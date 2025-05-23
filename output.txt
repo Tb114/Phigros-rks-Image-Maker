@@ -1,0 +1,50 @@
+Tb
+Save version:  6
+Challenge mode rank:  416
+RKS:  14.763749122619629
+GameVersion:  127
+Avatar:  Xenolith
+Data: 856MiB 766KiB
+/    EZ   HD   IN   AT
+C    33  104  204  13 
+FC   10  29  30   1 
+AT    4   3   3   0 
+
+P1 BreakOver.Kforest, ACC: 100%, RKS: 14.1/14.1 Score:1000000
+P2 AphroditesChildshortver.RUQOA, ACC: 100%, RKS: 13.3/13.3 Score:1000000
+P3 光.姜米條, ACC: 100%, RKS: 12.4/12.4 Score:1000000
+
+B1 DESTRUCTION321.Normal1zervsBrokenNerdz, ACC: 99.03%, RKS: 15.6/16.3 Score:957239
+B2 ComputeItWithSomeDevilishAlcoholicSteampunkEngines.かめりあ, ACC: 99.45%, RKS: 15.42/15.8 Score:995066
+B3 千紫万紅.r0yvsWABI, ACC: 99.68%, RKS: 15.38/15.6 Score:984900
+B4 Retribution.nmyKryexe, ACC: 98.72%, RKS: 15.29/16.2 Score:947968
+B5 Chronostasis.黒皇帝, ACC: 98.75%, RKS: 15.12/16.0 Score:949570
+B6 DontNeverAround.HAMA, ACC: 99.43%, RKS: 15.11/15.5 Score:994348
+B7 atruthseekerCommunicationwithUtopiawillbelost.kuro, ACC: 98.96%, RKS: 15.08/15.8 Score:938109
+B8 FracturedAngel.DJRaisei, ACC: 98.26%, RKS: 15.06/16.3 Score:934719
+B9 DistortedFate.Sakuzyo, ACC: 98.26%, RKS: 15.06/16.3 Score:934082
+B10 ReEndofaDream.umavsモリモリあつし, ACC: 98.75%, RKS: 15.03/15.9 Score:925531
+B11 Adastraperaspera.RabbitHouse, ACC: 98.08%, RKS: 14.94/16.3 Score:909278
+B12 青丘.BLACK0, ACC: 99.1%, RKS: 14.89/15.5 Score:959180
+B13 Rrharil.TeamGrimoire, ACC: 98.27%, RKS: 14.89/16.1 Score:939269
+B14 csqn.Aoi, ACC: 98.52%, RKS: 14.87/15.9 Score:925122
+B15 Palescreen.WyvernPfeatMadol, ACC: 98.44%, RKS: 14.82/15.9 Score:925826
+B16 インフェルノシティ.Ponchifeatはぁち, ACC: 98.71%, RKS: 14.81/15.7 Score:924667
+B17 望影の方舟Six.SeURa, ACC: 98.38%, RKS: 14.77/15.9 Score:928171
+B18 风屿.闫东炜, ACC: 99.44%, RKS: 14.73/15.1 Score:993277
+B19 ChronosCollapseLaCampanella.SunsetRay, ACC: 97.77%, RKS: 14.73/16.3 Score:924293
+B20 Cthugha.USAO, ACC: 98.16%, RKS: 14.72/16.0 Score:928871
+B21 Spasmodic.姜米條颶風元力上人, ACC: 98.85%, RKS: 14.72/15.5 Score:960763
+B22 双重间谍DoubleAgent.WAVAV, ACC: 98.55%, RKS: 14.71/15.7 Score:924287
+B23 ElCondorPasaPhigrosEdit.PlasticFruits, ACC: 98.67%, RKS: 14.69/15.6 Score:955811
+B24 Stasis.Maozon, ACC: 99.09%, RKS: 14.69/15.3 Score:945885
+B25 蝎虎天体Lacertid.CreamvsDaily天利, ACC: 98.78%, RKS: 14.67/15.5 Score:952233
+B26 valorstarcross.LundyvsWyvren, ACC: 98.36%, RKS: 14.67/15.8 Score:924358
+B27 AfterDawn.S9ryne, ACC: 99.05%, RKS: 14.66/15.3 Score:957467
+B28 InvertedWorld.ARForest, ACC: 98.73%, RKS: 14.64/15.5 Score:938829
+————OVER FLOW————
+B29 HorizonBlue.NothingButRequiemfeatAikapinChiyoko, ACC: 98.43%, RKS: 14.62/15.7 Score:981734
+B30 AnotherMe.DAAN, ACC: 98.57%, RKS: 14.62/15.6 Score:944520
+B31 SilenceisGoldenSpeechisGolden.NIWASHI, ACC: 98.47%, RKS: 14.56/15.6 Score:932797
+B32 Upshift.Iriss-Frantzz, ACC: 98.47%, RKS: 14.47/15.5 Score:934138
+B33 Nhelv.Silentroom, ACC: 98.31%, RKS: 14.45/15.6 Score:918740
