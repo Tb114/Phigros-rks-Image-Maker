@@ -6,19 +6,6 @@ from dotenv import load_dotenv
 import random
 import os
 
-def truncate_text(text, max_width, font):
-    """自动截断文本并添加省略号"""
-    if draw.textlength(text, font=font) <= max_width:
-        return text
-    ellipsis = "..."
-    max_len = len(text) - 1
-    while max_len > 1:
-        truncated = text[:max_len] + ellipsis
-        if draw.textlength(truncated, font=font) <= max_width:
-            return truncated
-        max_len -= 1
-    return ellipsis
-
 def add_corners(im, rad):
     """将图片裁剪为圆角"""
     circle = Image.new('L', (rad * 2, rad * 2), 0)
@@ -70,7 +57,7 @@ INFO_BLOCK_COLOR = (57, 197, 187)
 NEXT_COLOR = (196, 228, 164)
 WHITE = (255, 255, 255)
 
-def createImage(a_path, output_path, target_size, blur_radius, avatar, b27):
+def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks):
     # 初始化基础图像
     original_img = Image.open(a_path).convert('RGB')
     original_width, original_height = original_img.size
@@ -94,10 +81,11 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27):
     # 绘制头像
     try:
         ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
-        ava_round = add_corners(ava, 0)
-        final_img.paste(ava_round, (128, 128), ava_round)
+        ava_round = add_corners(ava, 5)
+        final_img.paste(ava_round, (64, 64), ava_round)
     except:
         print(f"Avatar {avatar} not found, using default")
+     
     # 字体配置
     FONT_CONFIG = {
         'rank': ImageFont.truetype("Resource/YaHei.ttf", 24),
@@ -105,9 +93,96 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27):
         'song_name': ImageFont.truetype("Resource/YaHei.ttf", 16),
         'score': ImageFont.truetype("Resource/YaHei-Bold.ttf", 28),
         'accuracy': ImageFont.truetype("Resource/YaHei.ttf", 16),
-        'next': ImageFont.truetype("Resource/YaHei.ttf", 14)
+        'next': ImageFont.truetype("Resource/YaHei.ttf", 14),
+        'username': ImageFont.truetype("Resource/YaHei.ttf", 48),
+        'rks': ImageFont.truetype("Resource/YaHei-Bold.ttf", 24)
     }
+       
+    # --- 新增：在头像右侧绘制用户名文本框 ---
+    draw = ImageDraw.Draw(final_img)
 
+    # 计算文本框位置（头像右侧 + 20px间距）
+    username_x = 64 + ava_round.width + 20
+    username_y = 64
+
+    # 文本框背景（圆角矩形）
+    username_bg_width = 600  # 宽度可根据需要调整
+    username_bg_height = 96
+    username_bg_radius = 10
+
+    final_img = add_rounded_rectangle(
+        final_img,
+        (username_x, username_y),
+        (username_bg_width, username_bg_height),
+        radius=username_bg_radius,
+        color=(50, 50, 50),  # 深灰色背景
+        alpha=150
+    )
+
+    # 绘制用户名文本（居中）
+    username_bbox = draw.textbbox((0, 0), username, font=FONT_CONFIG['username'])
+    username_text_x = username_x + (username_bg_width - username_bbox[2]) // 2
+    username_text_y = username_y + (username_bg_height - username_bbox[3]) // 2
+
+    draw.text(
+        (username_text_x, username_text_y),
+        username,
+        fill=WHITE,
+        font=FONT_CONFIG['username']
+    )
+    draw = ImageDraw.Draw(final_img)
+    username_font = FONT_CONFIG['username']
+    username_x = 64 + ava_round.width + 20
+    username_y = 64
+    username_bg_width = 600
+    username_bg_height = 96
+    username_bg_radius = 10
+
+    final_img = add_rounded_rectangle(
+        final_img,
+        (username_x, username_y),
+        (username_bg_width, username_bg_height),
+        radius=username_bg_radius,
+        color=(50, 50, 50),
+        alpha=150
+    )
+    draw.text(
+        (username_x + (username_bg_width - username_bbox[2]) // 2, username_y + (username_bg_height - username_bbox[3]) // 2),
+        username,
+        fill=WHITE,
+        font=username_font
+    )
+
+    # --- 新增：在用户名下方绘制RKS显示框 ---
+    rks_font = FONT_CONFIG['rks']
+    rks_text = f"{rks}"
+    
+    # 计算RKS文本框位置（用户名下方 + 10px间距）
+    rks_x = username_x  # 与用户名左对齐
+    rks_y = username_y + username_bg_height
+    
+    # RKS文本框尺寸（根据文本自动调整）
+    rks_bbox = draw.textbbox((0, 0), rks_text, font=rks_font)
+    rks_bg_width = rks_bbox[2] - rks_bbox[0] + 40  # 左右各加20px边距
+    rks_bg_height = rks_bbox[3] - rks_bbox[1] + 20  # 上下各加10px边距
+    
+    # 绘制白底黑字的RKS框
+    final_img = add_rounded_rectangle(
+        final_img,
+        (rks_x, rks_y),
+        (rks_bg_width, rks_bg_height),
+        radius=0,  # 圆角半径
+        color=WHITE,
+        alpha=255  # 不透明
+    )
+    
+    # 绘制RKS文本（居中）
+    draw.text(
+        (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2),
+        rks_text,
+        fill=(0, 0, 0),  # 黑色文字
+        font=rks_font
+    )
     # 布局参数
     start_y = 128 + 80  # 增加头像下方间距
     cell_width = 256 + 180 + 50
@@ -140,7 +215,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27):
         # 计算位置
         x = 50 + col * (cell_width + 50)
         y = start_y + row * (cell_height - 20)
-        
+        if idx >= 30: y+=50
         # 边界检查
             
         draw = ImageDraw.Draw(final_img)
@@ -305,7 +380,7 @@ phigros.get_b19.argtypes = ctypes.c_void_p,
 phigros.get_b19.restype = ctypes.c_char_p
 # phigros.re8.argtypes = ctypes.c_void_p,
 
-sessionToken = os.getenv('KEY').encode('UTF-8')
+sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
 handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
 # print(handle)
 nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
@@ -426,8 +501,10 @@ createImage(
     
     a_path=f"illustrationLowRes/{random.choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
     output_path="output.png",
-    target_size=(1800, 2500),
+    target_size=(1800, 3000),
     blur_radius=55,  # 可根据需要调整虚化程度
     avatar=summary['avatar'],
-    b27=b27
+    b27=b27,
+    username=nickname,
+    rks=round(summary['rankingScore'],4)
 )
