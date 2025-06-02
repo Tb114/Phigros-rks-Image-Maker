@@ -90,12 +90,12 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     FONT_CONFIG = {
         'rank': ImageFont.truetype("Resource/YaHei.ttf", 24),
         'difficulty': ImageFont.truetype("Resource/YaHei.ttf", 17),
-        'song_name': ImageFont.truetype("Resource/YaHei.ttf", 16),
-        'score': ImageFont.truetype("Resource/YaHei-Bold.ttf", 28),
-        'accuracy': ImageFont.truetype("Resource/YaHei.ttf", 16),
-        'next': ImageFont.truetype("Resource/YaHei.ttf", 14),
+        'song_name': ImageFont.truetype("Resource/YaHei.ttf", 20),
+        'score': ImageFont.truetype("Resource/YaHei-Bold.ttf", 32),
+        'accuracy': ImageFont.truetype("Resource/YaHei.ttf", 20),
+        'next': ImageFont.truetype("Resource/YaHei.ttf", 18),
         'username': ImageFont.truetype("Resource/YaHei.ttf", 48),
-        'rks': ImageFont.truetype("Resource/YaHei-Bold.ttf", 24)
+        'rks': ImageFont.truetype("Resource/YaHei.ttf", 24)
     }
        
     # --- 新增：在头像右侧绘制用户名文本框 ---
@@ -172,7 +172,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         (rks_x, rks_y),
         (rks_bg_width, rks_bg_height),
         radius=0,  # 圆角半径
-        color=WHITE,
+        color=(230,230,230),
         alpha=255  # 不透明
     )
     
@@ -223,7 +223,9 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         # 1. 绘制编号
         b_text = item[1]
         text_bbox = draw.textbbox((0,0), b_text, font=FONT_CONFIG['rank'])
-        b_width = text_bbox[2] - text_bbox[0] + 20
+        # b_width = text_bbox[2] - text_bbox[0] + 20
+        b_width = 50
+        
         b_height = text_bbox[3] - text_bbox[1] + 10
         
         final_img = add_rounded_rectangle(
@@ -278,17 +280,17 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         final_img = add_rounded_rectangle(
             final_img,
             info_pos,
-            (200, 90),  # 增大尺寸
+            (225, 110),  # 增大尺寸
             radius=0,
             color=INFO_BLOCK_COLOR,
-            alpha=int(255 * 0.6)  # 60%透明度
+            alpha=200  # 60%透明度
         )
         
         # 歌曲名称（白色，自动截断）
-        max_name_width = 180
+        max_name_width = 200
         truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
         song_name_font = FONT_CONFIG['song_name']
-        if(len(item[2]) <= 15): song_name_font=ImageFont.truetype("Resource/YaHei.ttf",20)
+        if(len(item[2]) <= 15): song_name_font=ImageFont.truetype("Resource/YaHei.ttf",26)
         name_bbox = draw.textbbox((0,0), truncated_name, font=song_name_font)
         draw.text(
             (info_pos[0] + 100 - name_bbox[2]/2, info_pos[1] + 5),
@@ -301,7 +303,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         score_text = f"{item[6]}"
         score_bbox = draw.textbbox((0,0), score_text, font=FONT_CONFIG['score'])
         draw.text(
-            (info_pos[0] + 100 - score_bbox[2]/2, info_pos[1] + 25),
+            (info_pos[0] + 100 - score_bbox[2]/2+20, info_pos[1] + 30),
             score_text,
             fill=WHITE,
             font=FONT_CONFIG['score']
@@ -316,7 +318,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         acc_text = f"{item[5]}%"
         acc_width = draw.textlength(acc_text, font=FONT_CONFIG['accuracy'])
         draw.text(
-            (line_start[0], line_start[1]),
+            (line_start[0]+25, line_start[1]),
             acc_text,
             fill=WHITE,
             font=FONT_CONFIG['accuracy']
@@ -324,7 +326,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         
         next_text = f">> {item[8]}"
         draw.text(
-            (line_start[0] + acc_width + 10, line_start[1]),
+            (line_start[0] + acc_width + 40, line_start[1]),
             next_text,
             fill=NEXT_COLOR,
             font=FONT_CONFIG['next']
@@ -346,8 +348,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             else: icon_path += "F.png"
         
         if os.path.exists(icon_path):
-            icon = Image.open(icon_path).convert('RGBA').resize((40,40))
-            final_img.paste(icon, (line_start[0]-35, line_start[1]-10), icon)
+            icon = Image.open(icon_path).convert('RGBA').resize((64,64))
+            final_img.paste(icon, (line_start[0]-35, line_start[1]-25), icon)
     
     # 最终保存
     final_img.convert('RGB').save(output_path, format="PNG")
