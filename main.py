@@ -57,7 +57,7 @@ INFO_BLOCK_COLOR = (57, 197, 187)
 NEXT_COLOR = (196, 228, 164)
 WHITE = (255, 255, 255)
 
-def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank):
+def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data):
     # 初始化基础图像
     original_img = Image.open(a_path).convert('RGB')
     original_width, original_height = original_img.size
@@ -100,7 +100,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
         'rks': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
         'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
-        'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28)
+        'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28),
+        'data': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
     }
        
     # --- 新增：在头像右侧绘制用户名文本框 ---
@@ -176,20 +177,20 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         final_img,
         (rks_x, rks_y),
         (rks_bg_width, rks_bg_height),
-        radius=0,  # 圆角半径
+        radius=5,  # 圆角半径
         color=(230,230,230),
         alpha=255  # 不透明
     )
     
     # 绘制RKS文本（居中）
     draw.text(
-        (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2),
+        (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2 - 5),
         rks_text,
         fill=(0, 0, 0),  # 黑色文字
         font=rks_font
     )
     
-    challenge_rank = summary['challengeModeRank']
+    challenge_rank = challengeModeRank
     rank_tier = challenge_rank // 100
     rank_number = challenge_rank % 100
 
@@ -211,7 +212,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         
         # 图标位置（RKS框右侧+10px间距）
         icon_x = rks_x + rks_bg_width + 10
-        icon_y = rks_y-7
+        icon_y = rks_y-10
         
         # 粘贴图标
         final_img.paste(icon, (icon_x, icon_y), icon)
@@ -222,14 +223,62 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         
         draw.text(
             (icon_x + (icon_size[0] - rank_bbox[2]) // 2, 
-            icon_y + (icon_size[1] - rank_bbox[3]) // 2-5),
+            icon_y + (icon_size[1] - rank_bbox[3]) // 2-7),
             str(rank_number),
             fill=WHITE,
             font=rank_font
         )
     except Exception as e:
         print(f"Failed to load challenge rank icon: {e}")
+    data_font = FONT_CONFIG['data']
+
+    # 1. 计算数据框宽度（动态调整）
+    data_icon = Image.open("Resource/data.png").convert('RGBA')
+    data_icon_size = (30, 30)  # 数据图标大小
+    data_icon = data_icon.resize(data_icon_size, Image.LANCZOS)
+
+    data_text_width = draw.textlength(data, font=data_font)
+    data_box_width = data_icon_size[0] + 10 + int(data_text_width) + 25  # 图标+间距+文字+边距
+    data_box_height = 40  # 与挑战模式图标同高
+
+    # 2. 绘制半透明背景（70%透明度）
+    data_box_pos = (icon_x - data_box_width +350, icon_y+10)  # 挑战模式图标左侧-10px
+    final_img = add_rounded_rectangle(
+        final_img,
+        data_box_pos,
+        (data_box_width, data_box_height),
+        radius=5,
+        color=(80, 80, 80),  # 深灰色背景
+        alpha=int(255 * 0.7)  # 70%透明度
+    )
+
+    # 3. 粘贴数据图标（左侧居中）
+    data_icon = Image.open("Resource/data.png").convert('RGBA')
+    original_width, original_height = data_icon.size  # 原始尺寸 20x12
     
+    # 计算等比缩放后的新尺寸（高度固定为数据框高度-8px=32px）
+    new_height = 24  # 略小于数据框高度以留出边距
+    new_width = int(original_width * (new_height / original_height))  # 20*(32/12)=53
+    
+    data_icon = data_icon.resize((new_width, new_height), Image.LANCZOS)
+    
+    # 图标位置（左侧居中，距离左边框10px）
+    data_icon_x = data_box_pos[0] + 10
+    data_icon_y = data_box_pos[1] + (data_box_height - new_height) // 2
+    final_img.paste(data_icon, (data_icon_x, data_icon_y), data_icon)
+    
+    # 调整数据文本起始位置（图标右侧+10px）
+    data_text_x = data_icon_x + new_width + 10
+
+    # 4. 绘制数据文本（右侧居中）
+    data_text_x = data_icon_x + data_icon_size[0] + 15
+    data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2 -5
+    draw.text(
+        (data_text_x, data_text_y),
+        data,
+        fill=WHITE,
+        font=data_font
+    )
     # 布局参数
     start_y = 128 + 80  # 增加头像下方间距
     cell_width = 256 + 180 + 50
@@ -566,11 +615,13 @@ print('RKS: ', summary['rankingScore'])
 print('GameVersion: ', summary['gameVersion'])
 print('Avatar: ', user['avatar'])
 print('Data: ', end='')
-if data[4]: print(f'{data[4]}PiB {data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB') 
-elif data[3]: print(f'{data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB') 
-elif data[2]: print(f'{data[2]}GiB {data[1]}MiB {data[0]}KiB') 
-elif data[1]: print(f'{data[1]}MiB {data[0]}KiB') 
-else: print(f'{data[0]}KiB') 
+data_num = ''
+if data[4]:   data_num=f'{data[4]}PiB {data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB'
+elif data[3]: data_num=f'{data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB'
+elif data[2]: data_num=f'{data[2]}GiB {data[1]}MiB {data[0]}KiB'
+elif data[1]: data_num=f'{data[1]}MiB {data[0]}KiB'
+else: f'{data[0]}KiB'
+print(data_num)
 print('/    EZ   HD   IN   AT')
 print(f'C   {progress[0]: 3d} {progress[3]: 3d} {progress[6]: 3d} {progress[9]: 3d} ')
 print(f'FC  {progress[1]: 3d} {progress[4]: 3d} {progress[7]: 3d} {progress[10]: 3d} ')
@@ -611,5 +662,6 @@ createImage(
     b27=b27,
     username=nickname,
     rks=round(summary['rankingScore'],4),
-    challengeModeRank=summary['challengeModeRank']
+    challengeModeRank=summary['challengeModeRank'],
+    data=data_num
 )
