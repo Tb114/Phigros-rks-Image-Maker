@@ -79,23 +79,27 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     final_img.paste(blurred_bg, (0, 0))
     
     # 绘制头像
+    
+    ava=''
     try:
         ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
-        ava_round = add_corners(ava, 5)
-        final_img.paste(ava_round, (64, 64), ava_round)
     except:
         print(f"Avatar {avatar} not found, using default")
+        ava = Image.open(f'Resource/noavatar.png').convert('RGBA')
+    ava_round = add_corners(ava, 5)
+    final_img.paste(ava_round, (64, 64), ava_round)    
      
     # 字体配置
     FONT_CONFIG = {
-        'rank': ImageFont.truetype("Resource/YaHei.ttf", 24),
-        'difficulty': ImageFont.truetype("Resource/YaHei.ttf", 17),
-        'song_name': ImageFont.truetype("Resource/YaHei.ttf", 20),
-        'score': ImageFont.truetype("Resource/YaHei-Bold.ttf", 32),
-        'accuracy': ImageFont.truetype("Resource/YaHei.ttf", 20),
-        'next': ImageFont.truetype("Resource/YaHei.ttf", 18),
-        'username': ImageFont.truetype("Resource/YaHei.ttf", 48),
-        'rks': ImageFont.truetype("Resource/YaHei.ttf", 24)
+        'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
+        'difficulty': ImageFont.truetype("Resource/Saira-Regular.ttf", 17),
+        'song_name': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 20),
+        'score': ImageFont.truetype("Resource/Saira-Bold.ttf", 32),
+        'accuracy': ImageFont.truetype("Resource/Saira-Regular.ttf", 20),
+        'next': ImageFont.truetype("Resource/Saira-Regular.ttf", 14),
+        'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
+        'rks': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
+        'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24)
     }
        
     # --- 新增：在头像右侧绘制用户名文本框 ---
@@ -246,7 +250,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         # 2. 歌曲插图
         img_path = f"illustrationLowRes/{item[0]}.png"
         if not os.path.exists(img_path):
-            img_path = "illustrationLowRes/none.png"
+            img_path = "Resource/nodata.png"
             
         song_img = Image.open(img_path).convert('RGB').resize((256, 135))
         final_img.paste(song_img, (x + b_width, y))
@@ -268,12 +272,21 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         # 难度文字
         diff_text = f"{diff_type} {item[4]}\n {item[3]}"
         text_bbox = draw.textbbox((0,0), diff_text, font=FONT_CONFIG['difficulty'])
-        draw.text(
-            (tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]),
-            diff_text,
-            fill=WHITE,
-            font=FONT_CONFIG['difficulty']
-        )
+        # draw.text(
+        #     (tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]),
+        #     diff_text,
+        #     fill=WHITE,
+        #     font=FONT_CONFIG['difficulty']
+        # )
+        xx,yy = tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]
+        for line in diff_text.split('\n'):
+            draw.text(
+                (xx, yy),
+                line, 
+                font=FONT_CONFIG['difficulty'], 
+                fill=WHITE
+            )
+            yy += -2 + int(17*4/3)
         
         # 4. 右侧信息块
         info_pos = (x + b_width + 256, y + (135 - 90)//2)
@@ -290,7 +303,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         max_name_width = 200
         truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
         song_name_font = FONT_CONFIG['song_name']
-        if(len(item[2]) <= 15): song_name_font=ImageFont.truetype("Resource/YaHei.ttf",26)
+        if(len(item[2]) <= 15): song_name_font=FONT_CONFIG['song_name_bigger']
         name_bbox = draw.textbbox((0,0), truncated_name, font=song_name_font)
         draw.text(
             (info_pos[0] + 100 - name_bbox[2]/2, info_pos[1] + 5),
@@ -456,7 +469,8 @@ for i in range(min(3,len(phi))):
 
 rks = rks / 30.0
 # print(rks)
-
+print(summary)
+# sys.exit(0)
 print(nickname)
 print('Save version: ', summary['saveVersion'])
 print('Challenge mode rank: ', summary['challengeModeRank'])
