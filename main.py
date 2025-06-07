@@ -538,8 +538,8 @@ handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数�
 nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
 summary = json.loads(phigros.get_summary(handle).decode('utf-8'))
 savedata = json.loads(phigros.get_save(handle).decode('utf-8'))
-# print(summary)
-# print(savedata)
+print(summary)
+print(savedata)
 progress = summary['progress']
 gameRecords = savedata['gameRecord']
 data = savedata['gameProgress']['money']
