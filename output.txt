@@ -1,10 +1,8 @@
-{'saveVersion': 6, 'challengeModeRank': 339, 'rankingScore': 14.816420555114746, 'gameVersion': -128, 'avatar': '\x08', 'progress': [25944, 28526, 26988, 26740, 33, 10, 4, 104, 29, 3, 210, 32], 'objectId': '679e3d3867e6b6cb0551eb03', 'userId': '679e3c6e67e6b6cb0551e469', 'fileId': '68441923c739ae5746cfa5c3', 'url': 'rak3ffdi.tds1.tapfiles.cn/gamesaves/R3K6b8r0KyAXNN4zgmev9oqXcjxDmTBM/.save', 'updatedAt': '2025-06-07T10:49:08.221Z'}
-Tb
 Save version:  6
 Challenge mode rank:  339
 RKS:  14.816420555114746
 GameVersion:  -128
-Avatar:  
+Avatar:  Xenolith
 Data: 821MiB 767KiB
 /    EZ   HD   IN   AT
 C    25944  26740   4   3 
@@ -49,4 +47,3 @@ B30 HorizonBlue.NothingButRequiemfeatAikapinChiyoko, ACC: 98.43%, RKS: 14.62/15.
 B31 AnotherMe.DAAN, ACC: 98.57%, RKS: 14.62/15.6 Score:944520
 B32 SilenceisGoldenSpeechisGolden.NIWASHI, ACC: 98.47%, RKS: 14.56/15.6 Score:932797
 B33 Upshift.Iriss-Frantzz, ACC: 98.47%, RKS: 14.47/15.5 Score:934138
-Avatar  not found, using default

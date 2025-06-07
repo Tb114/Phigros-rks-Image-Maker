@@ -57,7 +57,7 @@ INFO_BLOCK_COLOR = (57, 197, 187)
 NEXT_COLOR = (196, 228, 164)
 WHITE = (255, 255, 255)
 
-def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks):
+def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank):
     # 初始化基础图像
     original_img = Image.open(a_path).convert('RGB')
     original_width, original_height = original_img.size
@@ -98,8 +98,9 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'accuracy': ImageFont.truetype("Resource/Saira-Regular.ttf", 20),
         'next': ImageFont.truetype("Resource/Saira-Regular.ttf", 14),
         'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
-        'rks': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
-        'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24)
+        'rks': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
+        'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
+        'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28)
     }
        
     # --- 新增：在头像右侧绘制用户名文本框 ---
@@ -187,6 +188,48 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         fill=(0, 0, 0),  # 黑色文字
         font=rks_font
     )
+    
+    challenge_rank = summary['challengeModeRank']
+    rank_tier = challenge_rank // 100
+    rank_number = challenge_rank % 100
+
+    # 确定图标路径
+    icon_map = {
+        1: "Resource/green.png",
+        2: "Resource/blue.png",
+        3: "Resource/red.png",
+        4: "Resource/gold.png",
+        5: "Resource/rainbows.png"
+    }
+    icon_path = icon_map.get(rank_tier, "Resource/grey.png")
+
+    # 加载并调整图标大小
+    try:
+        icon = Image.open(icon_path).convert('RGBA')
+        icon_size = (100, 60)  # 保持与RKS框相同高度
+        icon = icon.resize(icon_size, Image.LANCZOS)
+        
+        # 图标位置（RKS框右侧+10px间距）
+        icon_x = rks_x + rks_bg_width + 10
+        icon_y = rks_y-7
+        
+        # 粘贴图标
+        final_img.paste(icon, (icon_x, icon_y), icon)
+        
+        # 在图标上绘制居中数字
+        rank_font = FONT_CONFIG['challenge_rank']
+        rank_bbox = draw.textbbox((0, 0), str(rank_number), font=rank_font)
+        
+        draw.text(
+            (icon_x + (icon_size[0] - rank_bbox[2]) // 2, 
+            icon_y + (icon_size[1] - rank_bbox[3]) // 2-5),
+            str(rank_number),
+            fill=WHITE,
+            font=rank_font
+        )
+    except Exception as e:
+        print(f"Failed to load challenge rank icon: {e}")
+    
     # 布局参数
     start_y = 128 + 80  # 增加头像下方间距
     cell_width = 256 + 180 + 50
@@ -270,7 +313,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         )
         
         # 难度文字
-        diff_text = f"{diff_type} {item[4]}\n {item[3]}"
+        diff_text = f'{diff_type} {item[4]}\n'+'%.3f'%item[3]
         text_bbox = draw.textbbox((0,0), diff_text, font=FONT_CONFIG['difficulty'])
         # draw.text(
         #     (tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]),
@@ -287,9 +330,54 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
                 fill=WHITE
             )
             yy += -2 + int(17*4/3)
-        
+        # 1. 定义info_block的尺寸
+        info_block_width = 225
+        info_block_height = 110
+        # 2. 绘制info_block（圆角矩形背景）
+        info_pos = (x + b_width + 256, y + (135 - info_block_height)//2)
+        final_img = add_rounded_rectangle(
+            final_img,
+            info_pos,
+            (info_block_width, info_block_height),
+            radius=0,
+            color=INFO_BLOCK_COLOR,
+            alpha=200
+        )
+
+        # 3. 计算居中坐标（关键修改）
+        def get_centered_x(text, font, box_width):
+            """计算文本在指定宽度内的居中x坐标"""
+            text_bbox = draw.textbbox((0, 0), text, font=font)
+            text_width = text_bbox[2] - text_bbox[0]
+            return (box_width - text_width) // 2
+
+        # 4. 绘制歌曲名称（居中）
+        max_name_width = 200
+        truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
+        song_name_font = FONT_CONFIG['song_name']
+        if len(item[2]) <= 15:
+            song_name_font = FONT_CONFIG['song_name_bigger']
+
+        # 计算居中位置
+        name_x = info_pos[0] + get_centered_x(truncated_name, song_name_font, info_block_width)
+        draw.text(
+            (name_x, info_pos[1] + 5),  # y坐标保持原样
+            truncated_name,
+            fill=WHITE,
+            font=song_name_font
+        )
+
+        # # 5. 绘制分数（居中）
+        # score_text = f"{item[6]}"
+        # score_x = info_pos[0] + get_centered_x(score_text, FONT_CONFIG['score'], info_block_width)
+        # draw.text(
+        #     (score_x, info_pos[1] + 25),
+        #     score_text,
+        #     fill=WHITE,
+        #     font=FONT_CONFIG['score']
+        # )
         # 4. 右侧信息块
-        info_pos = (x + b_width + 256, y + (135 - 90)//2)
+        '''info_pos = (x + b_width + 256, y + (135 - 90)//2)
         final_img = add_rounded_rectangle(
             final_img,
             info_pos,
@@ -300,6 +388,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         )
         
         # 歌曲名称（白色，自动截断）
+        
         max_name_width = 200
         truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
         song_name_font = FONT_CONFIG['song_name']
@@ -310,13 +399,13 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             truncated_name,
             fill=WHITE,
             font=song_name_font
-        )
+        )'''
         
         # 分数显示（无逗号，加粗）
         score_text = f"{item[6]}"
         score_bbox = draw.textbbox((0,0), score_text, font=FONT_CONFIG['score'])
         draw.text(
-            (info_pos[0] + 100 - score_bbox[2]/2+20, info_pos[1] + 30),
+            (info_pos[0] + 100 - score_bbox[2]/2+30, info_pos[1] + 30),
             score_text,
             fill=WHITE,
             font=FONT_CONFIG['score']
@@ -328,7 +417,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         #          fill=WHITE, width=4)
         
         # 精度和NEXT
-        acc_text = f"{item[5]}%"
+        acc_text ='%.2f'%item[5]+'%'
         acc_width = draw.textlength(acc_text, font=FONT_CONFIG['accuracy'])
         draw.text(
             (line_start[0]+25, line_start[1]),
@@ -359,10 +448,9 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             elif score >=820000: icon_path += "B.png"
             elif score >=700000: icon_path += "C.png"
             else: icon_path += "F.png"
-        
         if os.path.exists(icon_path):
             icon = Image.open(icon_path).convert('RGBA').resize((64,64))
-            final_img.paste(icon, (line_start[0]-35, line_start[1]-25), icon)
+            final_img.paste(icon, (info_pos[0], info_pos[1]+40), icon)
     
     # 最终保存
     final_img.convert('RGB').save(output_path, format="PNG")
@@ -400,11 +488,13 @@ handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数�
 # print(handle)
 nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
 summary = json.loads(phigros.get_summary(handle).decode('utf-8'))
-# print(summary)
-progress = summary['progress']
 savedata = json.loads(phigros.get_save(handle).decode('utf-8'))
+# print(summary)
+# print(savedata)
+progress = summary['progress']
 gameRecords = savedata['gameRecord']
 data = savedata['gameProgress']['money']
+user = savedata['user']
 # print(savedata)             # 获取存档
 
 singlefile = open('info.tsv', 'r', encoding='utf-8')
@@ -469,14 +559,12 @@ for i in range(min(3,len(phi))):
 
 rks = rks / 30.0
 # print(rks)
-print(summary)
 # sys.exit(0)
-print(nickname)
 print('Save version: ', summary['saveVersion'])
 print('Challenge mode rank: ', summary['challengeModeRank'])
 print('RKS: ', summary['rankingScore'])
 print('GameVersion: ', summary['gameVersion'])
-print('Avatar: ', summary['avatar'])
+print('Avatar: ', user['avatar'])
 print('Data: ', end='')
 if data[4]: print(f'{data[4]}PiB {data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB') 
 elif data[3]: print(f'{data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB') 
@@ -505,22 +593,23 @@ phigros.free_handle(handle)                 # 释放handle的内存,不会被垃
 b27 = [] # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
 for i in range(min(3,len(phi))):
     id = phi[i][1]
-    accuary = round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)
+    accuary = gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1]
     scr = gameRecords[phi[i][1]][classToNum(phi[i][2])*3]
-    b27.append((id,f'P{i+1}',songname[id],round(phi[i][0],2),phi[i][3],accuary,scr,phi[i][2],'00.00%',phi[i][4]))
+    b27.append((id,f'P{i+1}',songname[id],phi[i][0],phi[i][3],accuary,scr,phi[i][2],'00.00%',phi[i][4]))
 for i in range(min(33,len(score))):
     id = score[i][1]
-    accuary = round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)
+    accuary = gameRecords[score[i][1]][classToNum(score[i][2])*3+1]
     scr = gameRecords[score[i][1]][classToNum(score[i][2])*3]
-    b27.append((id,f'B{i+1}',songname[id],round(score[i][0],2),score[i][3],accuary,scr,score[i][2],'00.00%',score[i][4]))
+    b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'00.00%',score[i][4]))
 createImage(
     
     a_path=f"illustrationLowRes/{random.choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
     output_path="output.png",
     target_size=(1800, 3000),
     blur_radius=55,  # 可根据需要调整虚化程度
-    avatar=summary['avatar'],
+    avatar=user['avatar'],
     b27=b27,
     username=nickname,
-    rks=round(summary['rankingScore'],4)
+    rks=round(summary['rankingScore'],4),
+    challengeModeRank=summary['challengeModeRank']
 )
