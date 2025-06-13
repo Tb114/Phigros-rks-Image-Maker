@@ -5,7 +5,8 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 from dotenv import load_dotenv
 import random
 import os
-
+from datetime import datetime, timedelta, timezone
+from pytz import timezone
 def add_corners(im, rad):
     """将图片裁剪为圆角"""
     circle = Image.new('L', (rad * 2, rad * 2), 0)
@@ -607,8 +608,11 @@ for i in range(min(3,len(phi))):
     rks = rks + phi[i][0]
 
 rks = rks / 30.0
+
+updatetime = datetime.now().astimezone(timezone('Asia/Shanghai')).replace(tzinfo=None)
 # print(rks)
 # sys.exit(0)
+print(updatetime)
 print('Save version: ', summary['saveVersion'])
 print('Challenge mode rank: ', summary['challengeModeRank'])
 print('RKS: ', summary['rankingScore'])
