@@ -5,7 +5,7 @@ from PIL import Image, ImageFilter, ImageDraw, ImageFont
 from dotenv import load_dotenv
 from random import choice
 import os
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pytz import timezone
 def add_corners(im, rad):
     """将图片裁剪为圆角"""
