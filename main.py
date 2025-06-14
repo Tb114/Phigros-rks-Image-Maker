@@ -58,7 +58,7 @@ INFO_BLOCK_COLOR = (57, 197, 187)
 NEXT_COLOR = (196, 228, 164)
 WHITE = (255, 255, 255)
 
-def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime):
+def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress):
     # 初始化基础图像
     original_img = Image.open(a_path).convert('RGB')
     original_width, original_height = original_img.size
@@ -104,6 +104,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28),
         'data': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
         'updatetime': ImageFont.truetype("Resource/Saira-Regular.ttf", 22),
+        'sheet': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
     }
        
     # --- 新增：在头像右侧绘制用户名文本框 ---
@@ -129,8 +130,6 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
 
     # 绘制用户名文本（居中）
     username_bbox = draw.textbbox((0, 0), username, font=FONT_CONFIG['username'])
-    username_text_x = username_x + (username_bg_width - username_bbox[2]) // 2
-    username_text_y = username_y + (username_bg_height - username_bbox[3]) // 2
 
     
     draw = ImageDraw.Draw(final_img)
@@ -170,6 +169,108 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         font=FONT_CONFIG['updatetime']
     )
     
+    # 在username绘制代码之后添加以下内容
+
+    # 表格参数配置  
+    table_x = username_x + username_bg_width + 400  # 表格起始x坐标（username框右侧20px）
+    table_y = username_y - 10  # 与username框对齐
+    cell_width = 80  # 单元格宽度
+    cell_height = 40  # 单元格高度
+    header_height = 40  # 表头高度
+    row_height = cell_height  # 行高
+    border_radius = 5  # 圆角半径
+    bg_alpha = 150  # 背景透明度
+
+    # 表头文本
+    headers = ["", "EZ", "HD", "IN", "AT"]
+    row_labels = ["C", "FC", "AP"]
+
+    # 1. 绘制表头
+    for col in range(5):
+        cell_x = table_x + col * cell_width
+        cell_y = table_y
+        
+        # 表头单元格背景
+        final_img = add_rounded_rectangle(
+            final_img,
+            (cell_x, cell_y),
+            (cell_width if col > 0 else 80, header_height),  # 第一列较窄
+            radius=0,
+            color=(70, 70, 70),
+            alpha=bg_alpha
+        )
+        
+        # 表头文字
+        header_text = headers[col] if col < len(headers) else ""
+        text_bbox = draw.textbbox((0, 0), header_text, font=FONT_CONFIG['sheet'])
+        draw.text(
+            (cell_x + (cell_width - text_bbox[2])//2, cell_y + (header_height - text_bbox[3])//2),
+            header_text,
+            fill=WHITE,
+            font=FONT_CONFIG['sheet']
+        )
+
+    # 2. 绘制数据行
+    for row in range(3):
+        for col in range(5):
+            cell_x = table_x + col * cell_width
+            cell_y = table_y + header_height + row * row_height
+            
+            # 第一列特殊处理（行标签）
+            if col == 0:
+                final_img = add_rounded_rectangle(
+                    final_img,
+                    (cell_x, cell_y),
+                    (80, row_height),  # 行标签列较窄
+                    radius=0,
+                    color=(60, 60, 60),
+                    alpha=bg_alpha
+                )
+                
+                label_text = row_labels[row] if row < len(row_labels) else ""
+                text_bbox = draw.textbbox((0, 0), label_text, font=FONT_CONFIG['sheet'])
+                draw.text(
+                    (cell_x + (80 - text_bbox[2])//2, cell_y + (row_height - text_bbox[3])//2),
+                    label_text,
+                    fill=WHITE,
+                    font=FONT_CONFIG['sheet']
+                )
+            else:
+                # 数据单元格背景
+                final_img = add_rounded_rectangle(
+                    final_img,
+                    (cell_x, cell_y),
+                    (cell_width, row_height),
+                    radius=0,
+                    color=(50, 50, 50),
+                    alpha=bg_alpha
+                )
+                
+                # 进度数据（确保progress数组存在且足够大）
+                if len(progress) > row and len(progress[row]) > col-1:
+                    progress_text = f"{progress[row][col-1]:4d}"
+                else:
+                    progress_text = "0d"
+                    
+                text_bbox = draw.textbbox((0, 0), progress_text, font=FONT_CONFIG['sheet'])
+                draw.text(
+                    (cell_x + (cell_width - text_bbox[2])//2, cell_y + (row_height - text_bbox[3])//2),
+                    progress_text,
+                    fill=WHITE,
+                    font=FONT_CONFIG['sheet']
+                )
+
+    # 3. 添加表格外边框（可选）
+    table_width = 5 * cell_width
+    table_height = header_height + 3 * row_height
+    final_img = add_rounded_rectangle(
+        final_img,
+        (table_x, table_y),
+        (table_width, table_height),
+        radius=border_radius,
+        color=(100, 100, 100),
+        alpha=50,  # 半透明边框
+    )
     
     # --- 新增：在用户名下方绘制RKS显示框 ---
     rks_font = FONT_CONFIG['rks']
@@ -292,7 +393,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         font=data_font
     )
     # 布局参数
-    start_y = 128 + 80  # 增加头像下方间距
+    start_y = 128 + 120 # 增加头像下方间距
     cell_width = 256 + 180 + 50
     cell_height = 135 + 100  # 增加行高
 
@@ -552,7 +653,6 @@ summary = json.loads(phigros.get_summary(handle).decode('utf-8'))
 savedata = json.loads(phigros.get_save(handle).decode('utf-8'))
 print(summary)
 print(savedata)
-progress = summary['progress']
 gameRecords = savedata['gameRecord']
 data = savedata['gameProgress']['money']
 user = savedata['user']
@@ -586,6 +686,7 @@ for i in contect:
 rksContribution = {}
 score = []
 phi = []
+progress = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
 for i in songid: 
     if not i in gameRecords:
@@ -596,6 +697,18 @@ for i in songid:
     rksIN = pow((gameRecords[i][7]-55.0)/45,2)*diff[i][2] if gameRecords[i][7] >= 70 else 0
     rksAT = pow((gameRecords[i][10]-55.0)/45,2)*diff[i][3] if gameRecords[i][10] >= 70 else 0
     rksContribution[i] = [rksEZ, rksHD, rksIN, rksAT]
+    progress[0][0]+=(gameRecords[i][1] >= 70)
+    progress[0][1]+=(gameRecords[i][4] >= 70)
+    progress[0][2]+=(gameRecords[i][7] >= 70)
+    progress[0][3]+=(gameRecords[i][10] >= 70)
+    progress[1][0]+=bool(gameRecords[i][2])
+    progress[1][1]+=bool(gameRecords[i][5])
+    progress[1][2]+=bool(gameRecords[i][8])
+    progress[1][3]+=bool(gameRecords[i][11])
+    progress[2][0]+=bool(rksEZ == diff[i][0] and diff[i][0])
+    progress[2][1]+=bool(rksHD == diff[i][1] and diff[i][1])
+    progress[2][2]+=bool(rksIN == diff[i][2] and diff[i][2])
+    progress[2][3]+=bool(rksAT == diff[i][3] and diff[i][3])
     if rksEZ : score.append((rksEZ,i,'EZ',diff[i][0],bool(gameRecords[i][2])))
     if rksHD : score.append((rksHD,i,'HD',diff[i][1],bool(gameRecords[i][5])))
     if rksIN : score.append((rksIN,i,'IN',diff[i][2],bool(gameRecords[i][8])))
@@ -639,9 +752,9 @@ elif data[1]: data_num=f'{data[1]}MiB {data[0]}KiB'
 else: f'{data[0]}KiB'
 print(data_num)
 print('/    EZ   HD   IN   AT')
-print(f'C   {progress[0]: 3d} {progress[3]: 3d} {progress[6]: 3d} {progress[9]: 3d} ')
-print(f'FC  {progress[1]: 3d} {progress[4]: 3d} {progress[7]: 3d} {progress[10]: 3d} ')
-print(f'AT  {progress[2]: 3d} {progress[5]: 3d} {progress[8]: 3d} {progress[11]: 3d} ')
+print(f'C   {progress[0][0]: 3d} {progress[0][1]: 3d} {progress[0][2]: 3d} {progress[0][3]: 3d} ')
+print(f'FC  {progress[1][0]: 3d} {progress[1][1]: 3d} {progress[1][2]: 3d} {progress[1][3]: 3d} ')
+print(f'AT  {progress[2][0]: 3d} {progress[2][1]: 3d} {progress[2][2]: 3d} {progress[2][3]: 3d} ')
 print()
 for i in range(min(3,len(phi))):
     print(f'P{i+1} {phi[i][1]}, ACC: {round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%, RKS: {round(phi[i][0],2)}/{diff[phi[i][1]][classToNum(phi[i][2])]} Score:{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}')
@@ -680,6 +793,7 @@ createImage(
     rks=round(summary['rankingScore'],4),
     challengeModeRank=summary['challengeModeRank'],
     data=data_num,
-    updatetime=str(updatetime)
+    updatetime=str(updatetime),
+    progress=progress
 )
-# ver 0.01
+# ver 0.02
