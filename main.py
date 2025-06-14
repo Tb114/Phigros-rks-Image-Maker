@@ -415,7 +415,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             max_len -= 1
         
         return ellipsis  # 极端情况（max_width极小）
-
+    OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((1700,75))
+    final_img.paste(OVERFLOW,(35,2350),mask=OVERFLOW)
     # 绘制所有B27元素
     for idx, item in enumerate(b27):
         row = idx // 3
@@ -424,7 +425,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         # 计算位置
         x = 50 + col * (cell_width + 50)
         y = start_y + row * (cell_height - 20)
-        if idx >= 30: y+=50
+        if idx >= 30: y += 65
         # 边界检查
             
         draw = ImageDraw.Draw(final_img)
@@ -796,4 +797,4 @@ createImage(
     updatetime=str(updatetime),
     progress=progress
 )
-# ver 0.02
+# ver 0.03
