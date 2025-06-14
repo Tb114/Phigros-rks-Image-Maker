@@ -8,7 +8,8 @@ on:
 jobs:
   run-main:
     runs-on: ubuntu-latest
-    
+    permissions: 
+        contents: write
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -29,7 +30,7 @@ jobs:
         pip install dotenv
         pip install Pillow
         pip install pytz
-        
+
 
 
     - name: Run main.py
