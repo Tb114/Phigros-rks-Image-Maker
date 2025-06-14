@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install dotenv
-        pip install PIL
+        pip install Pillow
 
 
     - name: Run main.py
