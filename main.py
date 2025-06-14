@@ -1,9 +1,9 @@
 import ctypes
 import sys
-import json
+from json import loads
 from PIL import Image, ImageFilter, ImageDraw, ImageFont
 from dotenv import load_dotenv
-import random
+from random import choice
 import os
 from datetime import datetime, timedelta, timezone
 from pytz import timezone
@@ -96,8 +96,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'difficulty': ImageFont.truetype("Resource/Saira-Regular.ttf", 17),
         'song_name': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 20),
         'score': ImageFont.truetype("Resource/Saira-Bold.ttf", 32),
-        'accuracy': ImageFont.truetype("Resource/Saira-Regular.ttf", 20),
-        'next': ImageFont.truetype("Resource/Saira-Regular.ttf", 14),
+        'accuracy': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
+        'next': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 16),
         'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
         'rks': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
         'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
@@ -157,14 +157,14 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     final_img = add_rounded_rectangle(
         final_img,
         (username_x, username_y - 30),
-        (360,30),
+        (500,30),
         radius=5,
         color=(50, 50, 50),
         alpha=150
     )
     draw.text(
         (username_x + 10, username_y - 30),
-        updatetime[:-7]+' UTC+08:00',
+        'Updated at: '+updatetime[:-7]+' UTC+08:00',
         fill=WHITE,
         font=FONT_CONFIG['updatetime']
     )
@@ -423,7 +423,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         col = idx % 3
         
         # 计算位置
-        x = 50 + col * (cell_width + 50)
+        x = 50 + col * (cell_width + 70)
         y = start_y + row * (cell_height - 20)
         if idx >= 30: y += 65
         # 边界检查
@@ -442,9 +442,9 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             final_img,
             (x, y),
             (b_width, b_height),
-            0,
-            WHITE,
-            255
+            5,
+            (220,220,220),
+            200
         )
         draw.text(
             (x + (b_width - text_bbox[2])//2, y + (b_height - text_bbox[3])//2 - 5),
@@ -470,7 +470,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             final_img,
             tag_pos,
             tag_size,
-            0,
+            5,
             DIFFICULTY_COLORS.get(diff_type, WHITE),
             200
         )
@@ -494,7 +494,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             )
             yy += -2 + int(17*4/3)
         # 1. 定义info_block的尺寸
-        info_block_width = 225
+        info_block_width = 240
         info_block_height = 110
         # 2. 绘制info_block（圆角矩形背景）
         info_pos = (x + b_width + 256, y + (135 - info_block_height)//2)
@@ -502,7 +502,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             final_img,
             info_pos,
             (info_block_width, info_block_height),
-            radius=0,
+            radius=5,
             color=INFO_BLOCK_COLOR,
             alpha=200
         )
@@ -530,6 +530,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             font=song_name_font
         )
 
+        
         # # 5. 绘制分数（居中）
         # score_text = f"{item[6]}"
         # score_x = info_pos[0] + get_centered_x(score_text, FONT_CONFIG['score'], info_block_width)
@@ -583,19 +584,19 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         acc_text ='%.2f'%item[5]+'%'
         acc_width = draw.textlength(acc_text, font=FONT_CONFIG['accuracy'])
         draw.text(
-            (line_start[0]+25, line_start[1]),
+            (line_start[0]+35, line_start[1]+5),
             acc_text,
             fill=WHITE,
             font=FONT_CONFIG['accuracy']
         )
         
-        next_text = f">> {item[8]}"
-        draw.text(
-            (line_start[0] + acc_width + 40, line_start[1]),
-            next_text,
-            fill=NEXT_COLOR,
-            font=FONT_CONFIG['next']
-        )
+        # next_text = f"{item[8]}"
+        # draw.text(
+        #     (line_start[0] + acc_width + 30, line_start[1] + 5),
+        #     next_text,
+        #     fill=NEXT_COLOR,
+        #     font=FONT_CONFIG['next']
+        # )
         
         # 评级图标
         icon_path = "Resource/"
@@ -650,10 +651,10 @@ sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
 handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
 # print(handle)
 nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
-summary = json.loads(phigros.get_summary(handle).decode('utf-8'))
-savedata = json.loads(phigros.get_save(handle).decode('utf-8'))
-print(summary)
-print(savedata)
+summary = loads(phigros.get_summary(handle).decode('utf-8'))
+savedata = loads(phigros.get_save(handle).decode('utf-8'))
+# print(summary)
+# print(savedata)
 gameRecords = savedata['gameRecord']
 data = savedata['gameProgress']['money']
 user = savedata['user']
@@ -688,37 +689,19 @@ rksContribution = {}
 score = []
 phi = []
 progress = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-
+levelToNumMap = {'EZ':0, 'HD':1, 'IN':2, 'AT':3, 0:'EZ', 1:'HD', 2:'IN', 3:'AT'}
 for i in songid: 
-    if not i in gameRecords:
-        rksContribution[i] = [0.0, 0.0, 0.0, 0.0]
-        continue
-    rksEZ = pow((gameRecords[i][1]-55.0)/45,2)*diff[i][0] if gameRecords[i][1] >= 70 else 0
-    rksHD = pow((gameRecords[i][4]-55.0)/45,2)*diff[i][1] if gameRecords[i][4] >= 70 else 0
-    rksIN = pow((gameRecords[i][7]-55.0)/45,2)*diff[i][2] if gameRecords[i][7] >= 70 else 0
-    rksAT = pow((gameRecords[i][10]-55.0)/45,2)*diff[i][3] if gameRecords[i][10] >= 70 else 0
-    rksContribution[i] = [rksEZ, rksHD, rksIN, rksAT]
-    progress[0][0]+=(gameRecords[i][1] >= 70)
-    progress[0][1]+=(gameRecords[i][4] >= 70)
-    progress[0][2]+=(gameRecords[i][7] >= 70)
-    progress[0][3]+=(gameRecords[i][10] >= 70)
-    progress[1][0]+=bool(gameRecords[i][2])
-    progress[1][1]+=bool(gameRecords[i][5])
-    progress[1][2]+=bool(gameRecords[i][8])
-    progress[1][3]+=bool(gameRecords[i][11])
-    progress[2][0]+=bool(rksEZ == diff[i][0] and diff[i][0])
-    progress[2][1]+=bool(rksHD == diff[i][1] and diff[i][1])
-    progress[2][2]+=bool(rksIN == diff[i][2] and diff[i][2])
-    progress[2][3]+=bool(rksAT == diff[i][3] and diff[i][3])
-    if rksEZ : score.append((rksEZ,i,'EZ',diff[i][0],bool(gameRecords[i][2])))
-    if rksHD : score.append((rksHD,i,'HD',diff[i][1],bool(gameRecords[i][5])))
-    if rksIN : score.append((rksIN,i,'IN',diff[i][2],bool(gameRecords[i][8])))
-    if rksAT : score.append((rksAT,i,'AT',diff[i][3],bool(gameRecords[i][11])))
-    if(rksEZ == diff[i][0] and diff[i][0]) : phi.append((rksEZ,i,'EZ',diff[i][0],True))
-    if(rksHD == diff[i][1] and diff[i][1]) : phi.append((rksHD,i,'HD',diff[i][1],True))
-    if(rksIN == diff[i][2] and diff[i][2]) : phi.append((rksIN,i,'IN',diff[i][2],True))
-    if(rksAT == diff[i][3] and diff[i][3]) : phi.append((rksAT,i,'AT',diff[i][3],True))
+    rksContribution[i] = [0.0, 0.0, 0.0, 0.0]
+    if not i in gameRecords: continue
+    for now in range(4):
+        rksContribution[i][now] = pow((gameRecords[i][now*3+1]-55.0)/45,2)*diff[i][now] if gameRecords[i][now*3+1] >= 70 else 0
+        progress[0][now]+=(gameRecords[i][now*3+1] >= 70)
+        progress[1][now]+=bool(gameRecords[i][now*3+2])
+        progress[2][now]+=bool(rksContribution[i][now] == diff[i][now] and diff[i][now])
+        if rksContribution[i][now] : score.append((rksContribution[i][now],i,levelToNumMap[now],diff[i][now],bool(gameRecords[i][now*3+2])))
+        if(rksContribution[i][now] == diff[i][now] and diff[i][now]) : phi.append((rksContribution[i][now],i,levelToNumMap[now],diff[i][now],True))
     # print(i, rksContribution[i])
+
 score.sort()
 score.reverse()
 # print(score)
@@ -763,7 +746,7 @@ print()
 for i in range(min(33,len(score))):
     print(f'B{i+1} {score[i][1]}, ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],2)}/{diff[score[i][1]][classToNum(score[i][2])]} Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
     if(i == 27):
-        print('————OVER FLOW————')
+        print('————OVERFLOW————')
 
 # print(rks)
 # print(diff)
@@ -772,29 +755,39 @@ for i in range(min(33,len(score))):
 # print(b19)             # 从存档读取B19,依赖load_difficulty
 phigros.free_handle(handle)                 # 释放handle的内存,不会被垃圾回收,使用完handle请确保释放
 b27 = [] # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
+
+
 for i in range(min(3,len(phi))):
     id = phi[i][1]
     accuary = gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1]
     scr = gameRecords[phi[i][1]][classToNum(phi[i][2])*3]
-    b27.append((id,f'P{i+1}',songname[id],phi[i][0],phi[i][3],accuary,scr,phi[i][2],'00.00%',phi[i][4]))
+    b27.append((id,f'P{i+1}',songname[id],phi[i][0],phi[i][3],accuary,scr,phi[i][2],'推分建议已经被砍了',phi[i][4]))
 for i in range(min(33,len(score))):
     id = score[i][1]
     accuary = gameRecords[score[i][1]][classToNum(score[i][2])*3+1]
     scr = gameRecords[score[i][1]][classToNum(score[i][2])*3]
-    b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'00.00%',score[i][4]))
+    # cnt1 = int(rks*100)/100.0  +0.01
+    # nxt = (cnt1-rks)*30
+    # # nxt = ((cnt1+0.008 if rks-cnt1<0.005 else cnt1+0.018)-rks)*30
+    # target_rks = nxt + score[i][0]
+    # target_acc = pow(target_rks / score[i][3], 1/2) * 45 + 55
+    # print(score[i][0])
+    # print((cnt1+0.005 if rks-cnt1<0.005 else cnt1+0.015),f'{target_rks:f}',target_rks,target_acc,pow((target_acc-55)/45,2)*score[0][3])
+    b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'推分建议已经被砍了' '''f'{round(target_acc,2)}%' if target_acc<=100 else '无法推分' ''',score[i][4]))
+# score[i][2] ->EZ/HD/IN/AT
 createImage(
     
-    a_path=f"illustrationLowRes/{random.choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
+    a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
     output_path="output.png",
     target_size=(1800, 3000),
     blur_radius=55,  # 可根据需要调整虚化程度
     avatar=user['avatar'],
     b27=b27,
     username=nickname,
-    rks=round(summary['rankingScore'],4),
+    rks=round(rks,4),
     challengeModeRank=summary['challengeModeRank'],
     data=data_num,
     updatetime=str(updatetime),
     progress=progress
 )
-# ver 0.03
+# ver 0.04
