@@ -26,7 +26,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pytz
+        pip install dotenv
 
 
     - name: Run main.py
