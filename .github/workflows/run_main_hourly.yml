@@ -27,6 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install dotenv
+        pip install PIL
 
 
     - name: Run main.py
