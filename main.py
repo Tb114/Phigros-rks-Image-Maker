@@ -58,7 +58,7 @@ INFO_BLOCK_COLOR = (57, 197, 187)
 NEXT_COLOR = (196, 228, 164)
 WHITE = (255, 255, 255)
 
-def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data):
+def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime):
     # 初始化基础图像
     original_img = Image.open(a_path).convert('RGB')
     original_width, original_height = original_img.size
@@ -103,6 +103,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
         'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28),
         'data': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
+        'updatetime': ImageFont.truetype("Resource/Saira-Regular.ttf", 22),
     }
        
     # --- 新增：在头像右侧绘制用户名文本框 ---
@@ -131,14 +132,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     username_text_x = username_x + (username_bg_width - username_bbox[2]) // 2
     username_text_y = username_y + (username_bg_height - username_bbox[3]) // 2
 
-    draw.text(
-        (username_text_x, username_text_y),
-        username,
-        fill=WHITE,
-        font=FONT_CONFIG['username']
-    )
+    
     draw = ImageDraw.Draw(final_img)
-    username_font = FONT_CONFIG['username']
     username_x = 64 + ava_round.width + 20
     username_y = 64
     username_bg_width = 600
@@ -154,12 +149,28 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         alpha=150
     )
     draw.text(
-        (username_x + (username_bg_width - username_bbox[2]) // 2, username_y + (username_bg_height - username_bbox[3]) // 2),
+        (username_x + (username_bg_width - username_bbox[2]) // 2, username_y + (username_bg_height - username_bbox[3]) // 2 - 10),
         username,
         fill=WHITE,
-        font=username_font
+        font=FONT_CONFIG['username']
     )
-
+    
+    final_img = add_rounded_rectangle(
+        final_img,
+        (username_x, username_y - 30),
+        (360,30),
+        radius=5,
+        color=(50, 50, 50),
+        alpha=150
+    )
+    draw.text(
+        (username_x + 10, username_y - 30),
+        updatetime[:-7]+' UTC+08:00',
+        fill=WHITE,
+        font=FONT_CONFIG['updatetime']
+    )
+    
+    
     # --- 新增：在用户名下方绘制RKS显示框 ---
     rks_font = FONT_CONFIG['rks']
     rks_text = f"{rks}"
@@ -619,6 +630,7 @@ print('RKS: ', summary['rankingScore'])
 print('GameVersion: ', summary['gameVersion'])
 print('Avatar: ', user['avatar'])
 print('Data: ', end='')
+
 data_num = ''
 if data[4]:   data_num=f'{data[4]}PiB {data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB'
 elif data[3]: data_num=f'{data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB'
@@ -667,6 +679,7 @@ createImage(
     username=nickname,
     rks=round(summary['rankingScore'],4),
     challengeModeRank=summary['challengeModeRank'],
-    data=data_num
+    data=data_num,
+    updatetime=str(updatetime)
 )
-## a
+# ver 0.01
