@@ -2,7 +2,8 @@ name: Run main.py hourly
 
 on:
   schedule:
-    - cron: '0 * * * *'  # 每小时的第0分钟运行
+    - cron: '0 * * * *'
+    - cron: '30 * * * *'
   workflow_dispatch:  # 允许手动触发
 
 jobs:

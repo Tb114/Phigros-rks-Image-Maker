@@ -7,6 +7,15 @@ from random import choice
 import os
 from datetime import datetime, timezone
 from pytz import timezone
+from keyboard import wait
+
+
+def fuck(info : str, errcode : int = 0):
+    print(f"程序已中止(停止代码: {str(errcode).zfill(2)})")
+    print(info)
+    input("按下任意键继续...")
+    sys.exit(1)
+    
 def add_corners(im, rad):
     """将图片裁剪为圆角"""
     circle = Image.new('L', (rad * 2, rad * 2), 0)
@@ -626,12 +635,47 @@ def classToNum(a : str) -> int:
     elif(a == 'AT'): return 3
     return 4
 
-load_dotenv('.env')
+VERSION = '0.05'
+if os.path.exists('.env'):
+    load_dotenv('.env')
+    try:
+        sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
+    except:
+        sessionToken = None
+    if(not sessionToken): 
+        print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
+        sessionToken = None
+        flag1 : bool = True
+        while True:
+            sessionToken : str = input().strip()
+            if(sessionToken == '0'): break
+            if(sessionToken != ''):
+                flag1 = False
+                break
+        if(flag1): sys.exit(0)
+     
+else:
+    print('未检测到.env文件')
+    print('请输入Sessiontoken, 输入0则结束程序')
+    sessionToken = None
+    flag1 : bool = True
+    while True:
+        sessionToken : str = input().strip()
+        if(sessionToken == '0'): break
+        if(sessionToken != ''):
+            flag1 = False
+            break
+    if(flag1): sys.exit(0)   
+    
+try: 
+    sessionToken = sessionToken.encode('utf-8')
+except:
+    pass
 # 重定向print输出到文件
-sys.stdout = open('output.txt', 'w', encoding='utf-8')
+
 if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
 elif(sys.platform.startswith('win32')): phigros = ctypes.CDLL("./phigros-64.dll")
-else: sys.exit(1)
+else: fuck('暂不支持除Linux/Windows外的操作系统',1)
 # print(phigros)
 phigros.get_handle.argtypes = ctypes.c_char_p,
 phigros.get_handle.restype = ctypes.c_void_p
@@ -647,10 +691,12 @@ phigros.get_b19.argtypes = ctypes.c_void_p,
 phigros.get_b19.restype = ctypes.c_char_p
 # phigros.re8.argtypes = ctypes.c_void_p,
 
-sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
+
 handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
 # print(handle)
 nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
+if(nickname == 'ERROR:Could not find user.'):
+    fuck('Sessiontoken错误',4)
 summary = loads(phigros.get_summary(handle).decode('utf-8'))
 savedata = loads(phigros.get_save(handle).decode('utf-8'))
 # print(summary)
@@ -718,9 +764,13 @@ for i in range(min(3,len(phi))):
 rks = rks / 30.0
 
 updatetime = datetime.now().astimezone(timezone('Asia/Shanghai')).replace(tzinfo=None)
-# print(rks)
-# sys.exit(0)
-print(updatetime)
+
+original_stdout = sys.stdout
+sys.stdout = open('result.txt', 'w', encoding='utf-8')
+try:
+    print(updatetime)
+except:
+    fuck('?',2)
 print('Save version: ', summary['saveVersion'])
 print('Challenge mode rank: ', summary['challengeModeRank'])
 print('RKS: ', summary['rankingScore'])
@@ -747,7 +797,7 @@ for i in range(min(33,len(score))):
     print(f'B{i+1} {score[i][1]}, ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],2)}/{diff[score[i][1]][classToNum(score[i][2])]} Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
     if(i == 27):
         print('————OVERFLOW————')
-
+sys.stdout = original_stdout
 # print(rks)
 # print(diff)
 # phigros.load_difficulty(b"../difficulty.tsv")# 读取difficulty.tsv,参数为文件路径
@@ -775,10 +825,15 @@ for i in range(min(33,len(score))):
     # print((cnt1+0.005 if rks-cnt1<0.005 else cnt1+0.015),f'{target_rks:f}',target_rks,target_acc,pow((target_acc-55)/45,2)*score[0][3])
     b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'推分建议已经被砍了' '''f'{round(target_acc,2)}%' if target_acc<=100 else '无法推分' ''',score[i][4]))
 # score[i][2] ->EZ/HD/IN/AT
+filename = f'{str(updatetime).replace(" ", "_").replace(":", "_").replace(".", "_")}'
+if(sys.platform.startswith('linux')): os.system(f'cp ./result.txt ./log/{filename} >/dev/null')
+elif(sys.platform.startswith('win32')): 
+    os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
+
 createImage(
     
     a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
-    output_path="output.png",
+    output_path="result.png",
     target_size=(1800, 3000),
     blur_radius=55,  # 可根据需要调整虚化程度
     avatar=user['avatar'],
@@ -790,4 +845,4 @@ createImage(
     updatetime=str(updatetime),
     progress=progress
 )
-# ver 0.04
+print('成绩图片已输出至result.png, 文字文件已输出至result.txt')
