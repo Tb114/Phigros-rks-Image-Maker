@@ -31,7 +31,7 @@ jobs:
         pip install dotenv
         pip install Pillow
         pip install pytz
-
+        pip install keyboard
 
 
     - name: Run main.py
