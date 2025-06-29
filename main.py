@@ -8,7 +8,7 @@ import os
 from datetime import datetime, timezone
 from pytz import timezone
 from keyboard import wait
-
+VERSION = '0.06'
 
 def fuck(info : str, errcode : int = 0):
     print(f"程序已中止(停止代码: {str(errcode).zfill(2)})")
@@ -94,26 +94,27 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     try:
         ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
     except:
-        print(f"Avatar {avatar} not found, using default")
-        ava = Image.open(f'Resource/noavatar.png').convert('RGBA')
+        fuck('找不到头像png文件, 请检查avatar是否为最新数据',5)
     ava_round = add_corners(ava, 5)
     final_img.paste(ava_round, (64, 64), ava_round)    
      
     # 字体配置
     FONT_CONFIG = {
         'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
-        'difficulty': ImageFont.truetype("Resource/Saira-Regular.ttf", 17),
+        'difficulty': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 17),
         'song_name': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 20),
         'score': ImageFont.truetype("Resource/Saira-Bold.ttf", 32),
         'accuracy': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
         'next': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 16),
         'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
-        'rks': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
+        'rks': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 26),
         'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
         'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28),
         'data': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
-        'updatetime': ImageFont.truetype("Resource/Saira-Regular.ttf", 22),
-        'sheet': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
+        'updatetime': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
+        'sheet': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 26),
+        'version': ImageFont.truetype("Resource/Saira-Regular.ttf", 30),
+        'open-sourced': ImageFont.truetype("Resource/Saira-Regular.ttf", 24),
     }
        
     # --- 新增：在头像右侧绘制用户名文本框 ---
@@ -213,7 +214,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         header_text = headers[col] if col < len(headers) else ""
         text_bbox = draw.textbbox((0, 0), header_text, font=FONT_CONFIG['sheet'])
         draw.text(
-            (cell_x + (cell_width - text_bbox[2])//2, cell_y + (header_height - text_bbox[3])//2),
+            (cell_x + (cell_width - text_bbox[2])//2, cell_y + (header_height - text_bbox[3])//2-3),
             header_text,
             fill=WHITE,
             font=FONT_CONFIG['sheet']
@@ -351,7 +352,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             font=rank_font
         )
     except Exception as e:
-        print(f"Failed to load challenge rank icon: {e}")
+        fuck(f"Failed to load challenge rank icon: {e}")
+        
     data_font = FONT_CONFIG['data']
 
     # 1. 计算数据框宽度（动态调整）
@@ -360,11 +362,11 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     data_icon = data_icon.resize(data_icon_size, Image.LANCZOS)
 
     data_text_width = draw.textlength(data, font=data_font)
-    data_box_width = data_icon_size[0] + 10 + int(data_text_width) + 25  # 图标+间距+文字+边距
+    data_box_width = data_icon_size[0] + 10 + int(data_text_width) + 35  # 图标+间距+文字+边距
     data_box_height = 40  # 与挑战模式图标同高
 
     # 2. 绘制半透明背景（70%透明度）
-    data_box_pos = (icon_x - data_box_width +350, icon_y+10)  # 挑战模式图标左侧-10px
+    data_box_pos = (icon_x - data_box_width +385, icon_y+10)  # 挑战模式图标左侧-10px
     final_img = add_rounded_rectangle(
         final_img,
         data_box_pos,
@@ -394,7 +396,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
 
     # 4. 绘制数据文本（右侧居中）
     data_text_x = data_icon_x + data_icon_size[0] + 15
-    data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2 -5
+    data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2 -7
     draw.text(
         (data_text_x, data_text_y),
         data,
@@ -424,8 +426,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             max_len -= 1
         
         return ellipsis  # 极端情况（max_width极小）
-    OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((1700,75))
-    final_img.paste(OVERFLOW,(35,2350),mask=OVERFLOW)
+    OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA')
+    final_img.paste(OVERFLOW,(50,2350),mask=OVERFLOW)
     # 绘制所有B27元素
     for idx, item in enumerate(b27):
         row = idx // 3
@@ -507,15 +509,16 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         info_block_height = 110
         # 2. 绘制info_block（圆角矩形背景）
         info_pos = (x + b_width + 256, y + (135 - info_block_height)//2)
-        final_img = add_rounded_rectangle(
-            final_img,
-            info_pos,
-            (info_block_width, info_block_height),
-            radius=5,
-            color=INFO_BLOCK_COLOR,
-            alpha=200
-        )
-
+        # final_img = add_rounded_rectangle(
+        #     final_img,
+        #     info_pos,
+        #     (info_block_width, info_block_height),
+        #     radius=5,
+        #     color=INFO_BLOCK_COLOR,
+        #     alpha=200
+        # )
+        info_block = Image.open('Resource/infoblock.png').convert('RGBA').resize((info_block_width,info_block_height))
+        final_img.paste(info_block, (info_pos[0], info_pos[1]), info_block)
         # 3. 计算居中坐标（关键修改）
         def get_centered_x(text, font, box_width):
             """计算文本在指定宽度内的居中x坐标"""
@@ -624,7 +627,24 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         if os.path.exists(icon_path):
             icon = Image.open(icon_path).convert('RGBA').resize((64,64))
             final_img.paste(icon, (info_pos[0], info_pos[1]+40), icon)
-    
+    draw.text(
+        (5, 2950),
+        'Version: '+VERSION,
+        fill=WHITE,
+        font=FONT_CONFIG['version']
+    )
+    draw.text(
+        (1150, 2950),
+        'Phigros rks Image Maker',
+        fill=WHITE,
+        font=FONT_CONFIG['version']
+    )
+    draw.text(
+        (1500, 2960),
+        'open-sourced on Github',
+        fill=WHITE,
+        font=FONT_CONFIG['open-sourced']
+    )
     # 最终保存
     final_img.convert('RGB').save(output_path, format="PNG")
 # 使用示例
@@ -635,7 +655,7 @@ def classToNum(a : str) -> int:
     elif(a == 'AT'): return 3
     return 4
 
-VERSION = '0.05'
+
 if os.path.exists('.env'):
     load_dotenv('.env')
     try:
@@ -791,10 +811,10 @@ print(f'FC  {progress[1][0]: 3d} {progress[1][1]: 3d} {progress[1][2]: 3d} {prog
 print(f'AT  {progress[2][0]: 3d} {progress[2][1]: 3d} {progress[2][2]: 3d} {progress[2][3]: 3d} ')
 print()
 for i in range(min(3,len(phi))):
-    print(f'P{i+1} {phi[i][1]}, ACC: {round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%, RKS: {round(phi[i][0],2)}/{diff[phi[i][1]][classToNum(phi[i][2])]} Score:{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}')
+    print(f'P{i+1} {phi[i][1]}, ACC: {round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%, RKS: {round(phi[i][0],3)}/{diff[phi[i][1]][classToNum(phi[i][2])]} Score:{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}')
 print()
 for i in range(min(33,len(score))):
-    print(f'B{i+1} {score[i][1]}, ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],2)}/{diff[score[i][1]][classToNum(score[i][2])]} Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
+    print(f'B{i+1} {score[i][1]}, ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]} Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
     if(i == 27):
         print('————OVERFLOW————')
 sys.stdout = original_stdout

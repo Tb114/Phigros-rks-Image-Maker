@@ -1,0 +1,50 @@
+2025-06-29 10:12:40.316828
+Save version:  6
+Challenge mode rank:  430
+RKS:  14.930782318115234
+GameVersion:  -127
+Avatar:  Xenolith
+Data: 852MiB 588KiB
+/    EZ   HD   IN   AT
+C    34  104  215  15 
+FC   10  29  37   1 
+AT    4   3   4   0 
+
+P1 BreakOver.Kforest, ACC: 100%, RKS: 14.1/14.1 Score:1000000
+P2 Dlyrotz.Likey, ACC: 100%, RKS: 13.7/13.7 Score:1000000
+P3 AphroditesChildshortver.RUQOA, ACC: 100%, RKS: 13.3/13.3 Score:1000000
+
+B1 DistortedFate.Sakuzyo, ACC: 99.07%, RKS: 15.63/16.3 Score:954348
+B2 DESTRUCTION321.Normal1zervsBrokenNerdz, ACC: 99.03%, RKS: 15.6/16.3 Score:957239
+B3 ComputeItWithSomeDevilishAlcoholicSteampunkEngines.かめりあ, ACC: 99.45%, RKS: 15.42/15.8 Score:995066
+B4 千紫万紅.r0yvsWABI, ACC: 99.68%, RKS: 15.38/15.6 Score:984900
+B5 Retribution.nmyKryexe, ACC: 98.72%, RKS: 15.29/16.2 Score:947968
+B6 暗夜苏醒REANIMATE.Warak, ACC: 99.73%, RKS: 15.21/15.4 Score:996506
+B7 白と黒のバケモノ.テヅカ, ACC: 98.96%, RKS: 15.18/15.9 Score:935539
+B8 Chronostasis.黒皇帝, ACC: 98.8%, RKS: 15.16/16.0 Score:949570
+B9 望影の方舟Six.SeURa, ACC: 98.86%, RKS: 15.11/15.9 Score:932280
+B10 DontNeverAround.HAMA, ACC: 99.43%, RKS: 15.11/15.5 Score:994348
+B11 atruthseekerCommunicationwithUtopiawillbelost.kuro, ACC: 98.96%, RKS: 15.08/15.8 Score:938109
+B12 FracturedAngel.DJRaisei, ACC: 98.26%, RKS: 15.06/16.3 Score:934719
+B13 ReEndofaDream.umavsモリモリあつし, ACC: 98.78%, RKS: 15.05/15.9 Score:938811
+B14 AfterDawn.S9ryne, ACC: 99.54%, RKS: 14.99/15.3 Score:960928
+B15 Rrharil.TeamGrimoire, ACC: 98.42%, RKS: 14.99/16.1 Score:964046
+B16 TECHNOPOLIS2085.PRASTIKDANCEFLOOR, ACC: 98.65%, RKS: 14.96/15.9 Score:956268
+B17 Adastraperaspera.RabbitHouse, ACC: 98.08%, RKS: 14.94/16.3 Score:909278
+B18 CrushBETA.shadow_bling, ACC: 99.61%, RKS: 14.94/15.2 Score:973675
+B19 SIGMA.Kryexe, ACC: 98.73%, RKS: 14.92/15.8 Score:951522
+B20 ChronosCollapseLaCampanella.SunsetRay, ACC: 98.02%, RKS: 14.9/16.3 Score:924293
+B21 ERABYECONNEC10N.かめりあ, ACC: 98.02%, RKS: 14.89/16.3 Score:914043
+B22 青丘.BLACK0, ACC: 99.1%, RKS: 14.89/15.5 Score:959180
+B23 csqn.Aoi, ACC: 98.52%, RKS: 14.87/15.9 Score:938072
+B24 Feast远东之宴.茶鸣拾贰律, ACC: 99%, RKS: 14.82/15.5 Score:955900
+B25 幻影鬼魅PLEASE.R300K, ACC: 99.58%, RKS: 14.82/15.1 Score:996208
+B26 Palescreen.WyvernPfeatMadol, ACC: 98.44%, RKS: 14.82/15.9 Score:925826
+B27 インフェルノシティ.Ponchifeatはぁち, ACC: 98.71%, RKS: 14.81/15.7 Score:924667
+B28 valorstarcross.LundyvsWyvren, ACC: 98.55%, RKS: 14.8/15.8 Score:924358
+————OVERFLOW————
+B29 明鏡烈火.MUEvsRekuMochizuki, ACC: 98.41%, RKS: 14.8/15.9 Score:937032
+B30 LabyrinthinKowloonWalledWorld.かめりあ, ACC: 98.8%, RKS: 14.78/15.6 Score:947435
+B31 Spasmodic.姜米條颶風元力上人, ACC: 98.92%, RKS: 14.77/15.5 Score:964899
+B32 风屿.闫东炜, ACC: 99.44%, RKS: 14.73/15.1 Score:993277
+B33 Cthugha.USAO, ACC: 98.16%, RKS: 14.72/16.0 Score:928871
