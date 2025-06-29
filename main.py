@@ -426,7 +426,13 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             max_len -= 1
         
         return ellipsis  # 极端情况（max_width极小）
-    OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA')
+    try:
+        OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA')
+    except:
+        try:
+            OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA')
+        except Exception as e:
+            fuck(e)
     final_img.paste(OVERFLOW,(50,2350),mask=OVERFLOW)
     # 绘制所有B27元素
     for idx, item in enumerate(b27):
@@ -790,7 +796,7 @@ sys.stdout = open('result.txt', 'w', encoding='utf-8')
 try:
     print(updatetime)
 except:
-    fuck('?',2)
+    fuck('?')
 print('Save version: ', summary['saveVersion'])
 print('Challenge mode rank: ', summary['challengeModeRank'])
 print('RKS: ', summary['rankingScore'])
