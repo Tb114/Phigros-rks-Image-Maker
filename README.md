@@ -2,7 +2,7 @@
 
 本项目是为了部署在本地/云上而制作的查分程序
 
-Written by [Tb](https://github.com/Tb114)  [![](https://img.shields.io/badge/bilibili---Tb__-FF6699)](https://space.bilibili.com/2081603574)
+Written by [![](https://img.shields.io/badge/Github-Tb114-39C5bb)](https://github.com/Tb114)  [![](https://img.shields.io/badge/bilibili---Tb__-FF6699)](https://space.bilibili.com/2081603574)
 
 效果如下
 ![](https://github.com/Tb114/Phigros-rks-Image-Maker/blob/main/result.png?raw=true)
