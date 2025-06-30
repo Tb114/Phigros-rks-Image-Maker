@@ -103,7 +103,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
         'difficulty': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 17),
         'song_name': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 20),
-        'score': ImageFont.truetype("Resource/Saira-Bold.ttf", 32),
+        'score': ImageFont.truetype("Resource/Saira-Regular.ttf", 32),
         'accuracy': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
         'next': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 16),
         'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
@@ -360,13 +360,13 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     data_icon = Image.open("Resource/data.png").convert('RGBA')
     data_icon_size = (30, 30)  # 数据图标大小
     data_icon = data_icon.resize(data_icon_size, Image.LANCZOS)
-
+    
     data_text_width = draw.textlength(data, font=data_font)
     data_box_width = data_icon_size[0] + 10 + int(data_text_width) + 35  # 图标+间距+文字+边距
     data_box_height = 40  # 与挑战模式图标同高
 
     # 2. 绘制半透明背景（70%透明度）
-    data_box_pos = (icon_x - data_box_width +385, icon_y+10)  # 挑战模式图标左侧-10px
+    data_box_pos = (440, icon_y+10)  # 挑战模式图标左侧-10px
     final_img = add_rounded_rectangle(
         final_img,
         data_box_pos,
@@ -454,13 +454,14 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         b_width = 50
         
         b_height = text_bbox[3] - text_bbox[1] + 10
-        
+        color1 = (220,220,220)
+        if(item[1][0]=='P'): color1=(240,235,0)
         final_img = add_rounded_rectangle(
             final_img,
             (x, y),
             (b_width, b_height),
             5,
-            (220,220,220),
+            color1,
             200
         )
         draw.text(
@@ -477,39 +478,39 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             
         song_img = Image.open(img_path).convert('RGB').resize((256, 135))
         final_img.paste(song_img, (x + b_width, y))
-        
+        if(item[0] != 'No Data'):
         # 3. 难度标签（左下角）
-        diff_type = item[7]
-        tag_size = (70, 45)
-        tag_pos = (x + b_width, y + 135 - tag_size[1])  # 左下角位置
-        
-        final_img = add_rounded_rectangle(
-            final_img,
-            tag_pos,
-            tag_size,
-            5,
-            DIFFICULTY_COLORS.get(diff_type, WHITE),
-            200
-        )
-        
-        # 难度文字
-        diff_text = f'{diff_type} {item[4]}\n'+'%.3f'%item[3]
-        text_bbox = draw.textbbox((0,0), diff_text, font=FONT_CONFIG['difficulty'])
-        # draw.text(
-        #     (tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]),
-        #     diff_text,
-        #     fill=WHITE,
-        #     font=FONT_CONFIG['difficulty']
-        # )
-        xx,yy = tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]
-        for line in diff_text.split('\n'):
-            draw.text(
-                (xx, yy),
-                line, 
-                font=FONT_CONFIG['difficulty'], 
-                fill=WHITE
+            diff_type = item[7]
+            tag_size = (70, 45)
+            tag_pos = (x + b_width, y + 135 - tag_size[1])  # 左下角位置
+            
+            final_img = add_rounded_rectangle(
+                final_img,
+                tag_pos,
+                tag_size,
+                5,
+                DIFFICULTY_COLORS.get(diff_type, WHITE),
+                200
             )
-            yy += -2 + int(17*4/3)
+            
+            # 难度文字
+            diff_text = f'{diff_type} {item[4]}\n'+'%.3f'%item[3]
+            text_bbox = draw.textbbox((0,0), diff_text, font=FONT_CONFIG['difficulty'])
+            # draw.text(
+            #     (tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]),
+            #     diff_text,
+            #     fill=WHITE,
+            #     font=FONT_CONFIG['difficulty']
+            # )
+            xx,yy = tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]
+            for line in diff_text.split('\n'):
+                draw.text(
+                    (xx, yy),
+                    line, 
+                    font=FONT_CONFIG['difficulty'], 
+                    fill=WHITE
+                )
+                yy += -2 + int(17*4/3)
         # 1. 定义info_block的尺寸
         info_block_width = 240
         info_block_height = 110
@@ -766,6 +767,15 @@ for i in songid:
     rksContribution[i] = [0.0, 0.0, 0.0, 0.0]
     if not i in gameRecords: continue
     for now in range(4):
+        # if(diff[i][now]>=16.4):
+        #     gameRecords[i]=[1000000,100,1,1000000,100,1,1000000,100,1,1000000,100,1]
+        #     rksContribution[i][now] = diff[i][now]
+        #     progress[0][now]+=1
+        #     progress[1][now]+=1
+        #     progress[2][now]+=1
+        #     score.append((rksContribution[i][now],i,levelToNumMap[now],diff[i][now],True))
+        #     phi.append((rksContribution[i][now],i,levelToNumMap[now],diff[i][now],True))
+        # continue
         rksContribution[i][now] = pow((gameRecords[i][now*3+1]-55.0)/45,2)*diff[i][now] if gameRecords[i][now*3+1] >= 70 else 0
         progress[0][now]+=(gameRecords[i][now*3+1] >= 70)
         progress[1][now]+=bool(gameRecords[i][now*3+2])
@@ -833,12 +843,18 @@ phigros.free_handle(handle)                 # 释放handle的内存,不会被垃
 b27 = [] # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
 
 
-for i in range(min(3,len(phi))):
+for i in range(3):
+    if(i>=len(phi)):
+        phi.append(('No Data',f'B{i+1}','No Data',0,0,0,0,0,'',0))
+        continue
     id = phi[i][1]
     accuary = gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1]
     scr = gameRecords[phi[i][1]][classToNum(phi[i][2])*3]
     b27.append((id,f'P{i+1}',songname[id],phi[i][0],phi[i][3],accuary,scr,phi[i][2],'推分建议已经被砍了',phi[i][4]))
-for i in range(min(33,len(score))):
+for i in range(33):
+    if(i>=len(score)):
+        b27.append(('No Data',f'B{i+1}','No Data',0,0,0,0,0,'',0))
+        continue
     id = score[i][1]
     accuary = gameRecords[score[i][1]][classToNum(score[i][2])*3+1]
     scr = gameRecords[score[i][1]][classToNum(score[i][2])*3]
@@ -850,12 +866,13 @@ for i in range(min(33,len(score))):
     # print(score[i][0])
     # print((cnt1+0.005 if rks-cnt1<0.005 else cnt1+0.015),f'{target_rks:f}',target_rks,target_acc,pow((target_acc-55)/45,2)*score[0][3])
     b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'推分建议已经被砍了' '''f'{round(target_acc,2)}%' if target_acc<=100 else '无法推分' ''',score[i][4]))
+
 # score[i][2] ->EZ/HD/IN/AT
 filename = f'{str(updatetime).replace(" ", "_").replace(":", "_").replace(".", "_")}'
 if(sys.platform.startswith('linux')): os.system(f'cp ./result.txt ./log/{filename} >/dev/null')
 elif(sys.platform.startswith('win32')): 
     os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
-
+    
 createImage(
     
     a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
