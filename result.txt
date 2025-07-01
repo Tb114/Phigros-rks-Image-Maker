@@ -1,50 +1,386 @@
-2025-07-01 21:10:05.566800
-Save version:  6
-Challenge mode rank:  430
+2025-07-01 23:22:54.604678
+课题模式:  430
 RKS:  14.945342063903809
-GameVersion:  -127
-Avatar:  Xenolith
+头像:  Xenolith
 Data: 871MiB 968KiB
-/    EZ   HD   IN   AT
+
+\    EZ   HD   IN   AT
 C    34  104  216  16 
 FC   10  29  37   1 
 AT    4   3   4   0 
 
-P1 BreakOver.Kforest, ACC: 100%, RKS: 14.1/14.1 Score:1000000
-P2 Dlyrotz.Likey, ACC: 100%, RKS: 13.7/13.7 Score:1000000
-P3 AphroditesChildshortver.RUQOA, ACC: 100%, RKS: 13.3/13.3 Score:1000000
+P1 Break Over,  ACC: 100%, RKS: 14.1/14.1, Score:1000000
+P2 Dlyrotz,  ACC: 100%, RKS: 13.7/13.7, Score:1000000
+P3 Aphrodite's Child (short ver.),  ACC: 100%, RKS: 13.3/13.3, Score:1000000
 
-B1 DistortedFate.Sakuzyo, ACC: 99.07%, RKS: 15.632/16.3 Score:954348
-B2 DESTRUCTION321.Normal1zervsBrokenNerdz, ACC: 99.03%, RKS: 15.603/16.3 Score:957239
-B3 ComputeItWithSomeDevilishAlcoholicSteampunkEngines.かめりあ, ACC: 99.45%, RKS: 15.417/15.8 Score:995066
-B4 千紫万紅.r0yvsWABI, ACC: 99.68%, RKS: 15.381/15.6 Score:984900
-B5 Retribution.nmyKryexe, ACC: 98.72%, RKS: 15.291/16.2 Score:947968
-B6 暗夜苏醒REANIMATE.Warak, ACC: 99.73%, RKS: 15.213/15.4 Score:996506
-B7 白と黒のバケモノ.テヅカ, ACC: 98.96%, RKS: 15.176/15.9 Score:935539
-B8 Chronostasis.黒皇帝, ACC: 98.8%, RKS: 15.156/16.0 Score:949570
-B9 祈-我ら神祖と共に歩む者なり-.光吉猛修VS穴山大輔VSKaiVS水野健治VS大国奏音, ACC: 98.21%, RKS: 15.119/16.4 Score:905056
-B10 望影の方舟Six.SeURa, ACC: 98.86%, RKS: 15.108/15.9 Score:932280
-B11 DontNeverAround.HAMA, ACC: 99.43%, RKS: 15.107/15.5 Score:994348
-B12 atruthseekerCommunicationwithUtopiawillbelost.kuro, ACC: 98.96%, RKS: 15.078/15.8 Score:938109
-B13 FracturedAngel.DJRaisei, ACC: 98.26%, RKS: 15.065/16.3 Score:934719
-B14 ReEndofaDream.umavsモリモリあつし, ACC: 98.78%, RKS: 15.048/15.9 Score:938811
-B15 AfterDawn.S9ryne, ACC: 99.54%, RKS: 14.988/15.3 Score:960928
-B16 Rrharil.TeamGrimoire, ACC: 98.42%, RKS: 14.986/16.1 Score:964046
-B17 TECHNOPOLIS2085.PRASTIKDANCEFLOOR, ACC: 98.65%, RKS: 14.958/15.9 Score:956268
-B18 BoundedQuietude.FiniteLimitvsSiLiS, ACC: 98.22%, RKS: 14.946/16.2 Score:935047
-B19 Adastraperaspera.RabbitHouse, ACC: 98.08%, RKS: 14.94/16.3 Score:909278
-B20 CrushBETA.shadow_bling, ACC: 99.61%, RKS: 14.938/15.2 Score:973675
-B21 SIGMA.Kryexe, ACC: 98.73%, RKS: 14.922/15.8 Score:951522
-B22 ChronosCollapseLaCampanella.SunsetRay, ACC: 98.02%, RKS: 14.897/16.3 Score:924293
-B23 ERABYECONNEC10N.かめりあ, ACC: 98.02%, RKS: 14.895/16.3 Score:914043
-B24 青丘.BLACK0, ACC: 99.1%, RKS: 14.888/15.5 Score:959180
-B25 csqn.Aoi, ACC: 98.52%, RKS: 14.87/15.9 Score:949465
-B26 Feast远东之宴.茶鸣拾贰律, ACC: 99%, RKS: 14.819/15.5 Score:955900
-B27 幻影鬼魅PLEASE.R300K, ACC: 99.58%, RKS: 14.819/15.1 Score:996208
-B28 Palescreen.WyvernPfeatMadol, ACC: 98.44%, RKS: 14.818/15.9 Score:925826
+B1 Distorted Fate,  ACC: 99.07%, RKS: 15.632/16.3, Score:954348
+B2 DESTRUCTION 3,2,1,  ACC: 99.03%, RKS: 15.603/16.3, Score:957239
+B3 Compute It With Some Devilish Alcoholic Steampunk Engines,  ACC: 99.45%, RKS: 15.417/15.8, Score:995066
+B4 千紫万紅,  ACC: 99.68%, RKS: 15.381/15.6, Score:984900
+B5 Retribution,  ACC: 98.72%, RKS: 15.291/16.2, Score:947968
+B6 暗夜苏醒 (REANIMATE),  ACC: 99.73%, RKS: 15.213/15.4, Score:996506
+B7 白と黒のバケモノ,  ACC: 98.96%, RKS: 15.176/15.9, Score:935539
+B8 Chronostasis,  ACC: 98.8%, RKS: 15.156/16.0, Score:949570
+B9 祈 -我ら神祖と共に歩む者なり-,  ACC: 98.21%, RKS: 15.119/16.4, Score:905056
+B10 望影の方舟Six,  ACC: 98.86%, RKS: 15.108/15.9, Score:932280
+B11 Don't Never Around,  ACC: 99.43%, RKS: 15.107/15.5, Score:994348
+B12 a truth seeker -Communication with Utopia will be lost-,  ACC: 98.96%, RKS: 15.078/15.8, Score:938109
+B13 Fractured Angel,  ACC: 98.26%, RKS: 15.065/16.3, Score:934719
+B14 Re：End of a Dream,  ACC: 98.78%, RKS: 15.048/15.9, Score:938811
+B15 After Dawn,  ACC: 99.54%, RKS: 14.988/15.3, Score:960928
+B16 Rrhar'il,  ACC: 98.42%, RKS: 14.986/16.1, Score:964046
+B17 TECHNOPOLIS 2085,  ACC: 98.65%, RKS: 14.958/15.9, Score:956268
+B18 Bounded Quietude,  ACC: 98.22%, RKS: 14.946/16.2, Score:935047
+B19 Ad astra per aspera,  ACC: 98.08%, RKS: 14.94/16.3, Score:909278
+B20 Crush BETA,  ACC: 99.61%, RKS: 14.938/15.2, Score:973675
+B21 SIGMA,  ACC: 98.73%, RKS: 14.922/15.8, Score:951522
+B22 Chronos Collapse - La Campanella,  ACC: 98.02%, RKS: 14.897/16.3, Score:924293
+B23 +ERABY+E CONNEC+10N,  ACC: 98.02%, RKS: 14.895/16.3, Score:914043
+B24 青丘,  ACC: 99.1%, RKS: 14.888/15.5, Score:959180
+B25 c.s.q.n.,  ACC: 98.52%, RKS: 14.87/15.9, Score:949465
+B26 Feast远东之宴,  ACC: 99%, RKS: 14.819/15.5, Score:955900
+B27 幻影鬼魅 (PLEASE),  ACC: 99.58%, RKS: 14.819/15.1, Score:996208
+B28 Palescreen,  ACC: 98.44%, RKS: 14.818/15.9, Score:925826
 ————OVERFLOW————
-B29 インフェルノシティ.Ponchifeatはぁち, ACC: 98.71%, RKS: 14.81/15.7 Score:924667
-B30 valorstarcross.LundyvsWyvren, ACC: 98.55%, RKS: 14.798/15.8 Score:924358
-B31 明鏡烈火.MUEvsRekuMochizuki, ACC: 98.41%, RKS: 14.795/15.9 Score:937032
-B32 LabyrinthinKowloonWalledWorld.かめりあ, ACC: 98.8%, RKS: 14.776/15.6 Score:947435
-B33 Spasmodic.姜米條颶風元力上人, ACC: 98.92%, RKS: 14.767/15.5 Score:964899
+B29 インフェルノシティ,  ACC: 98.71%, RKS: 14.81/15.7, Score:924667
+B30 valor/starcross,  ACC: 98.55%, RKS: 14.798/15.8, Score:924358
+B31 明鏡烈火,  ACC: 98.41%, RKS: 14.795/15.9, Score:937032
+B32 Labyrinth in Kowloon: Walled World,  ACC: 98.8%, RKS: 14.776/15.6, Score:947435
+B33 Spasmodic,  ACC: 98.92%, RKS: 14.767/15.5, Score:964899
+B34 风屿,  ACC: 99.44%, RKS: 14.728/15.1, Score:993277
+B35 Cthugha,  ACC: 98.16%, RKS: 14.72/16.0, Score:928871
+B36 双重间谍 (Double Agent),  ACC: 98.55%, RKS: 14.705/15.7, Score:924287
+B37 El Condor Pasa (Phigros Edit),  ACC: 98.67%, RKS: 14.692/15.6, Score:955811
+B38 Stasis,  ACC: 99.09%, RKS: 14.686/15.3, Score:945885
+B39 Schadenfreude,  ACC: 99.23%, RKS: 14.686/15.2, Score:951508
+B40 蝎虎天体 -Lacertid-,  ACC: 98.78%, RKS: 14.668/15.5, Score:952233
+B41 Igallta,  ACC: 97.93%, RKS: 14.654/16.1, Score:941213
+B42 Non-Melodic Ragez (MUG Edit),  ACC: 97.91%, RKS: 14.64/16.1, Score:931725
+B43 Inverted World,  ACC: 98.73%, RKS: 14.639/15.5, Score:938829
+B44 Horizon Blue,  ACC: 98.43%, RKS: 14.625/15.7, Score:981734
+B45 Another Me,  ACC: 98.57%, RKS: 14.623/15.6, Score:944520
+B46 いざ、参ります,  ACC: 99.36%, RKS: 14.575/15.0, Score:986890
+B47 Silence is Golden, Speech is Golden,  ACC: 98.47%, RKS: 14.556/15.6, Score:932797
+B48 Upshift,  ACC: 98.47%, RKS: 14.466/15.5, Score:934138
+B49 Nhelv,  ACC: 98.31%, RKS: 14.448/15.6, Score:918740
+B50 Antithese,  ACC: 98.57%, RKS: 14.44/15.4, Score:923862
+B51 Diamond Dust,  ACC: 98.71%, RKS: 14.433/15.3, Score:940294
+B52 NightTheater,  ACC: 99.7%, RKS: 14.405/14.6, Score:997281
+B53 Ramification,  ACC: 99.39%, RKS: 14.403/14.8, Score:951496
+B54 Chronomia,  ACC: 98.5%, RKS: 14.392/15.4, Score:956991
+B55 聖夜讃歌,  ACC: 98.78%, RKS: 14.389/15.2, Score:931165
+B56 G.V.N. (Glitter,Vomitus and Neon),  ACC: 97.94%, RKS: 14.384/15.8, Score:926334
+B57 青芽,  ACC: 98.87%, RKS: 14.351/15.1, Score:979215
+B58 雪降り、メリクリ,  ACC: 98.44%, RKS: 14.351/15.4, Score:965085
+B59 Temporal Shifting,  ACC: 98.7%, RKS: 14.332/15.2, Score:961470
+B60 Dance with Silence,  ACC: 98.69%, RKS: 14.327/15.2, Score:931920
+B61 大和撫子 -Wild Dances-,  ACC: 98.81%, RKS: 14.31/15.1, Score:931203
+B62 Indelible Scar,  ACC: 98.47%, RKS: 14.274/15.3, Score:929556
+B63 Future Mind,  ACC: 99.96%, RKS: 14.274/14.3, Score:999636
+B64 尊師 ～The Guru～,  ACC: 98.31%, RKS: 14.263/15.4, Score:966870
+B65 Manifold Hypothesis,  ACC: 99.3%, RKS: 14.244/14.7, Score:993665
+B66 Xenolith,  ACC: 99.91%, RKS: 14.244/14.3, Score:999202
+B67 幽世桔梗,  ACC: 99.12%, RKS: 14.229/14.8, Score:936758
+B68 CROSS†SOUL,  ACC: 96.89%, RKS: 14.208/16.4, Score:912502
+B69 贝多芬祝福 (Beethoven Blessing),  ACC: 98.78%, RKS: 14.197/15.0, Score:935559
+B70 Kerberos,  ACC: 97.61%, RKS: 14.168/15.8, Score:962408
+B71 Artificial Existence,  ACC: 99.14%, RKS: 14.146/14.7, Score:945044
+B72 Break Over,  ACC: 100%, RKS: 14.1/14.1, Score:1000000
+B73 Originally,  ACC: 99.17%, RKS: 14.069/14.6, Score:940310
+B74 Ποσειδών,  ACC: 96.91%, RKS: 14.054/16.2, Score:898591
+B75 Lyrith -迷宮リリス-,  ACC: 97.04%, RKS: 14.049/16.1, Score:898504
+B76 ぱぴぷぴぷぴぱ,  ACC: 97.37%, RKS: 14.004/15.8, Score:903628
+B77 iL-Artifact,  ACC: 97.49%, RKS: 14.0/15.7, Score:901529
+B78 HAZARD,  ACC: 98.76%, RKS: 13.995/14.8, Score:970119
+B79 K.Moe (VIP),  ACC: 97.19%, RKS: 13.975/15.9, Score:919594
+B80 energy trixxx,  ACC: 97.87%, RKS: 13.974/15.4, Score:930575
+B81 Triumph & Regret,  ACC: 98.43%, RKS: 13.973/15.0, Score:920799
+B82 Resolver,  ACC: 99.16%, RKS: 13.966/14.5, Score:959043
+B83 月下缭乱,  ACC: 98.54%, RKS: 13.949/14.9, Score:927208
+B84 On And On!!,  ACC: 98.1%, RKS: 13.945/15.2, Score:914488
+B85 月詠に鳴る,  ACC: 99.07%, RKS: 13.909/14.5, Score:955542
+B86 The Mountain Eater,  ACC: 98.76%, RKS: 13.9/14.7, Score:964211
+B87 Protoflicker,  ACC: 97.74%, RKS: 13.894/15.4, Score:907351
+B88 重生,  ACC: 99.12%, RKS: 13.84/14.4, Score:976161
+B89 混乱-Confusion,  ACC: 98.47%, RKS: 13.808/14.8, Score:975256
+B90 NO ONE YES MAN,  ACC: 97.45%, RKS: 13.791/15.5, Score:929982
+B91 ATHAZA,  ACC: 97.17%, RKS: 13.786/15.7, Score:903712
+B92 ジングルベル(Jingle Bell),  ACC: 98.87%, RKS: 13.783/14.5, Score:978810
+B93 [PRAW],  ACC: 97.98%, RKS: 13.775/15.1, Score:928886
+B94 Radiance,  ACC: 99.63%, RKS: 13.772/14.0, Score:996694
+B95 ENERGY SYNERGY MATRIX,  ACC: 98.99%, RKS: 13.763/14.4, Score:978940
+B96 君往何处 (Quo Vadis),  ACC: 99.3%, RKS: 13.761/14.2, Score:968134
+B97 The Chariot ~REVIIVAL~,  ACC: 99.59%, RKS: 13.745/14.0, Score:996254
+B98 Dlyrotz,  ACC: 100%, RKS: 13.7/13.7, Score:1000000
+B99 FULi AUTO BUSTER,  ACC: 98.58%, RKS: 13.695/14.6, Score:984563
+B100 Concvssion,  ACC: 97.12%, RKS: 13.667/15.6, Score:937880
+B101 Poison AND÷OR Affection,  ACC: 96.95%, RKS: 13.643/15.7, Score:913074
+B102 风屿,  ACC: 99.41%, RKS: 13.636/14.0, Score:980087
+B103 Freaky Undulations ~Noble Knights of Tune~,  ACC: 97.47%, RKS: 13.628/15.3, Score:908451
+B104 RESSiSTANCE,  ACC: 96.39%, RKS: 13.62/16.1, Score:895473
+B105 开心病,  ACC: 99.67%, RKS: 13.596/13.8, Score:997000
+B106 GOODFORTUNE,  ACC: 96.85%, RKS: 13.579/15.7, Score:901518
+B107 TECHNOPOLIS 2085,  ACC: 99.15%, RKS: 13.574/14.1, Score:991933
+B108 PRAGMATISM -RESURRECTION-,  ACC: 96.45%, RKS: 13.573/16.0, Score:894244
+B109 Reimei,  ACC: 97.64%, RKS: 13.561/15.1, Score:952762
+B110 狂喜蘭舞,  ACC: 98.81%, RKS: 13.555/14.3, Score:976498
+B111 Spasmodic,  ACC: 95.54%, RKS: 13.553/16.7, Score:879955
+B112 宇宙残骸少女 (Cosmic Dusty Girl),  ACC: 99.7%, RKS: 13.516/13.7, Score:997265
+B113 Aleph-0,  ACC: 96.31%, RKS: 13.48/16.0, Score:914090
+B114 life flashes before weeb eyes,  ACC: 97.75%, RKS: 13.448/14.9, Score:931592
+B115 Quantum Hyperspace,  ACC: 97.6%, RKS: 13.444/15.0, Score:933705
+B116 Find_Me,  ACC: 98.63%, RKS: 13.443/14.3, Score:962913
+B117 996,  ACC: 98.02%, RKS: 13.433/14.7, Score:940788
+B118 Der Richter,  ACC: 96.75%, RKS: 13.43/15.6, Score:904291
+B119 FULi AUTO SHOOTER,  ACC: 97.65%, RKS: 13.385/14.9, Score:940427
+B120 MARENOL,  ACC: 99.15%, RKS: 13.38/13.9, Score:940980
+B121 bye,  ACC: 97.77%, RKS: 13.371/14.8, Score:962572
+B122 Khronostasis Katharsis,  ACC: 98.95%, RKS: 13.354/14.0, Score:979274
+B123 Winter ↑cube↓,  ACC: 99.9%, RKS: 13.343/13.4, Score:999141
+B124 Luminous Entities Lost Heart,  ACC: 97.15%, RKS: 13.334/15.2, Score:912648
+B125 Cthugha,  ACC: 95.94%, RKS: 13.325/16.1, Score:885717
+B126 WATER,  ACC: 99.51%, RKS: 13.305/13.6, Score:995591
+B127 Aphrodite's Child (short ver.),  ACC: 100%, RKS: 13.3/13.3, Score:1000000
+B128 INFiNiTE ENERZY -Overdoze-,  ACC: 97.62%, RKS: 13.278/14.8, Score:932894
+B129 Snow Desert,  ACC: 99.79%, RKS: 13.273/13.4, Score:998076
+B130 Swing Skip Drop,  ACC: 96.62%, RKS: 13.257/15.5, Score:917871
+B131 Final Step!,  ACC: 98.61%, RKS: 13.242/14.1, Score:987481
+B132 Pont des souvenirs,  ACC: 96.86%, RKS: 13.238/15.3, Score:920506
+B133 零號車輛,  ACC: 95.65%, RKS: 13.219/16.2, Score:880198
+B134 Starduster,  ACC: 96.95%, RKS: 13.206/15.2, Score:913924
+B135 inferior,  ACC: 97.77%, RKS: 13.188/14.6, Score:910378
+B136 Break Through The Barrier,  ACC: 97.91%, RKS: 13.183/14.5, Score:922826
+B137 Thrash force,  ACC: 96.77%, RKS: 13.183/15.3, Score:908603
+B138 Cereris,  ACC: 97.59%, RKS: 13.167/14.7, Score:932533
+B139 游园地,  ACC: 99.93%, RKS: 13.157/13.2, Score:999345
+B140 Ark,  ACC: 97.09%, RKS: 13.121/15.0, Score:909731
+B141 NO x,  ACC: 95.62%, RKS: 13.12/16.1, Score:882857
+B142 Secret Illumination,  ACC: 97.65%, RKS: 13.113/14.6, Score:905239
+B143 RIPPER,  ACC: 96.66%, RKS: 13.111/15.3, Score:898158
+B144 Disorder,  ACC: 97.33%, RKS: 13.097/14.8, Score:912037
+B145 Miracle Forest (VIP Mix),  ACC: 99.96%, RKS: 13.076/13.1, Score:999625
+B146 Cipher : /2&//<|0,  ACC: 97.87%, RKS: 13.07/14.4, Score:925135
+B147 GOODTEK,  ACC: 98.09%, RKS: 13.022/14.2, Score:936100
+B148 A journey to the moonlight,  ACC: 97.63%, RKS: 13.014/14.5, Score:897531
+B149 You are the Miserable,  ACC: 98.22%, RKS: 13.006/14.1, Score:935487
+B150 黄金之城 (GOLD TOWN),  ACC: 97.3%, RKS: 12.992/14.7, Score:948203
+B151 Nick of Time,  ACC: 97.3%, RKS: 12.986/14.7, Score:915658
+B152 Apocalypse,  ACC: 99.07%, RKS: 12.947/13.5, Score:991612
+B153 Re_Nascence (Psystyle Ver.) ,  ACC: 97.82%, RKS: 12.946/14.3, Score:927394
+B154 Shadow,  ACC: 97.43%, RKS: 12.894/14.5, Score:935804
+B155 ストレイソウル・アラウンド,  ACC: 97.88%, RKS: 12.894/14.2, Score:907682
+B156 End Me,  ACC: 98.02%, RKS: 12.885/14.1, Score:921112
+B157 Cuvism³,  ACC: 98.33%, RKS: 12.885/13.9, Score:964807
+B158 S.A.T.E.L.L.I.T.E.,  ACC: 97.71%, RKS: 12.881/14.3, Score:932670
+B159 cryout,  ACC: 98.78%, RKS: 12.871/13.6, Score:988055
+B160 MOBILYS,  ACC: 97.69%, RKS: 12.871/14.3, Score:967761
+B161 Alice in a xxxxxxxx,  ACC: 95.68%, RKS: 12.829/15.7, Score:896676
+B162 ニライカナイ (NiraicA_nai Mix),  ACC: 98.83%, RKS: 12.808/13.5, Score:933169
+B163 Spotlight,  ACC: 97.43%, RKS: 12.804/14.4, Score:925154
+B164 桜樹街道,  ACC: 99.62%, RKS: 12.781/13.0, Score:996569
+B165 Class Memories,  ACC: 98.1%, RKS: 12.661/13.8, Score:932676
+B166 JunXion Between Life And Death(VIP Mix),  ACC: 98.69%, RKS: 12.632/13.4, Score:988220
+B167 Chronologika,  ACC: 98.04%, RKS: 12.625/13.8, Score:954923
+B168 KIZUNA Resolution,  ACC: 98.6%, RKS: 12.58/13.4, Score:978823
+B169 萤火虫の怨,  ACC: 99.22%, RKS: 12.553/13.0, Score:942249
+B170 Luminescence,  ACC: 96.78%, RKS: 12.501/14.5, Score:900228
+B171 AbsoluTe disoRdeR,  ACC: 94.52%, RKS: 12.494/16.2, Score:866856
+B172 Bonus Time,  ACC: 97.79%, RKS: 12.476/13.8, Score:930733
+B173 mechanted,  ACC: 96.17%, RKS: 12.472/14.9, Score:919766
+B174 心の記憶,  ACC: 98.53%, RKS: 12.447/13.3, Score:965149
+B175 Trojan,  ACC: 95.97%, RKS: 12.431/15.0, Score:892502
+B176 光,  ACC: 100%, RKS: 12.4/12.4, Score:1000000
+B177 祈 -我ら神祖と共に歩む者なり-,  ACC: 98.6%, RKS: 12.392/13.2, Score:909726
+B178 volcanic,  ACC: 96.3%, RKS: 12.381/14.7, Score:886384
+B179 Infinity Heaven,  ACC: 97.44%, RKS: 12.366/13.9, Score:902945
+B180 Journey with You,  ACC: 97.68%, RKS: 12.323/13.7, Score:908283
+B181 Clock Paradox,  ACC: 99.66%, RKS: 12.314/12.5, Score:996971
+B182 ATHAZA,  ACC: 98.97%, RKS: 12.314/12.9, Score:936156
+B183 DevIAtiOn (short ver.),  ACC: 94.94%, RKS: 12.287/15.6, Score:871983
+B184 Rrhar'il,  ACC: 99.16%, RKS: 12.233/12.7, Score:928193
+B185 Another Me,  ACC: 97.68%, RKS: 12.232/13.6, Score:955514
+B186 盏茗,  ACC: 98.15%, RKS: 12.23/13.3, Score:964242
+B187 Random,  ACC: 96.01%, RKS: 12.211/14.7, Score:889893
+B188 今天不是明天,  ACC: 97.91%, RKS: 12.183/13.4, Score:937141
+B189 もぺもぺ,  ACC: 94.97%, RKS: 12.147/15.4, Score:896736
+B190 GOODWORLD,  ACC: 95.55%, RKS: 12.097/14.9, Score:908672
+B191 DESTRUCTION 3,2,1,  ACC: 92.54%, RKS: 12.039/17.3, Score:845981
+B192 Engine x Start!! (melody mix),  ACC: 98.3%, RKS: 12.038/13.0, Score:984723
+B193 dB doll,  ACC: 97.31%, RKS: 12.021/13.6, Score:975769
+B194 opia,  ACC: 94.49%, RKS: 12.013/15.6, Score:877768
+B195 Better Graphic Animation,  ACC: 94.85%, RKS: 11.996/15.3, Score:892086
+B196 AbsoluTe disoRdeR,  ACC: 99.34%, RKS: 11.939/12.3, Score:972605
+B197 Re：End of a Dream,  ACC: 98.09%, RKS: 11.92/13.0, Score:926969
+B198 XING,  ACC: 96.67%, RKS: 11.917/13.9, Score:917820
+B199 Time to Night Sky (feat. Lee Yu Jin),  ACC: 97.12%, RKS: 11.915/13.6, Score:924269
+B200 Khalid,  ACC: 97.92%, RKS: 11.915/13.1, Score:953510
+B201 PANIC PARADISE,  ACC: 94.51%, RKS: 11.873/15.4, Score:882276
+B202 micro.wav,  ACC: 95.42%, RKS: 11.858/14.7, Score:905431
+B203 Leave All Behind,  ACC: 98.46%, RKS: 11.846/12.7, Score:986147
+B204 ぱぴぷぴぷぴぱ,  ACC: 99.09%, RKS: 11.809/12.3, Score:942155
+B205 GOODBOUNCE,  ACC: 95.73%, RKS: 11.8/14.4, Score:895134
+B206 Chronos Collapse - La Campanella,  ACC: 99.06%, RKS: 11.793/12.3, Score:976552
+B207 零號車輛,  ACC: 99.42%, RKS: 11.792/12.1, Score:940558
+B208 Get Ready!! ,  ACC: 96.74%, RKS: 11.787/13.7, Score:915714
+B209 HumaN,  ACC: 97.99%, RKS: 11.772/12.9, Score:979359
+B210 Pixel Rebelz,  ACC: 94.46%, RKS: 11.767/15.3, Score:883008
+B211 DESTRUCTION 3,2,1,  ACC: 97.65%, RKS: 11.766/13.1, Score:906072
+B212 暗夜苏醒 (REANIMATE),  ACC: 97.96%, RKS: 11.667/12.8, Score:915873
+B213 Le temps perdu,  ACC: 98.45%, RKS: 11.655/12.5, Score:971748
+B214 Indelible Scar,  ACC: 92.79%, RKS: 11.638/16.5, Score:847473
+B215 Demonkin,  ACC: 96.31%, RKS: 11.632/13.8, Score:910983
+B216 Crave Wave,  ACC: 96.42%, RKS: 11.608/13.7, Score:900778
+B217 Glaciaxion,  ACC: 98.16%, RKS: 11.592/12.6, Score:942579
+B218 Ad astra per aspera,  ACC: 99.01%, RKS: 11.573/12.1, Score:964356
+B219 -SURREALISM-,  ACC: 96.78%, RKS: 11.55/13.4, Score:922970
+B220 インマイマインド,  ACC: 98.75%, RKS: 11.534/12.2, Score:988790
+B221 PANIC PARADISE,  ACC: 99.74%, RKS: 11.366/11.5, Score:997636
+B222 狂喜蘭舞,  ACC: 92.44%, RKS: 11.351/16.4, Score:852166
+B223 Credits,  ACC: 96.07%, RKS: 11.331/13.6, Score:920000
+B224 Initialize,  ACC: 99.46%, RKS: 11.322/11.6, Score:995120
+B225 Don't Never Around,  ACC: 100%, RKS: 11.3/11.3, Score:1000000
+B226 Distorted Fate,  ACC: 96.15%, RKS: 11.289/13.5, Score:891222
+B227 El último baile,  ACC: 95.26%, RKS: 11.287/14.1, Score:887361
+B228 Eradication Catastrophe,  ACC: 97.4%, RKS: 11.276/12.7, Score:935481
+B229 Igallta,  ACC: 98.22%, RKS: 11.254/12.2, Score:922762
+B230 千紫万紅,  ACC: 98.32%, RKS: 11.216/12.1, Score:923434
+B231 Colorful Days♪,  ACC: 97.26%, RKS: 11.201/12.7, Score:969816
+B232 Indelible Scar,  ACC: 99.39%, RKS: 11.188/11.5, Score:974966
+B233 Ποσειδών,  ACC: 97.04%, RKS: 11.174/12.8, Score:920511
+B234 尊師 ～The Guru～,  ACC: 99.07%, RKS: 11.126/11.6, Score:991637
+B235 a truth seeker -Communication with Utopia will be lost-,  ACC: 97.62%, RKS: 11.124/12.4, Score:928144
+B236 Demiurge,  ACC: 98.65%, RKS: 11.105/11.8, Score:987885
+B237 NYA!!! (Phigros ver.),  ACC: 96.43%, RKS: 11.102/13.1, Score:967838
+B238 Rubbish Sorting,  ACC: 96.23%, RKS: 11.082/13.2, Score:937211
+B239 望影の方舟Six,  ACC: 98.42%, RKS: 11.08/11.9, Score:925342
+B240 月詠に鳴る,  ACC: 92.8%, RKS: 11.077/15.7, Score:848619
+B241 心之所向,  ACC: 95.58%, RKS: 11.061/13.6, Score:893478
+B242 神話,  ACC: 95.67%, RKS: 11.029/13.5, Score:892898
+B243 双重间谍 (Double Agent),  ACC: 98.43%, RKS: 10.993/11.8, Score:985915
+B244 Der Richter,  ACC: 99.1%, RKS: 10.947/11.4, Score:953504
+B245 INFiNiTE ENERZY -Overdoze-,  ACC: 97.42%, RKS: 10.933/12.3, Score:976824
+B246 c.s.q.n.,  ACC: 97.57%, RKS: 10.918/12.2, Score:926470
+B247 Re_Nascence (Psystyle Ver.) ,  ACC: 98.26%, RKS: 10.814/11.7, Score:928164
+B248 Chronomia,  ACC: 99.37%, RKS: 10.79/11.1, Score:994299
+B249 Lyrith -迷宮リリス-,  ACC: 99.35%, RKS: 10.782/11.1, Score:994150
+B250 DevIAtiOn (short ver.),  ACC: 99.29%, RKS: 10.751/11.1, Score:961657
+B251 Break Over,  ACC: 93.16%, RKS: 10.713/14.9, Score:863509
+B252 もぺもぺ,  ACC: 98.99%, RKS: 10.609/11.1, Score:958896
+B253 Reimei,  ACC: 97.8%, RKS: 10.585/11.7, Score:922461
+B254 +ERABY+E CONNEC+10N,  ACC: 97.91%, RKS: 10.55/11.6, Score:930570
+B255 明鏡烈火,  ACC: 98.46%, RKS: 10.541/11.3, Score:985283
+B256 Sultan Rage,  ACC: 96.62%, RKS: 10.521/12.3, Score:898845
+B257 Luminescence,  ACC: 98.99%, RKS: 10.512/11.0, Score:980472
+B258 Spasmodic,  ACC: 94.98%, RKS: 10.497/13.3, Score:918407
+B259 Non-Melodic Ragez (MUG Edit),  ACC: 97.77%, RKS: 10.479/11.6, Score:946452
+B260 Dance with Silence,  ACC: 99.06%, RKS: 10.448/10.9, Score:950217
+B261 A journey to the moonlight,  ACC: 99.43%, RKS: 10.432/10.7, Score:994892
+B262 ENERGY SYNERGY MATRIX,  ACC: 97.8%, RKS: 10.404/11.5, Score:931940
+B263 Final Step!,  ACC: 98.74%, RKS: 10.393/11.0, Score:944801
+B264 Inverted World,  ACC: 98.35%, RKS: 10.392/11.2, Score:985122
+B265 NO ONE YES MAN,  ACC: 98.93%, RKS: 10.388/10.9, Score:963734
+B266 Labyrinth in Kowloon: Walled World,  ACC: 98.52%, RKS: 10.383/11.1, Score:943833
+B267 Antithese,  ACC: 90.7%, RKS: 10.322/16.4, Score:830300
+B268 Credits,  ACC: 91.38%, RKS: 10.261/15.7, Score:851254
+B269 Compute It With Some Devilish Alcoholic Steampunk Engines,  ACC: 99.27%, RKS: 10.261/10.6, Score:993465
+B270 Quantum Hyperspace,  ACC: 98.07%, RKS: 10.26/11.2, Score:927310
+B271 Class Memories,  ACC: 98.79%, RKS: 10.229/10.8, Score:976304
+B272 GOODRAGE,  ACC: 90.69%, RKS: 10.065/16.0, Score:830150
+B273 蝎虎天体 -Lacertid-,  ACC: 98.62%, RKS: 10.056/10.7, Score:948356
+B274 Trojan,  ACC: 98.4%, RKS: 10.046/10.8, Score:943097
+B275 Temporal Shifting,  ACC: 97.05%, RKS: 10.043/11.5, Score:917570
+B276 GOODTEK,  ACC: 99.94%, RKS: 9.974/10.0, Score:999483
+B277 Freaky Undulations ~Noble Knights of Tune~,  ACC: 97.98%, RKS: 9.943/10.9, Score:924646
+B278 NO x,  ACC: 99.15%, RKS: 9.915/10.3, Score:992350
+B279 Cipher : /2&//<|0,  ACC: 99.12%, RKS: 9.902/10.3, Score:972019
+B280 Retribution,  ACC: 96.28%, RKS: 9.764/11.6, Score:920017
+B281 Cereris,  ACC: 97.56%, RKS: 9.75/10.9, Score:924265
+B282 幻影鬼魅 (PLEASE),  ACC: 100%, RKS: 9.6/9.6, Score:1000000
+B283 The Mountain Eater,  ACC: 100%, RKS: 9.6/9.6, Score:1000000
+B284 黄金之城 (GOLD TOWN),  ACC: 98.65%, RKS: 9.598/10.2, Score:965074
+B285 KIZUNA Resolution,  ACC: 89.28%, RKS: 9.519/16.4, Score:825876
+B286 RESSiSTANCE,  ACC: 96.47%, RKS: 9.509/11.2, Score:897487
+B287 Another Me,  ACC: 99.31%, RKS: 9.504/9.8, Score:993832
+B288 Cthugha,  ACC: 97.96%, RKS: 9.476/10.4, Score:953910
+B289 ストレイソウル・アラウンド,  ACC: 99.15%, RKS: 9.432/9.8, Score:973385
+B290 After Dawn,  ACC: 97.83%, RKS: 9.423/10.4, Score:928211
+B291 micro.wav,  ACC: 97.57%, RKS: 9.397/10.5, Score:942625
+B292 iL-Artifact,  ACC: 97.5%, RKS: 9.365/10.5, Score:910557
+B293 混乱-Confusion,  ACC: 98.28%, RKS: 9.252/10.0, Score:938536
+B294 雪降り、メリクリ,  ACC: 96.26%, RKS: 9.08/10.8, Score:923953
+B295 Bonus Time,  ACC: 98.99%, RKS: 9.079/9.5, Score:979284
+B296 Credits,  ACC: 96.87%, RKS: 9.005/10.4, Score:922000
+B297 cryout,  ACC: 97.84%, RKS: 8.971/9.9, Score:952259
+B298 [PRAW],  ACC: 96.39%, RKS: 8.968/10.6, Score:920739
+B299 Artificial Existence,  ACC: 99.12%, RKS: 8.942/9.3, Score:992125
+B300 The Chariot ~REVIIVAL~,  ACC: 99.68%, RKS: 8.873/9.0, Score:997136
+B301 Chronologika,  ACC: 97.63%, RKS: 8.796/9.8, Score:974956
+B302 XING,  ACC: 97.29%, RKS: 8.744/9.9, Score:921618
+B303 MOBILYS,  ACC: 98.57%, RKS: 8.717/9.3, Score:941245
+B304 -SURREALISM-,  ACC: 98.32%, RKS: 8.711/9.4, Score:946340
+B305 FULi AUTO SHOOTER,  ACC: 99.19%, RKS: 8.679/9.0, Score:992712
+B306 Nick of Time,  ACC: 98.38%, RKS: 8.642/9.3, Score:939965
+B307 Dlyrotz,  ACC: 98.85%, RKS: 8.642/9.1, Score:989683
+B308 いざ、参ります,  ACC: 98.58%, RKS: 8.63/9.2, Score:970918
+B309 Leave All Behind,  ACC: 99.29%, RKS: 8.621/8.9, Score:993604
+B310 Demonkin,  ACC: 98.07%, RKS: 8.428/9.2, Score:925127
+B311 Ark,  ACC: 97.36%, RKS: 8.419/9.5, Score:920421
+B312 GOODFORTUNE,  ACC: 99.19%, RKS: 8.389/8.7, Score:992694
+B313 WATER,  ACC: 97.49%, RKS: 8.38/9.4, Score:910832
+B314 Rrhar'il,  ACC: 85.91%, RKS: 8.303/17.6, Score:780169
+B315 重生,  ACC: 98.57%, RKS: 8.249/8.8, Score:960815
+B316 Engine x Start!! (melody mix),  ACC: 99.27%, RKS: 8.033/8.3, Score:993438
+B317 JunXion Between Life And Death(VIP Mix),  ACC: 98.22%, RKS: 8.026/8.7, Score:932049
+B318 Pixel Rebelz,  ACC: 95.91%, RKS: 8.017/9.7, Score:934485
+B319 Xenolith,  ACC: 98.65%, RKS: 7.997/8.5, Score:983527
+B320 Khalid,  ACC: 99.31%, RKS: 7.951/8.2, Score:993806
+B321 Crave Wave,  ACC: 99.29%, RKS: 7.751/8.0, Score:993636
+B322 Winter ↑cube↓,  ACC: 97.88%, RKS: 7.447/8.2, Score:951782
+B323 NYA!!! (Phigros ver.),  ACC: 96.66%, RKS: 7.37/8.6, Score:962453
+B324 Eradication Catastrophe,  ACC: 99.47%, RKS: 7.326/7.5, Score:995275
+B325 dB doll,  ACC: 97.22%, RKS: 7.305/8.3, Score:948354
+B326 Igallta,  ACC: 84.09%, RKS: 7.273/17.4, Score:764291
+B327 Demiurge,  ACC: 99.24%, RKS: 7.247/7.5, Score:985708
+B328 Spasmodic,  ACC: 97.19%, RKS: 7.208/8.2, Score:907834
+B329 光,  ACC: 99.11%, RKS: 7.207/7.5, Score:992000
+B330 Distorted Fate,  ACC: 97.39%, RKS: 7.188/8.1, Score:928199
+B331 HumaN,  ACC: 97.48%, RKS: 7.128/8.0, Score:977297
+B332 Re：End of a Dream,  ACC: 98.85%, RKS: 7.121/7.5, Score:951152
+B333 Ποσειδών,  ACC: 96.3%, RKS: 7.075/8.4, Score:966675
+B334 Miracle Forest (VIP Mix),  ACC: 98.36%, RKS: 6.964/7.5, Score:971945
+B335 瓷岁,  ACC: 98.86%, RKS: 6.651/7.0, Score:966206
+B336 Igallta,  ACC: 97.28%, RKS: 6.622/7.5, Score:903804
+B337 Sultan Rage,  ACC: 98.65%, RKS: 6.587/7.0, Score:959431
+B338 Reimei,  ACC: 98.92%, RKS: 6.193/6.5, Score:990308
+B339 Glaciaxion,  ACC: 98.75%, RKS: 6.145/6.5, Score:988779
+B340 PANIC PARADISE,  ACC: 98.6%, RKS: 6.101/6.5, Score:962030
+B341 尊師 ～The Guru～,  ACC: 99.82%, RKS: 5.952/6.0, Score:998368
+B342 Cthugha,  ACC: 99.37%, RKS: 5.832/6.0, Score:947989
+B343 Freaky Undulations ~Noble Knights of Tune~,  ACC: 96.06%, RKS: 5.828/7.0, Score:934418
+B344 Quantum Hyperspace,  ACC: 99.14%, RKS: 5.773/6.0, Score:943973
+B345 望影の方舟Six,  ACC: 96.91%, RKS: 5.639/6.5, Score:903267
+B346 Class Memories,  ACC: 98.07%, RKS: 5.495/6.0, Score:946718
+B347 Clock Paradox,  ACC: 97.28%, RKS: 5.295/6.0, Score:920673
+B348 Final Step!,  ACC: 98.86%, RKS: 5.225/5.5, Score:953394
+B349 XING,  ACC: 98.76%, RKS: 5.201/5.5, Score:988823
+B350 Colorful Days♪,  ACC: 93.2%, RKS: 5.044/7.0, Score:929113
+B351 Cereris,  ACC: 97.77%, RKS: 4.967/5.5, Score:926622
+B352 [PRAW],  ACC: 95.9%, RKS: 4.955/6.0, Score:894540
+B353 ENERGY SYNERGY MATRIX,  ACC: 97.34%, RKS: 4.87/5.5, Score:947656
+B354 -SURREALISM-,  ACC: 98.58%, RKS: 4.689/5.0, Score:933965
+B355 Non-Melodic Ragez (MUG Edit),  ACC: 96.46%, RKS: 4.668/5.5, Score:904409
+B356 Cipher : /2&//<|0,  ACC: 98.45%, RKS: 4.662/5.0, Score:951920
+B357 Pixel Rebelz,  ACC: 99.4%, RKS: 4.381/4.5, Score:965860
+B358 Khalid,  ACC: 99.08%, RKS: 3.838/4.0, Score:991711
+B359 DESTRUCTION 3,2,1,  ACC: 85.19%, RKS: 3.827/8.5, Score:777401
+B360 Dlyrotz,  ACC: 98.22%, RKS: 3.689/4.0, Score:945754
+B361 Sultan Rage,  ACC: 97.83%, RKS: 3.624/4.0, Score:971667
+B362 Bonus Time,  ACC: 100%, RKS: 3.5/3.5, Score:1000000
+B363 混乱-Confusion,  ACC: 96.91%, RKS: 3.47/4.0, Score:931458
+B364 Winter ↑cube↓,  ACC: 99.77%, RKS: 3.465/3.5, Score:997941
+B365 Credits,  ACC: 94.18%, RKS: 3.41/4.5, Score:900771
+B366 Eradication Catastrophe,  ACC: 98.29%, RKS: 3.239/3.5, Score:963591
+B367 Engine x Start!! (melody mix),  ACC: 100%, RKS: 2.5/2.5, Score:1000000
+B368 dB doll,  ACC: 99.42%, RKS: 1.461/1.5, Score:994750
+B369 Originally,  ACC: 100%, RKS: 1.0/1.0, Score:1000000
+B370 Glaciaxion,  ACC: 100%, RKS: 1.0/1.0, Score:1000000

@@ -64,7 +64,6 @@ DIFFICULTY_COLORS = {
 }
 
 INFO_BLOCK_COLOR = (57, 197, 187)
-NEXT_COLOR = (196, 228, 164)
 WHITE = (255, 255, 255)
 
 def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress):
@@ -93,8 +92,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     ava=''
     try:
         ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
-    except:
-        fuck('找不到头像png文件, 请检查avatar是否为最新数据',5)
+    except Exception as e:
+        fuck(f'找不到头像png文件, 请检查avatar是否为最新数据:{e}',5)
     ava_round = add_corners(ava, 5)
     final_img.paste(ava_round, (64, 64), ava_round)    
      
@@ -109,7 +108,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48),
         'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
         'song_name_bigger': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
-        'challenge_rank': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 28),
+        'challenge_rank': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
         'data': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
         'updatetime': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 22),
         'sheet': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
@@ -191,7 +190,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         alpha=150
     )
     draw.text(
-        (username_x + 10, username_y - 30),
+        (username_x + 10, username_y - 33),
         'Updated at: '+updatetime[:-7]+' UTC+08:00',
         fill=WHITE,
         font=FONT_CONFIG['updatetime']
@@ -325,7 +324,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     
     # 绘制RKS文本（居中）
     draw.text(
-        (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2 - 5),
+        (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2 - 3),
         rks_text,
         fill=(0, 0, 0),  # 黑色文字
         font=rks_font
@@ -348,12 +347,12 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     # 加载并调整图标大小
     try:
         icon = Image.open(icon_path).convert('RGBA')
-        icon_size = (100, 60)  # 保持与RKS框相同高度
+        icon_size = (90, 50)  # 保持与RKS框相同高度
         icon = icon.resize(icon_size, Image.LANCZOS)
         
         # 图标位置（RKS框右侧+10px间距）
         icon_x = rks_x + rks_bg_width + 10
-        icon_y = rks_y-10
+        icon_y = rks_y
         
         # 粘贴图标
         final_img.paste(icon, (icon_x, icon_y), icon)
@@ -364,7 +363,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         
         draw.text(
             (icon_x + (icon_size[0] - rank_bbox[2]) // 2, 
-            icon_y + (icon_size[1] - rank_bbox[3]) // 2-7),
+            icon_y + (icon_size[1] - rank_bbox[3]) // 2-12),
             str(rank_number),
             fill=WHITE,
             font=rank_font
@@ -384,7 +383,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     data_box_height = 40  # 与挑战模式图标同高
 
     # 2. 绘制半透明背景（70%透明度）
-    data_box_pos = (440, icon_y+10)  # 挑战模式图标左侧-10px
+    data_box_pos = (460, icon_y)  # 挑战模式图标左侧-10px
     final_img = add_rounded_rectangle(
         final_img,
         data_box_pos,
@@ -414,7 +413,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
 
     # 4. 绘制数据文本（右侧居中）
     data_text_x = data_icon_x + data_icon_size[0] + 15
-    data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2 -7
+    data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2 
     draw.text(
         (data_text_x, data_text_y),
         data,
@@ -520,7 +519,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             #     fill=WHITE,
             #     font=FONT_CONFIG['difficulty']
             # )
-            xx,yy = tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]
+            xx,yy = tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]+5
             for line in diff_text.split('\n'):
                 draw.text(
                     (xx, yy),
@@ -606,7 +605,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         score_text = f"{item[6]}"
         score_bbox = draw.textbbox((0,0), score_text, font=FONT_CONFIG['score'])
         draw.text(
-            (info_pos[0] + 100 - score_bbox[2]/2+30, info_pos[1] + 30),
+            (info_pos[0] + 100 - score_bbox[2]/2+40, info_pos[1] + 30),
             score_text,
             fill=WHITE,
             font=FONT_CONFIG['score']
@@ -825,11 +824,11 @@ try:
     print(updatetime)
 except:
     fuck('?')
-print('Save version: ', summary['saveVersion'])
-print('Challenge mode rank: ', summary['challengeModeRank'])
+# print('Save version: ', summary['saveVersion'])
+print('课题模式: ', summary['challengeModeRank'])
 print('RKS: ', summary['rankingScore'])
-print('GameVersion: ', summary['gameVersion'])
-print('Avatar: ', user['avatar'])
+# print('GameVersion: ', summary['gameVersion'])
+print('头像: ', user['avatar'])
 print('Data: ', end='')
 
 data_num = ''
@@ -838,17 +837,17 @@ elif data[3]: data_num=f'{data[3]}TiB {data[2]}GiB {data[1]}MiB {data[0]}KiB'
 elif data[2]: data_num=f'{data[2]}GiB {data[1]}MiB {data[0]}KiB'
 elif data[1]: data_num=f'{data[1]}MiB {data[0]}KiB'
 else: f'{data[0]}KiB'
-print(data_num)
-print('/    EZ   HD   IN   AT')
+print(data_num, end='\n\n')
+print('\\    EZ   HD   IN   AT')
 print(f'C   {progress[0][0]: 3d} {progress[0][1]: 3d} {progress[0][2]: 3d} {progress[0][3]: 3d} ')
 print(f'FC  {progress[1][0]: 3d} {progress[1][1]: 3d} {progress[1][2]: 3d} {progress[1][3]: 3d} ')
 print(f'AT  {progress[2][0]: 3d} {progress[2][1]: 3d} {progress[2][2]: 3d} {progress[2][3]: 3d} ')
 print()
 for i in range(min(3,len(phi))):
-    print(f'P{i+1} {phi[i][1]}, ACC: {round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%, RKS: {round(phi[i][0],3)}/{diff[phi[i][1]][classToNum(phi[i][2])]} Score:{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}')
+    print(f'P{i+1} {songname[phi[i][1]]},  ACC: {round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%, RKS: {round(phi[i][0],3)}/{diff[phi[i][1]][classToNum(phi[i][2])]}, Score:{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}')
 print()
 for i in range(min(33,len(score))):
-    print(f'B{i+1} {score[i][1]}, ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]} Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
+    print(f'B{i+1} {songname[score[i][1]]},  ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]}, Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
     if(i == 27):
         print('————OVERFLOW————')
 sys.stdout = original_stdout
