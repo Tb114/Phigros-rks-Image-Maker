@@ -1,0 +1,1 @@
+pip install dotenv Pillow pytz keyboard -i https://pypi.tuna.tsinghua.edu.cn/simple
