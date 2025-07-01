@@ -1,10 +1,10 @@
-2025-06-30 21:58:36.468144
+2025-07-01 21:10:05.566800
 Save version:  6
 Challenge mode rank:  430
-RKS:  14.935315132141113
+RKS:  14.945342063903809
 GameVersion:  -127
 Avatar:  Xenolith
-Data: 857MiB 541KiB
+Data: 871MiB 968KiB
 /    EZ   HD   IN   AT
 C    34  104  216  16 
 FC   10  29  37   1 
@@ -22,29 +22,29 @@ B5 Retribution.nmyKryexe, ACC: 98.72%, RKS: 15.291/16.2 Score:947968
 B6 暗夜苏醒REANIMATE.Warak, ACC: 99.73%, RKS: 15.213/15.4 Score:996506
 B7 白と黒のバケモノ.テヅカ, ACC: 98.96%, RKS: 15.176/15.9 Score:935539
 B8 Chronostasis.黒皇帝, ACC: 98.8%, RKS: 15.156/16.0 Score:949570
-B9 望影の方舟Six.SeURa, ACC: 98.86%, RKS: 15.108/15.9 Score:932280
-B10 DontNeverAround.HAMA, ACC: 99.43%, RKS: 15.107/15.5 Score:994348
-B11 atruthseekerCommunicationwithUtopiawillbelost.kuro, ACC: 98.96%, RKS: 15.078/15.8 Score:938109
-B12 FracturedAngel.DJRaisei, ACC: 98.26%, RKS: 15.065/16.3 Score:934719
-B13 ReEndofaDream.umavsモリモリあつし, ACC: 98.78%, RKS: 15.048/15.9 Score:938811
-B14 AfterDawn.S9ryne, ACC: 99.54%, RKS: 14.988/15.3 Score:960928
-B15 Rrharil.TeamGrimoire, ACC: 98.42%, RKS: 14.986/16.1 Score:964046
-B16 TECHNOPOLIS2085.PRASTIKDANCEFLOOR, ACC: 98.65%, RKS: 14.958/15.9 Score:956268
-B17 BoundedQuietude.FiniteLimitvsSiLiS, ACC: 98.22%, RKS: 14.946/16.2 Score:935047
-B18 Adastraperaspera.RabbitHouse, ACC: 98.08%, RKS: 14.94/16.3 Score:909278
-B19 CrushBETA.shadow_bling, ACC: 99.61%, RKS: 14.938/15.2 Score:973675
-B20 SIGMA.Kryexe, ACC: 98.73%, RKS: 14.922/15.8 Score:951522
-B21 ChronosCollapseLaCampanella.SunsetRay, ACC: 98.02%, RKS: 14.897/16.3 Score:924293
-B22 ERABYECONNEC10N.かめりあ, ACC: 98.02%, RKS: 14.895/16.3 Score:914043
-B23 青丘.BLACK0, ACC: 99.1%, RKS: 14.888/15.5 Score:959180
-B24 csqn.Aoi, ACC: 98.52%, RKS: 14.87/15.9 Score:949465
-B25 Feast远东之宴.茶鸣拾贰律, ACC: 99%, RKS: 14.819/15.5 Score:955900
-B26 幻影鬼魅PLEASE.R300K, ACC: 99.58%, RKS: 14.819/15.1 Score:996208
-B27 Palescreen.WyvernPfeatMadol, ACC: 98.44%, RKS: 14.818/15.9 Score:925826
-B28 インフェルノシティ.Ponchifeatはぁち, ACC: 98.71%, RKS: 14.81/15.7 Score:924667
+B9 祈-我ら神祖と共に歩む者なり-.光吉猛修VS穴山大輔VSKaiVS水野健治VS大国奏音, ACC: 98.21%, RKS: 15.119/16.4 Score:905056
+B10 望影の方舟Six.SeURa, ACC: 98.86%, RKS: 15.108/15.9 Score:932280
+B11 DontNeverAround.HAMA, ACC: 99.43%, RKS: 15.107/15.5 Score:994348
+B12 atruthseekerCommunicationwithUtopiawillbelost.kuro, ACC: 98.96%, RKS: 15.078/15.8 Score:938109
+B13 FracturedAngel.DJRaisei, ACC: 98.26%, RKS: 15.065/16.3 Score:934719
+B14 ReEndofaDream.umavsモリモリあつし, ACC: 98.78%, RKS: 15.048/15.9 Score:938811
+B15 AfterDawn.S9ryne, ACC: 99.54%, RKS: 14.988/15.3 Score:960928
+B16 Rrharil.TeamGrimoire, ACC: 98.42%, RKS: 14.986/16.1 Score:964046
+B17 TECHNOPOLIS2085.PRASTIKDANCEFLOOR, ACC: 98.65%, RKS: 14.958/15.9 Score:956268
+B18 BoundedQuietude.FiniteLimitvsSiLiS, ACC: 98.22%, RKS: 14.946/16.2 Score:935047
+B19 Adastraperaspera.RabbitHouse, ACC: 98.08%, RKS: 14.94/16.3 Score:909278
+B20 CrushBETA.shadow_bling, ACC: 99.61%, RKS: 14.938/15.2 Score:973675
+B21 SIGMA.Kryexe, ACC: 98.73%, RKS: 14.922/15.8 Score:951522
+B22 ChronosCollapseLaCampanella.SunsetRay, ACC: 98.02%, RKS: 14.897/16.3 Score:924293
+B23 ERABYECONNEC10N.かめりあ, ACC: 98.02%, RKS: 14.895/16.3 Score:914043
+B24 青丘.BLACK0, ACC: 99.1%, RKS: 14.888/15.5 Score:959180
+B25 csqn.Aoi, ACC: 98.52%, RKS: 14.87/15.9 Score:949465
+B26 Feast远东之宴.茶鸣拾贰律, ACC: 99%, RKS: 14.819/15.5 Score:955900
+B27 幻影鬼魅PLEASE.R300K, ACC: 99.58%, RKS: 14.819/15.1 Score:996208
+B28 Palescreen.WyvernPfeatMadol, ACC: 98.44%, RKS: 14.818/15.9 Score:925826
 ————OVERFLOW————
-B29 valorstarcross.LundyvsWyvren, ACC: 98.55%, RKS: 14.798/15.8 Score:924358
-B30 明鏡烈火.MUEvsRekuMochizuki, ACC: 98.41%, RKS: 14.795/15.9 Score:937032
-B31 LabyrinthinKowloonWalledWorld.かめりあ, ACC: 98.8%, RKS: 14.776/15.6 Score:947435
-B32 Spasmodic.姜米條颶風元力上人, ACC: 98.92%, RKS: 14.767/15.5 Score:964899
-B33 风屿.闫东炜, ACC: 99.44%, RKS: 14.728/15.1 Score:993277
+B29 インフェルノシティ.Ponchifeatはぁち, ACC: 98.71%, RKS: 14.81/15.7 Score:924667
+B30 valorstarcross.LundyvsWyvren, ACC: 98.55%, RKS: 14.798/15.8 Score:924358
+B31 明鏡烈火.MUEvsRekuMochizuki, ACC: 98.41%, RKS: 14.795/15.9 Score:937032
+B32 LabyrinthinKowloonWalledWorld.かめりあ, ACC: 98.8%, RKS: 14.776/15.6 Score:947435
+B33 Spasmodic.姜米條颶風元力上人, ACC: 98.92%, RKS: 14.767/15.5 Score:964899
