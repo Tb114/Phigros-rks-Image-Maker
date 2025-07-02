@@ -751,13 +751,16 @@ if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
 elif(sys.platform.startswith('win32')): phigros = ctypes.CDLL("./phigros-64.dll")
 else: fuck('暂不支持除Linux/Windows外的操作系统',1)
 # print(phigros)
-updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n')
-if updatefileOption == 'Y' or updatefileOption == 'y':
-    try:
-        import updatefile
-        updatefile.main()
-    except Exception as e:
-        printwithcolor(f'无法更新文件{e}',[31])
+try:
+    updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n')
+    if updatefileOption == 'Y' or updatefileOption == 'y':
+        try:
+            import updatefile
+            updatefile.main()
+        except Exception as e:
+            printwithcolor(f'无法更新文件{e}',[31])
+except:
+    pass
 phigros.get_handle.argtypes = ctypes.c_char_p,
 phigros.get_handle.restype = ctypes.c_void_p
 phigros.free_handle.argtypes = ctypes.c_void_p,
