@@ -28,7 +28,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install dotenv Pillow pytz keyboard requests 
+        pip install dotenv Pillow pytz requests 
 
 
     - name: Run main.py

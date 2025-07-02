@@ -7,13 +7,39 @@ from random import choice
 import os
 from datetime import datetime, timezone
 from pytz import timezone
-from keyboard import wait
-VERSION = '0.06'
+VERSION = '0.07'
+
+def printwithcolor(text: str, option: list, end1: str='\n'):
+    '''
+    option: 
+            0	关闭所有格式，还原为初始状态
+            1	粗体/高亮显示
+            2	模糊（※）
+            3	斜体（※）
+            4	下划线（单线）
+            5	闪烁（慢）
+            6	闪烁（快）（※）
+            7	交换背景色与前景色
+            8	隐藏（伸手不见五指，啥也看不见）（※）
+            30-37	前景色, 即30+x, x表示不同的颜色 (参见下面的“颜色表”)
+            40-47	背景色, 即40+x, x表示不同的颜色 (参见下面的“颜色表”)
+0	1	2	3	4	5	6	7
+黑	红	绿	黄	蓝	紫	青	白
+    '''
+    if type(option)==int:option=[option]
+    res : str = '\033['
+    for i in option:
+        if(type(i)!=int): raise('Invaild type')
+        if((0<=i and i<=8)or(30<=i<=37)or(40<=i<=47)): res+=str(i)+';'
+        else: raise('Invaild type')
+    res = res[:-1]
+    res+=f'm{text}\033[0m'
+    print(res, end=end1)
 
 def fuck(info : str, errcode : int = 0):
-    print(f"程序已中止(停止代码: {str(errcode).zfill(2)})")
+    printwithcolor(f'程序已中止(停止代码: {str(errcode).zfill(2)})',[1,31])
     print(info)
-    input("按下任意键继续...")
+    input("按下Enter以继续...")
     sys.exit(1)
     
 def add_corners(im, rad):
@@ -55,6 +81,14 @@ def add_rounded_rectangle(img, position, size, radius, color, alpha):
     img.paste(rectangle, (x, y), rectangle)
     return img
 
+def classToNum(a : str) -> int:
+    # 将难度字符串转换为数字
+    if(a == 'EZ'): return 0
+    elif(a == 'HD'): return 1
+    elif(a == 'IN'): return 2
+    elif(a == 'AT'): return 3
+    return 4
+
 # 预定义颜色常量
 DIFFICULTY_COLORS = {
     'AT': (56, 56, 56),
@@ -67,6 +101,7 @@ INFO_BLOCK_COLOR = (57, 197, 187)
 WHITE = (255, 255, 255)
 
 def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress):
+    # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
     # 初始化基础图像
     original_img = Image.open(a_path).convert('RGB')
     original_width, original_height = original_img.size
@@ -672,32 +707,26 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     # 最终保存
     final_img.convert('RGB').save(output_path, format="PNG")
 # 使用示例
-def classToNum(a : str) -> int:
-    if(a == 'EZ'): return 0
-    elif(a == 'HD'): return 1
-    elif(a == 'IN'): return 2
-    elif(a == 'AT'): return 3
-    return 4
 
 
 if os.path.exists('.env'):
-    load_dotenv('.env')
-    try:
-        sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
-    except:
-        sessionToken = None
-    if(not sessionToken): 
-        print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
-        sessionToken = None
-        flag1 : bool = True
-        while True:
-            sessionToken : str = input().strip()
-            if(sessionToken == '0'): break
-            if(sessionToken != ''):
-                flag1 = False
-                break
-        if(flag1): sys.exit(0)
-     
+        load_dotenv('.env')
+        try:
+            sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
+        except:
+            sessionToken = None
+        if(not sessionToken): 
+            print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
+            sessionToken = None
+            flag1 : bool = True
+            while True:
+                sessionToken : str = input().strip()
+                if(sessionToken == '0'): break
+                if(sessionToken != ''):
+                    flag1 = False
+                    break
+            if(flag1): sys.exit(0)
+    
 else:
     print('未检测到.env文件')
     print('请输入Sessiontoken, 输入0则结束程序')
@@ -735,8 +764,10 @@ phigros.get_b19.argtypes = ctypes.c_void_p,
 phigros.get_b19.restype = ctypes.c_char_p
 # phigros.re8.argtypes = ctypes.c_void_p,
 
-
-handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
+try:
+    handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
+except Exception as e:
+    fuck(e)
 # print(handle)
 nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
 if(nickname == 'ERROR:Could not find user.'):
@@ -820,15 +851,23 @@ updatetime = datetime.now().astimezone(timezone('Asia/Shanghai')).replace(tzinfo
 
 original_stdout = sys.stdout
 sys.stdout = open('result.txt', 'w', encoding='utf-8')
-try:
-    print(updatetime)
-except:
-    fuck('?')
+print(updatetime)
 # print('Save version: ', summary['saveVersion'])
-print('课题模式: ', summary['challengeModeRank'])
+def challengeModeRankToChinese(cmr : int) -> str:
+    res : str = ''
+    if(cmr//100==0): res+='灰'
+    elif(cmr//100==1): res+='绿'
+    elif(cmr//100==2): res+='蓝'
+    elif(cmr//100==3): res+='红'
+    elif(cmr//100==4): res+='金'
+    else: res+='彩'
+    res += str(cmr%100)
+    return res
+cmrcn = challengeModeRankToChinese(summary['challengeModeRank'])
+print('课题模式: ', cmrcn)
 print('RKS: ', summary['rankingScore'])
 # print('GameVersion: ', summary['gameVersion'])
-print('头像: ', user['avatar'])
+# print('头像: ', user['avatar'])
 print('Data: ', end='')
 
 data_num = ''
@@ -905,4 +944,47 @@ createImage(
     updatetime=str(updatetime),
     progress=progress
 )
-print('成绩图片已输出至result.png, 文字文件已输出至result.txt')
+printwithcolor('成绩图片已输出至result.png, 文字文件已输出至result.txt',[36])
+
+print(updatetime)
+
+if(cmrcn[0]=='灰'):printwithcolor(cmrcn,[30,1],' ')
+elif(cmrcn[0]=='绿'):printwithcolor(cmrcn,[32,1],' ')
+elif(cmrcn[0]=='蓝'):printwithcolor(cmrcn,[36,1],' ')
+elif(cmrcn[0]=='红'):printwithcolor(cmrcn,[31,1],' ')
+elif(cmrcn[0]=='金'):printwithcolor(cmrcn,[33,1],' ')
+else:printwithcolor(cmrcn,[35,1],' ')
+printwithcolor(round(summary['rankingScore'],5),[7,1],    ' ')
+# print('GameVersion: ', summary['gameVersion'])
+printwithcolor(data_num, [1,3])
+print('\\   ',end='')
+printwithcolor('EZ',[1,32],'   ')
+printwithcolor('HD',[1,36],'   ')
+printwithcolor('IN',[1,31],'   ')
+printwithcolor('AT',[1,37])
+printwithcolor('C',37,'')
+print(f'   {progress[0][0]: 3d} {progress[0][1]: 3d} {progress[0][2]: 3d} {progress[0][3]: 3d} ')
+printwithcolor('FC',34,'')
+print(f'  {progress[1][0]: 3d} {progress[1][1]: 3d} {progress[1][2]: 3d} {progress[1][3]: 3d} ')
+printwithcolor('AP',33,'')
+print(f'  {progress[2][0]: 3d} {progress[2][1]: 3d} {progress[2][2]: 3d} {progress[2][3]: 3d} ')
+print()
+for i in range(min(3,len(phi))):
+    printwithcolor(f'P{i+1}',[43,1],' ')
+    printwithcolor(songname[phi[i][1]],0,' ')
+    printwithcolor(f'{round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%',[1],' ')
+    printwithcolor(f'{round(phi[i][0],3)}/{diff[phi[i][1]][classToNum(phi[i][2])]}',[44],' ')
+    printwithcolor(f'{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}',[1,33])
+print()
+for i in range(min(33,len(score))):
+    printwithcolor(f'B{i+1}',[43,1],' ')
+    printwithcolor(songname[score[i][1]],0,' ')
+    printwithcolor(f'{round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%',[1],' ')
+    printwithcolor(f'{round(score[i][0],3)}',[44],'')
+    printwithcolor(f'/{diff[score[i][1]][classToNum(score[i][2])]}',[0],' ')
+    printwithcolor(f'{gameRecords[score[i][1]][classToNum(score[i][2])*3]}',[1,36])
+    # print(f'B{i+1} {songname[score[i][1]]},  ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]}, Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
+    if(i == 27):
+        printwithcolor('————OVERFLOW————',[0])
+# input('按下Enter以继续')
+sys.exit(0)
