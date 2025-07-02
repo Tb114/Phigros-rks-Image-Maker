@@ -1,2 +1,2 @@
 #!/bin/bash
-pip install dotenv Pillow pytz  -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install dotenv Pillow pytz requests  -i https://pypi.tuna.tsinghua.edu.cn/simple
