@@ -11,13 +11,14 @@ Written by [![](https://img.shields.io/badge/Github-Tb114-39C5bb)](https://githu
 ### To do:
 - 重写一个好看的UI
 - 报错判断
-- 自动更新info.tsv, difficulty.tsv
+
 - 超时判断
 - 宣传
 
 ### Done:
 - 使用Github Action实现全自动生成图片
 - 历史记录(**log文件夹有超过100MB的风险，已使用子树进行优化**)
+- 自动更新info.tsv, difficulty.tsv(暂未确定稳定性)
 
 ### Not planned:
 - 推分建议(砍)

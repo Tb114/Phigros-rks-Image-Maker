@@ -7,7 +7,8 @@ from random import choice
 import os
 from datetime import datetime, timezone
 from pytz import timezone
-VERSION = '0.07'
+
+VERSION = '0.07.1'
 
 def printwithcolor(text: str, option: list, end1: str='\n'):
     '''
@@ -750,6 +751,13 @@ if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
 elif(sys.platform.startswith('win32')): phigros = ctypes.CDLL("./phigros-64.dll")
 else: fuck('暂不支持除Linux/Windows外的操作系统',1)
 # print(phigros)
+updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n')
+if updatefileOption == 'Y' or updatefileOption == 'y':
+    try:
+        import updatefile
+        updatefile.main()
+    except Exception as e:
+        printwithcolor(f'无法更新文件{e}',[31])
 phigros.get_handle.argtypes = ctypes.c_char_p,
 phigros.get_handle.restype = ctypes.c_void_p
 phigros.free_handle.argtypes = ctypes.c_void_p,
@@ -954,7 +962,7 @@ elif(cmrcn[0]=='蓝'):printwithcolor(cmrcn,[36,1],' ')
 elif(cmrcn[0]=='红'):printwithcolor(cmrcn,[31,1],' ')
 elif(cmrcn[0]=='金'):printwithcolor(cmrcn,[33,1],' ')
 else:printwithcolor(cmrcn,[35,1],' ')
-printwithcolor(round(summary['rankingScore'],5),[7,1],    ' ')
+printwithcolor(round(summary['rankingScore'],6),[7,1],    ' ')
 # print('GameVersion: ', summary['gameVersion'])
 printwithcolor(data_num, [1,3])
 print('\\   ',end='')
