@@ -752,7 +752,7 @@ elif(sys.platform.startswith('win32')): phigros = ctypes.CDLL("./phigros-64.dll"
 else: fuck('暂不支持除Linux/Windows外的操作系统',1)
 # print(phigros)
 try:
-    updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n')
+    updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n\n')
     if updatefileOption == 'Y' or updatefileOption == 'y':
         try:
             import updatefile
