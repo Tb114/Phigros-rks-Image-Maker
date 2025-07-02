@@ -1,0 +1,49 @@
+2025-07-02 19:17:01.413376
+课题模式:  430
+RKS:  14.97867488861084
+头像:  Xenolith
+Data: 883MiB 312KiB
+
+\    EZ   HD   IN   AT
+C    34  104  216  16 
+FC   10  29  38   1 
+AT    4   3   5   0 
+
+P1 Future Mind,  ACC: 100%, RKS: 14.3/14.3, Score:1000000
+P2 Break Over,  ACC: 100%, RKS: 14.1/14.1, Score:1000000
+P3 Dlyrotz,  ACC: 100%, RKS: 13.7/13.7, Score:1000000
+
+B1 Distorted Fate,  ACC: 99.07%, RKS: 15.632/16.3, Score:954348
+B2 DESTRUCTION 3,2,1,  ACC: 99.03%, RKS: 15.603/16.3, Score:957239
+B3 Compute It With Some Devilish Alcoholic Steampunk Engines,  ACC: 99.45%, RKS: 15.417/15.8, Score:995066
+B4 千紫万紅,  ACC: 99.68%, RKS: 15.381/15.6, Score:984900
+B5 Retribution,  ACC: 98.72%, RKS: 15.291/16.2, Score:947968
+B6 暗夜苏醒 (REANIMATE),  ACC: 99.73%, RKS: 15.213/15.4, Score:996506
+B7 白と黒のバケモノ,  ACC: 98.96%, RKS: 15.176/15.9, Score:935539
+B8 Chronostasis,  ACC: 98.8%, RKS: 15.156/16.0, Score:949570
+B9 祈 -我ら神祖と共に歩む者なり-,  ACC: 98.21%, RKS: 15.119/16.4, Score:905056
+B10 望影の方舟Six,  ACC: 98.86%, RKS: 15.108/15.9, Score:932280
+B11 Don't Never Around,  ACC: 99.43%, RKS: 15.107/15.5, Score:994348
+B12 a truth seeker -Communication with Utopia will be lost-,  ACC: 98.96%, RKS: 15.078/15.8, Score:938109
+B13 Fractured Angel,  ACC: 98.26%, RKS: 15.065/16.3, Score:934719
+B14 Re：End of a Dream,  ACC: 98.78%, RKS: 15.048/15.9, Score:938811
+B15 After Dawn,  ACC: 99.54%, RKS: 14.988/15.3, Score:960928
+B16 Rrhar'il,  ACC: 98.42%, RKS: 14.986/16.1, Score:964046
+B17 TECHNOPOLIS 2085,  ACC: 98.65%, RKS: 14.958/15.9, Score:956268
+B18 Bounded Quietude,  ACC: 98.22%, RKS: 14.946/16.2, Score:935047
+B19 Ad astra per aspera,  ACC: 98.08%, RKS: 14.94/16.3, Score:909278
+B20 Crush BETA,  ACC: 99.61%, RKS: 14.938/15.2, Score:973675
+B21 SIGMA,  ACC: 98.73%, RKS: 14.922/15.8, Score:951522
+B22 Chronos Collapse - La Campanella,  ACC: 98.02%, RKS: 14.897/16.3, Score:924293
+B23 +ERABY+E CONNEC+10N,  ACC: 98.02%, RKS: 14.895/16.3, Score:914043
+B24 青丘,  ACC: 99.1%, RKS: 14.888/15.5, Score:959180
+B25 c.s.q.n.,  ACC: 98.52%, RKS: 14.87/15.9, Score:949465
+B26 Feast远东之宴,  ACC: 99%, RKS: 14.819/15.5, Score:955900
+B27 幻影鬼魅 (PLEASE),  ACC: 99.58%, RKS: 14.819/15.1, Score:996208
+B28 Palescreen,  ACC: 98.44%, RKS: 14.818/15.9, Score:925826
+————OVERFLOW————
+B29 インフェルノシティ,  ACC: 98.71%, RKS: 14.81/15.7, Score:924667
+B30 valor/starcross,  ACC: 98.55%, RKS: 14.798/15.8, Score:924358
+B31 明鏡烈火,  ACC: 98.41%, RKS: 14.795/15.9, Score:937032
+B32 Non-Melodic Ragez (MUG Edit),  ACC: 98.13%, RKS: 14.792/16.1, Score:931725
+B33 Labyrinth in Kowloon: Walled World,  ACC: 98.8%, RKS: 14.776/15.6, Score:947435
