@@ -8,7 +8,7 @@ import os
 from datetime import datetime, timezone
 from pytz import timezone
 
-VERSION = '0.07.1'
+VERSION = '0.07.2'
 
 def printwithcolor(text: str, option: list, end1: str='\n'):
     '''
@@ -219,14 +219,14 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     
     final_img = add_rounded_rectangle(
         final_img,
-        (username_x, username_y - 30),
+        (username_x, username_y - 28),
         (500,30),
         radius=5,
         color=(50, 50, 50),
         alpha=150
     )
     draw.text(
-        (username_x + 10, username_y - 33),
+        (username_x + 10, username_y - 28),
         'Updated at: '+updatetime[:-7]+' UTC+08:00',
         fill=WHITE,
         font=FONT_CONFIG['updatetime']
@@ -337,7 +337,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     
     # --- 新增：在用户名下方绘制RKS显示框 ---
     rks_font = FONT_CONFIG['rks']
-    rks_text = f"{rks}"
+    rks_text = f'%.4f'%rks
     
     # 计算RKS文本框位置（用户名下方 + 10px间距）
     rks_x = username_x  # 与用户名左对齐
@@ -383,12 +383,12 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     # 加载并调整图标大小
     try:
         icon = Image.open(icon_path).convert('RGBA')
-        icon_size = (90, 50)  # 保持与RKS框相同高度
+        icon_size = (100, 60)  # 保持与RKS框相同高度
         icon = icon.resize(icon_size, Image.LANCZOS)
         
         # 图标位置（RKS框右侧+10px间距）
         icon_x = rks_x + rks_bg_width + 10
-        icon_y = rks_y
+        icon_y = rks_y - 8
         
         # 粘贴图标
         final_img.paste(icon, (icon_x, icon_y), icon)
@@ -399,7 +399,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         
         draw.text(
             (icon_x + (icon_size[0] - rank_bbox[2]) // 2, 
-            icon_y + (icon_size[1] - rank_bbox[3]) // 2-12),
+            icon_y + (icon_size[1] - rank_bbox[3]) // 2-5),
             str(rank_number),
             fill=WHITE,
             font=rank_font
@@ -419,7 +419,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     data_box_height = 40  # 与挑战模式图标同高
 
     # 2. 绘制半透明背景（70%透明度）
-    data_box_pos = (460, icon_y)  # 挑战模式图标左侧-10px
+    data_box_pos = (460, icon_y+10)  # 挑战模式图标左侧-10px
     final_img = add_rounded_rectangle(
         final_img,
         data_box_pos,
@@ -689,7 +689,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             final_img.paste(icon, (info_pos[0], info_pos[1]+40), icon)
     draw.text(
         (5, 2950),
-        'Version: '+VERSION,
+        'Ver.'+VERSION,
         fill=WHITE,
         font=FONT_CONFIG['version']
     )
@@ -759,8 +759,7 @@ try:
             updatefile.main()
         except Exception as e:
             printwithcolor(f'无法更新文件{e}',[31])
-except:
-    pass
+except: pass
 phigros.get_handle.argtypes = ctypes.c_char_p,
 phigros.get_handle.restype = ctypes.c_void_p
 phigros.free_handle.argtypes = ctypes.c_void_p,
@@ -875,7 +874,7 @@ def challengeModeRankToChinese(cmr : int) -> str:
     res += str(cmr%100)
     return res
 cmrcn = challengeModeRankToChinese(summary['challengeModeRank'])
-print('课题模式: ', cmrcn)
+print('课题模式:', cmrcn)
 print('RKS: ', summary['rankingScore'])
 # print('GameVersion: ', summary['gameVersion'])
 # print('头像: ', user['avatar'])
@@ -997,5 +996,6 @@ for i in range(min(33,len(score))):
     # print(f'B{i+1} {songname[score[i][1]]},  ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]}, Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
     if(i == 27):
         printwithcolor('————OVERFLOW————',[0])
-# input('按下Enter以继续')
+try: input('按下Enter以继续')
+except: pass
 sys.exit(0)
