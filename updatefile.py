@@ -1,7 +1,6 @@
 import os
 import requests
 from urllib.parse import urljoin
-from sys import platform
 # 配置参数
 LOCAL_FOLDER = "illustrationLowRes"
 LOCAL_FOLDER1 = 'avatar'
@@ -72,17 +71,17 @@ def verify_file(file_name, raw_url, file_folder, unexpected_url):
     # 获取GitHub文件内容
     try:
         response = requests.get(file_url, timeout=10)
-        if response.status_code != 200:
-            print(f"无法验证 {file_name}: GitHub文件访问失败")
-            return False
+        # if response.status_code != 200:
+        #     print(f"无法验证 {file_name}: GitHub文件访问失败")
+        #     return False
         github_content = response.content
     except requests.exceptions.RequestException as e:
         print(f"获取GitHub文件 {file_name} 时出错: {e}\n尝试使用代理网站")
         try:
             response = requests.get(unexpected_url, timeout=10)
-            if response.status_code != 200:
-                print(f"无法验证 {file_name}: GitHub文件访问失败")
-                return False
+            # if response.status_code != 200:
+            #     print(f"无法验证 {file_name}: GitHub文件访问失败")
+            #     return False
             github_content = response.content
         except requests.exceptions.RequestException as e:
             print(f"代理网站下载 {file_name} 时出错: {e}")
@@ -125,7 +124,6 @@ def sync_folder(api_url, raw_url, local_folder, unexpected_raw_url, unexpected_a
             print(f"代理网站同步 {local_folder} 时出错: {e}")
             return False
     local_files = get_local_files(local_folder)
-    
     print(f"GitHub文件数: {len(github_files)}, 本地文件数: {len(local_files)}")
     
     if not github_files:
