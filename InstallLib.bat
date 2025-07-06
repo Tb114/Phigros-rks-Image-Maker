@@ -1,1 +1,1 @@
-pip install dotenv Pillow pytz requests  -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install dotenv Pillow pytz requests pathlib  -i https://pypi.tuna.tsinghua.edu.cn/simple
