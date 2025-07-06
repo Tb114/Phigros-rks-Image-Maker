@@ -7,8 +7,9 @@ from random import choice
 import os
 from datetime import datetime, timezone
 from pytz import timezone
+from pathlib import Path
 
-VERSION = '0.07.3'
+VERSION = '0.07.4'
 
 def printwithcolor(text: str, option: list, end1: str='\n'):
     '''
@@ -709,6 +710,9 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     final_img.convert('RGB').save(output_path, format="PNG")
 # 使用示例
 
+current_dir = Path(__file__).resolve().parent
+try: os.system(f'cd \"{current_dir}\"')
+except: printwithcolor('无法切换到文件所在目录, 可能无法正常运行',[1,31])
 settings : dict = {
     'AutoUpdate' : True, 
     'EnterToContiune' : True
@@ -972,6 +976,11 @@ for i in range(33):
 
 # score[i][2] ->EZ/HD/IN/AT
 filename = f'{str(updatetime).replace(" ", "_").replace(":", "_").replace(".", "_")}'
+if(os.path.exists('/log')): 
+    if(os.path.isfile('/log')): pass
+    else: os.system('mkdir log')
+else: os.system('mkdir log')
+
 if(sys.platform.startswith('linux')): os.system(f'cp ./result.txt ./log/{filename} >/dev/null')
 elif(sys.platform.startswith('win32')): 
     os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
