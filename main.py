@@ -746,18 +746,18 @@ else:
    
 if os.path.exists('settings.ini'):
     load_dotenv('settings.ini')
-    for i in settings:
+    for key in settings.keys():
         try:
-            set1 = os.getenv(i.keys()).encode('UTF-8')
+            set1 = os.getenv(key).encode('UTF-8')
             if(set1 == 1 or set1 == b'True' or set1 == b'true'): set1=True
             else: set1=False
-            settings[i.keys()] = set1
+            settings[key] = set1
         except:
             pass
 else:
     f = open('settings.ini', 'w')
-    for i in settings:
-        print(f'{i.keys()}={"True" if i.values() else "False"}')
+    for key, value in settings.items():
+        f.write(f'{key}={"True" if value else "False"}\n')
     f.close()
 
 try:  sessionToken = sessionToken.encode('utf-8')
