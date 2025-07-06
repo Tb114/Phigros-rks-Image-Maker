@@ -8,7 +8,7 @@ import os
 from datetime import datetime, timezone
 from pytz import timezone
 
-VERSION = '0.07.2'
+VERSION = '0.07.3'
 
 def printwithcolor(text: str, option: list, end1: str='\n'):
     '''
@@ -480,13 +480,13 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         
         return ellipsis  # 极端情况（max_width极小）
     try:
-        OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA')
+        OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA').resize((600,157))
     except:
         try:
             OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA')
         except Exception as e:
             fuck(e)
-    final_img.paste(OVERFLOW,(50,2350),mask=OVERFLOW)
+    final_img.paste(OVERFLOW,(600,2315),mask=OVERFLOW)
     # 绘制所有B27元素
     for idx, item in enumerate(b27):
         row = idx // 3
@@ -566,7 +566,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
                 yy += -2 + int(17*4/3)
         # 1. 定义info_block的尺寸
         info_block_width = 240
-        info_block_height = 110
+        info_block_height = 130
         # 2. 绘制info_block（圆角矩形背景）
         info_pos = (x + b_width + 256, y + (135 - info_block_height)//2)
         # final_img = add_rounded_rectangle(
@@ -578,7 +578,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         #     alpha=200
         # )
         info_block = Image.open('Resource/infoblock.png').convert('RGBA').resize((info_block_width,info_block_height))
-        final_img.paste(info_block, (info_pos[0], info_pos[1]), info_block)
+        final_img.paste(info_block, (info_pos[0], info_pos[1] - 13), info_block)
         # 3. 计算居中坐标（关键修改）
         def get_centered_x(text, font, box_width):
             """计算文本在指定宽度内的居中x坐标"""
@@ -709,24 +709,27 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     final_img.convert('RGB').save(output_path, format="PNG")
 # 使用示例
 
-
+settings : dict = {
+    'AutoUpdate' : True, 
+    'EnterToContiune' : True
+    }
 if os.path.exists('.env'):
-        load_dotenv('.env')
-        try:
-            sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
-        except:
-            sessionToken = None
-        if(not sessionToken): 
-            print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
-            sessionToken = None
-            flag1 : bool = True
-            while True:
-                sessionToken : str = input().strip()
-                if(sessionToken == '0'): break
-                if(sessionToken != ''):
-                    flag1 = False
-                    break
-            if(flag1): sys.exit(0)
+    load_dotenv('.env')
+    try:
+        sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
+    except:
+        sessionToken = None
+    if(not sessionToken): 
+        print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
+        sessionToken = None
+        flag1 : bool = True
+        while True:
+            sessionToken : str = input().strip()
+            if(sessionToken == '0'): break
+            if(sessionToken != ''):
+                flag1 = False
+                break
+        if(flag1): sys.exit(0)
     
 else:
     print('未检测到.env文件')
@@ -740,26 +743,40 @@ else:
             flag1 = False
             break
     if(flag1): sys.exit(0)   
-    
-try: 
-    sessionToken = sessionToken.encode('utf-8')
-except:
-    pass
-# 重定向print输出到文件
+   
+if os.path.exists('settings.ini'):
+    load_dotenv('settings.ini')
+    for i in settings:
+        try:
+            set1 = os.getenv(i.keys()).encode('UTF-8')
+            if(set1 == 1 or set1 == b'True' or set1 == b'true'): set1=True
+            else: set1=False
+            settings[i.keys()] = set1
+        except:
+            pass
+else:
+    f = open('settings.ini', 'w')
+    for i in settings:
+        print(f'{i.keys()}={"True" if i.values() else "False"}')
+    f.close()
+
+try:  sessionToken = sessionToken.encode('utf-8')
+except: pass
 
 if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
 elif(sys.platform.startswith('win32')): phigros = ctypes.CDLL("./phigros-64.dll")
 else: fuck('暂不支持除Linux/Windows外的操作系统',1)
 # print(phigros)
-try:
-    updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n\n')
-    if updatefileOption == 'Y' or updatefileOption == 'y':
-        try:
-            import updatefile
-            updatefile.main()
-        except Exception as e:
-            printwithcolor(f'无法更新文件{e}',[31])
-except: pass
+if settings['AutoUpdate']:
+    try:
+        updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n\n')
+        if updatefileOption == 'Y' or updatefileOption == 'y':
+            try:
+                import updatefile
+                updatefile.main()
+            except Exception as e:
+                printwithcolor(f'无法更新文件{e}',[31])
+    except: pass
 phigros.get_handle.argtypes = ctypes.c_char_p,
 phigros.get_handle.restype = ctypes.c_void_p
 phigros.free_handle.argtypes = ctypes.c_void_p,
@@ -838,8 +855,28 @@ for i in songid:
         progress[0][now]+=(gameRecords[i][now*3+1] >= 70)
         progress[1][now]+=bool(gameRecords[i][now*3+2])
         progress[2][now]+=bool(rksContribution[i][now] == diff[i][now] and diff[i][now])
-        if rksContribution[i][now] : score.append((rksContribution[i][now],i,levelToNumMap[now],diff[i][now],bool(gameRecords[i][now*3+2])))
-        if(rksContribution[i][now] == diff[i][now] and diff[i][now]) : phi.append((rksContribution[i][now],i,levelToNumMap[now],diff[i][now],True))
+        if rksContribution[i][now] : score.append((
+            rksContribution[i][now],            #  0                
+            i,                                  #  1
+            levelToNumMap[now],                 #  2          
+            diff[i][now],                       #  3    
+            bool(gameRecords[i][now*3+2]),      #  4                     
+            songname[i],                        #  5   
+            gameRecords[i][now*3],#score        #  6                   
+            diff[i][now], #difficulty           #  7                
+            gameRecords[i][now*3+1] #acc        #  8                   
+            ))
+        if(rksContribution[i][now] >= diff[i][now] and diff[i][now]) : phi.append((
+            rksContribution[i][now],            #  0                
+            i,                                  #  1
+            levelToNumMap[now],                 #  2          
+            diff[i][now],                       #  3    
+            bool(gameRecords[i][now*3+2]),      #  4                     
+            songname[i],                        #  5   
+            gameRecords[i][now*3],#score        #  6                   
+            diff[i][now], #difficulty           #  7                
+            gameRecords[i][now*3+1] #acc        #  8    
+            ))
     # print(i, rksContribution[i])
 
 score.sort()
@@ -893,10 +930,10 @@ print(f'FC  {progress[1][0]: 3d} {progress[1][1]: 3d} {progress[1][2]: 3d} {prog
 print(f'AT  {progress[2][0]: 3d} {progress[2][1]: 3d} {progress[2][2]: 3d} {progress[2][3]: 3d} ')
 print()
 for i in range(min(3,len(phi))):
-    print(f'P{i+1} {songname[phi[i][1]]},  ACC: {round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%, RKS: {round(phi[i][0],3)}/{diff[phi[i][1]][classToNum(phi[i][2])]}, Score:{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}')
+    print(f'P{i+1} {phi[i][5]},  ACC: {round(phi[i][8],2)}%, RKS: {round(phi[i][0],3)}/{phi[i][7]}, Score:{phi[i][6]}')
 print()
 for i in range(min(33,len(score))):
-    print(f'B{i+1} {songname[score[i][1]]},  ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]}, Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
+    print(f'B{i+1} {score[i][5]},  ACC: {round(score[i][8],2)}%, RKS: {round(score[i][0],3)}/{score[i][7]}, Score:{score[i][6]}')
     if(i == 27):
         print('————OVERFLOW————')
 sys.stdout = original_stdout
@@ -996,6 +1033,7 @@ for i in range(min(33,len(score))):
     # print(f'B{i+1} {songname[score[i][1]]},  ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]}, Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
     if(i == 27):
         printwithcolor('————OVERFLOW————',[0])
-try: input('按下Enter以继续')
-except: pass
+if settings['EnterToContiune']:
+    try: input('按下Enter以继续')
+    except: pass
 sys.exit(0)

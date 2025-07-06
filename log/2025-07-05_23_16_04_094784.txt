@@ -1,0 +1,48 @@
+2025-07-05 23:16:04.094784
+课题模式: 金30
+RKS:  15.029521942138672
+Data: 913MiB 647KiB
+
+\    EZ   HD   IN   AT
+C    34  104  217  16 
+FC   10  29  38   1 
+AT    4   3   6   0 
+
+P1 Future Mind,  ACC: 100%, RKS: 14.3/14.3, Score:1000000
+P2 君往何处 (Quo Vadis),  ACC: 100%, RKS: 14.2/14.2, Score:1000000
+P3 Break Over,  ACC: 100%, RKS: 14.1/14.1, Score:1000000
+
+B1 Distorted Fate,  ACC: 99.07%, RKS: 15.632/16.3, Score:954348
+B2 DESTRUCTION 3,2,1,  ACC: 99.03%, RKS: 15.603/16.3, Score:957239
+B3 Compute It With Some Devilish Alcoholic Steampunk Engines,  ACC: 99.45%, RKS: 15.417/15.8, Score:995066
+B4 望影の方舟Six,  ACC: 99.26%, RKS: 15.384/15.9, Score:958992
+B5 千紫万紅,  ACC: 99.68%, RKS: 15.381/15.6, Score:984900
+B6 Retribution,  ACC: 98.72%, RKS: 15.291/16.2, Score:947968
+B7 暗夜苏醒 (REANIMATE),  ACC: 99.73%, RKS: 15.213/15.4, Score:996506
+B8 白と黒のバケモノ,  ACC: 98.96%, RKS: 15.176/15.9, Score:935539
+B9 Chronostasis,  ACC: 98.8%, RKS: 15.156/16.0, Score:949570
+B10 祈 -我ら神祖と共に歩む者なり-,  ACC: 98.21%, RKS: 15.119/16.4, Score:905056
+B11 Don't Never Around,  ACC: 99.43%, RKS: 15.107/15.5, Score:994348
+B12 Crush BETA,  ACC: 99.86%, RKS: 15.107/15.2, Score:973675
+B13 Silence is Golden, Speech is Golden,  ACC: 99.27%, RKS: 15.095/15.6, Score:959560
+B14 a truth seeker -Communication with Utopia will be lost-,  ACC: 98.96%, RKS: 15.078/15.8, Score:938109
+B15 Fractured Angel,  ACC: 98.26%, RKS: 15.065/16.3, Score:934719
+B16 Re：End of a Dream,  ACC: 98.78%, RKS: 15.048/15.9, Score:947593
+B17 After Dawn,  ACC: 99.54%, RKS: 14.988/15.3, Score:960928
+B18 Rrhar'il,  ACC: 98.42%, RKS: 14.986/16.1, Score:964046
+B19 Nhelv,  ACC: 99.09%, RKS: 14.978/15.6, Score:981999
+B20 Palescreen,  ACC: 98.67%, RKS: 14.973/15.9, Score:947559
+B21 TECHNOPOLIS 2085,  ACC: 98.65%, RKS: 14.958/15.9, Score:956268
+B22 Bounded Quietude,  ACC: 98.22%, RKS: 14.946/16.2, Score:935047
+B23 Ad astra per aspera,  ACC: 98.08%, RKS: 14.94/16.3, Score:909278
+B24 valor/starcross,  ACC: 98.74%, RKS: 14.93/15.8, Score:959612
+B25 SIGMA,  ACC: 98.73%, RKS: 14.922/15.8, Score:951522
+B26 Chronos Collapse - La Campanella,  ACC: 98.02%, RKS: 14.897/16.3, Score:924293
+B27 +ERABY+E CONNEC+10N,  ACC: 98.02%, RKS: 14.895/16.3, Score:914043
+B28 青丘,  ACC: 99.1%, RKS: 14.888/15.5, Score:959180
+————OVERFLOW————
+B29 c.s.q.n.,  ACC: 98.52%, RKS: 14.87/15.9, Score:949465
+B30 Feast远东之宴,  ACC: 99%, RKS: 14.819/15.5, Score:955900
+B31 幻影鬼魅 (PLEASE),  ACC: 99.58%, RKS: 14.819/15.1, Score:996208
+B32 インフェルノシティ,  ACC: 98.71%, RKS: 14.81/15.7, Score:924667
+B33 明鏡烈火,  ACC: 98.41%, RKS: 14.795/15.9, Score:937032
