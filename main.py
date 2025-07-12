@@ -484,7 +484,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA').resize((600,157))
     except:
         try:
-            OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA')
+            OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((600,157))
         except Exception as e:
             fuck(e)
     final_img.paste(OVERFLOW,(600,2315),mask=OVERFLOW)
