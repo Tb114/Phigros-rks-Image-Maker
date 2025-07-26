@@ -7,9 +7,9 @@ LOCAL_FOLDER1 = 'avatar'
 RAW_CONTENT_URL = "https://raw.githubusercontent.com/7aGiven/Phigros_Resource/illustrationLowRes/"
 RAW_CONTENT_URL1 = "https://raw.githubusercontent.com/7aGiven/Phigros_Resource/info/"
 RAW_CONTENT_URL2 = "https://raw.githubusercontent.com/7aGiven/Phigros_Resource/avatar/"
-RAW_CONTENT_URL_BAK = "https://github.akams.cn/https://raw.githubusercontent.com/7aGiven/Phigros_Resource/illustrationLowRes/"
-RAW_CONTENT_URL1_BAK = "https://github.akams.cn/https://raw.githubusercontent.com/7aGiven/Phigros_Resource/info/"
-RAW_CONTENT_URL2_BAK = "https://github.akams.cn/https://raw.githubusercontent.com/7aGiven/Phigros_Resource/avatar/"
+RAW_CONTENT_URL_BAK = "https://github.akams.cn/https://github.com/7aGiven/Phigros_Resource/blob/illustrationLowRes/"
+RAW_CONTENT_URL1_BAK = "https://github.akams.cn/https://github.com/7aGiven/Phigros_Resource/blob/info/"
+RAW_CONTENT_URL2_BAK = "https://github.akams.cn/https://github.com/7aGiven/Phigros_Resource/blob/avatar/"
 API_URL = "https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=illustrationLowRes"
 API_URL1 = "https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=avatar"
 API_URL2 = "https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=info"
@@ -21,13 +21,13 @@ def get_github_files(api_url):
     """使用GitHub API获取文件列表"""
     try:
         response = requests.get(api_url, timeout=10)
-        if response.status_code == 200:
+        if response.status_code in [200,301,302]:
             return [item['name'] for item in response.json() if item['type'] == 'file']
-        print(f"GitHub API请求失败: HTTP {response.status_code}")
-        return []
-    except requests.exceptions.RequestException as e:
-        print(f"网络错误: {e}")
-        return []
+        # print(f"GitHub API请求失败: HTTP {response.status_code}")
+        # raise Exception(f'网络错误: {e}')
+    except Exception as e:
+        # print(f"网络错误: {e}")
+        raise Exception(f'网络错误: {e}')
 
 def get_local_files(file_folder):
     """获取本地文件夹中的文件列表"""
@@ -37,36 +37,41 @@ def get_local_files(file_folder):
     
     return [f for f in os.listdir(file_folder) if os.path.isfile(os.path.join(file_folder, f))]
 
-def download_file(file_name, raw_url, file_folder, unexpected_url):
+def download_file(file_name, raw_url, file_folder, unexpected_url, flag = True):
     """从GitHub下载文件"""
     file_url = urljoin(raw_url, file_name)
+    # unexpected_url = urljoin(unexpected_url, file_name) ## 垃圾东西，不科学，把我//硬变成了/
+    if(flag): unexpected_url = f'{unexpected_url}/{file_name}'
     try:
         response = requests.get(file_url, timeout=10)
-        if response.status_code == 200:
+        if response.status_code in [200,301,302]:
             file_path = os.path.join(file_folder, file_name)
             with open(file_path, 'wb') as f:
                 f.write(response.content)
             print(f"已下载: {file_name}")
-        else:
-            print(f"下载失败: {file_name} (HTTP {response.status_code})")
-    except requests.exceptions.RequestException as e:
-        print(f"下载 {file_name} 时出错: {e}\n尝试使用代理网站")
+        else: raise Exception(f"下载失败: {file_name} (HTTP {response.status_code})")
+    except Exception as e:
+        # print(f"下载 {file_name} 时出错: {e}\n尝试使用代理网站")
         try:
             response = requests.get(unexpected_url, timeout=10)
-            if response.status_code == 200:
+            if response.status_code in [200,301,302]:
                 file_path = os.path.join(file_folder, file_name)
                 with open(file_path, 'wb') as f:
                     f.write(response.content)
                 print(f"已下载: {file_name}")
             else:
+                # print('=-------=')
+                # print(unexpected_url)
                 print(f"下载失败: {file_name} (HTTP {response.status_code})")
         except requests.exceptions.RequestException as e:
-            print(f"代理网站下载 {file_name} 时出错: {e}")
+            print(f"下载 {file_name} 时出错: {e}")
 
 def verify_file(file_name, raw_url, file_folder, unexpected_url):
     """验证本地文件与GitHub上的文件内容是否一致"""
     file_url = urljoin(raw_url, file_name)
     local_path = os.path.join(file_folder, file_name)
+    # unexpected_url = urljoin(unexpected_url, file_name) ## 垃圾东西，不科学，把我//硬变成了/
+    unexpected_url = f'{unexpected_url}/{file_name}'
     
     # 获取GitHub文件内容
     try:
@@ -76,7 +81,7 @@ def verify_file(file_name, raw_url, file_folder, unexpected_url):
         #     return False
         github_content = response.content
     except requests.exceptions.RequestException as e:
-        print(f"获取GitHub文件 {file_name} 时出错: {e}\n尝试使用代理网站")
+        # print(f"获取GitHub文件 {file_name} 时出错: {e}\n尝试使用代理网站")
         try:
             response = requests.get(unexpected_url, timeout=10)
             # if response.status_code != 200:
@@ -90,7 +95,7 @@ def verify_file(file_name, raw_url, file_folder, unexpected_url):
     # 检查本地文件是否存在
     if not os.path.exists(local_path):
         print(f"本地文件 {file_name} 不存在，将下载")
-        download_file(file_name, raw_url, file_folder)
+        download_file(file_name, raw_url, file_folder, unexpected_url, False)
         return True
     
     # 获取本地文件内容
@@ -104,7 +109,7 @@ def verify_file(file_name, raw_url, file_folder, unexpected_url):
     # 比较内容
     if github_content != local_content:
         print(f"文件不一致: {file_name}, 重新下载...")
-        download_file(file_name, raw_url, file_folder)
+        download_file(file_name, raw_url, file_folder, unexpected_url, False)
         return False
     
     return True
@@ -116,12 +121,12 @@ def sync_folder(api_url, raw_url, local_folder, unexpected_raw_url, unexpected_a
     # 获取文件列表
     try:
         github_files = get_github_files(api_url)
-    except requests.exceptions.RequestException as e:
-        print(f"同步 {local_folder} 时出错: {e}\n尝试使用代理网站")
+    except Exception as e:
+        # print(f"同步 {local_folder} 时出错: {e}\n尝试使用代理网站")
         try:
             github_files = get_github_files(unexpected_api_url)
         except:
-            print(f"代理网站同步 {local_folder} 时出错: {e}")
+            print(f"同步 {local_folder} 时出错: {e}")
             return False
     local_files = get_local_files(local_folder)
     print(f"GitHub文件数: {len(github_files)}, 本地文件数: {len(local_files)}")

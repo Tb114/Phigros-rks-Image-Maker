@@ -32,7 +32,7 @@ jobs:
 
 
     - name: Run main.py
-      run: python main.py
+      run: timeout 5m python main.py
 
     - name: Commit and push changes
       run: |
