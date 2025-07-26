@@ -1,7 +1,7 @@
 import ctypes
 import sys
 from json import loads
-from PIL import Image, ImageFilter, ImageDraw, ImageFont
+from PIL import Image, ImageFilter, ImageDraw, ImageFont, ImageEnhance
 from dotenv import load_dotenv
 from random import choice
 import os
@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pytz import timezone
 from pathlib import Path
 
-VERSION = '0.07.4'
+VERSION = '0.07.5'
 
 def printwithcolor(text: str, option: list, end1: str='\n'):
     '''
@@ -106,7 +106,10 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
     # 初始化基础图像
     original_img = Image.open(a_path).convert('RGB')
+    enhancer = ImageEnhance.Brightness(original_img)
+    original_img = enhancer.enhance(0.7)
     original_width, original_height = original_img.size
+    
     target_width, target_height = target_size
     
     # 背景模糊处理
@@ -129,10 +132,14 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     ava=''
     try:
         ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
-    except Exception as e:
-        fuck(f'找不到头像png文件, 请检查avatar是否为最新数据:{e}',5)
-    ava_round = add_corners(ava, 5)
-    final_img.paste(ava_round, (64, 64), ava_round)    
+        ava_round = add_corners(ava, 5)
+        final_img.paste(ava_round, (64, 64), ava_round)    
+    # except Exception as e:
+        #     fuck(f'找不到头像png文件, 请检查avatar是否为最新数据:{e}',5)
+    except:
+        ava = Image.new("RGBA",(64,64),(57,197,187))
+        ava_round = add_corners(ava, 5)
+    
      
     # 字体配置
     FONT_CONFIG = {
@@ -140,7 +147,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         'difficulty': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 17),
         'song_name': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
         'score': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
-        'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 22),
+        'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
         'next': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 16),
         'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48),
         'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
@@ -494,7 +501,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         col = idx % 3
         
         # 计算位置
-        x = 50 + col * (cell_width + 70)
+        x = 50 + col * (cell_width + 100)
         y = start_y + row * (cell_height - 20)
         if idx >= 30: y += 65
         # 边界检查
@@ -530,13 +537,13 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         if not os.path.exists(img_path):
             img_path = "Resource/nodata.png"
             
-        song_img = Image.open(img_path).convert('RGB').resize((256, 135))
+        song_img = Image.open(img_path).convert('RGB').resize((int(256*1.2), int(135*1.2)))
         final_img.paste(song_img, (x + b_width, y))
         if(item[0] != 'No Data'):
         # 3. 难度标签（左下角）
             diff_type = item[7]
             tag_size = (70, 45)
-            tag_pos = (x + b_width, y + 135 - tag_size[1])  # 左下角位置
+            tag_pos = (x + b_width, y + 135 - tag_size[1] +25)  # 左下角位置
             
             final_img = add_rounded_rectangle(
                 final_img,
@@ -569,7 +576,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         info_block_width = 240
         info_block_height = 130
         # 2. 绘制info_block（圆角矩形背景）
-        info_pos = (x + b_width + 256, y + (135 - info_block_height)//2)
+        info_pos = (x + b_width + 256 + 50, y + (135 - info_block_height)//2 + 25)
         # final_img = add_rounded_rectangle(
         #     final_img,
         #     info_pos,
@@ -690,7 +697,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             final_img.paste(icon, (info_pos[0], info_pos[1]+40), icon)
     draw.text(
         (5, 2950),
-        'Ver.'+VERSION,
+        'Ver. '+VERSION,
         fill=WHITE,
         font=FONT_CONFIG['version']
     )
@@ -715,7 +722,8 @@ try: os.system(f'cd \"{current_dir}\"')
 except: printwithcolor('无法切换到文件所在目录, 可能无法正常运行',[1,31])
 settings : dict = {
     'AutoUpdate' : True, 
-    'EnterToContiune' : True
+    'EnterToContiune' : True,
+    'yywMode' : False
     }
 if os.path.exists('.env'):
     load_dotenv('.env')
@@ -727,14 +735,16 @@ if os.path.exists('.env'):
         print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
         sessionToken = None
         flag1 : bool = True
-        while True:
-            sessionToken : str = input().strip()
-            if(sessionToken == '0'): break
-            if(sessionToken != ''):
-                flag1 = False
-                break
-        if(flag1): sys.exit(0)
-    
+        try:
+            while True:
+                sessionToken : str = input().strip()
+                if(sessionToken == '0'): break
+                if(sessionToken != ''):
+                    flag1 = False
+                    break
+            if(flag1): sys.exit(0)  
+        except:
+            fuck('?')
 else:
     print('未检测到.env文件')
     print('请输入Sessiontoken, 输入0则结束程序')
@@ -758,11 +768,11 @@ if os.path.exists('settings.ini'):
             settings[key] = set1
         except:
             pass
-else:
-    f = open('settings.ini', 'w')
-    for key, value in settings.items():
-        f.write(f'{key}={"True" if value else "False"}\n')
-    f.close()
+# else:
+#     f = open('settings.ini', 'w')
+#     for key, value in settings.items():
+#         f.write(f'{key}={"True" if value else "False"}\n')
+#     f.close()
 
 try:  sessionToken = sessionToken.encode('utf-8')
 except: pass
@@ -781,6 +791,8 @@ if settings['AutoUpdate']:
             except Exception as e:
                 printwithcolor(f'无法更新文件{e}',[31])
     except: pass
+
+
 phigros.get_handle.argtypes = ctypes.c_char_p,
 phigros.get_handle.restype = ctypes.c_void_p
 phigros.free_handle.argtypes = ctypes.c_void_p,
@@ -794,24 +806,79 @@ phigros.load_difficulty.argtypes = ctypes.c_void_p,
 phigros.get_b19.argtypes = ctypes.c_void_p,
 phigros.get_b19.restype = ctypes.c_char_p
 # phigros.re8.argtypes = ctypes.c_void_p,
-
 try:
-    handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
-except Exception as e:
-    fuck(e)
-# print(handle)
-nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
-if(nickname == 'ERROR:Could not find user.'):
-    fuck('Sessiontoken错误',4)
-summary = loads(phigros.get_summary(handle).decode('utf-8'))
-savedata = loads(phigros.get_save(handle).decode('utf-8'))
-# print(summary)
-# print(savedata)
-gameRecords = savedata['gameRecord']
-data = savedata['gameProgress']['money']
-user = savedata['user']
-# print(savedata)             # 获取存档
+    singlefile = open('info.tsv', 'r', encoding='utf-8')
+except:
+    fuck('无法打开info.tsv文件',11)
+songid = singlefile.readlines()    
+songname = {}
+for idx in range(len(songid)):
+    now = songid[idx]
+    songid[idx] = now.split('\t')[0]
+    songname.update({songid[idx]:now.split('\t')[1]})
+# print(songname)
+# print(gameRecords)
+try:
+    difffile = open('difficulty.tsv', 'r', encoding='utf-8')
+except:
+    fuck('无法打开info.tsv文件',11)
+diff = {}
+allRksRanking = {}
+contect = difffile.readlines()
+for idx in range(len(contect)):
+    contect[idx] = contect[idx].rstrip('\n')
+# print(contect)
+for i in contect:
+    sum = i.count('\t')
+    str1 = i.split('\t')
+    if sum == 3:
+        diff[str1[0]] = [float(str1[1]), float(str1[2]), float(str1[3]), 0.0]
+        for _ in range(1,4):
+            allRksRanking[(str1[0],_)]=[diff[str1[0]][_-1]]
+    else:
+        diff[str1[0]] = [float(str1[1]), float(str1[2]), float(str1[3]), float(str1[4])]
+        for _ in range(1,5):
+            allRksRanking[(str1[0],_)]=[diff[str1[0]][_-1]]
+allRksRanking = sorted(allRksRanking.items(), key=lambda x: x[1])
+allRksRanking.reverse()
+def getMaxRks()->int:
+    res = 0
+    for idx,i in zip(allRksRanking,range(0,min(27,len(allRksRanking)))):
+        res+=idx[1][0]
+        if i<=2: res+=idx[1][0]
+    return res/30
 
+if not settings['yywMode']:
+        
+    try:
+        handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
+    except Exception as e:
+        fuck(e)
+    # print(handle)
+    nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
+    if(nickname == 'ERROR:Could not find user.'):
+        fuck('Sessiontoken错误',4)
+    summary = loads(phigros.get_summary(handle).decode('utf-8'))
+    savedata = loads(phigros.get_save(handle).decode('utf-8'))
+    gameRecords = savedata['gameRecord']
+    data = savedata['gameProgress']['money']
+    user = savedata['user']
+    # print(savedata)             # 获取存档
+else:
+    nickname = 'Sample'
+    summary={'challengeModeRank':551,'rankingScore':getMaxRks()}
+    user = {'avatar':''}
+    savedata={'gameRecord':{},'gameProgress':{'challengeModeRank':551,'money':[0,0,0,0,0]} }
+    for idx in contect:
+        sum = idx.count('\t')
+        str1 = idx.split('\t')
+        if sum == 3:
+            savedata['gameRecord'][str1[0]]=[1000000,100,1,1000000,100,1,1000000,100,1,0,0,0]
+        else:
+            savedata['gameRecord'][str1[0]]=[1000000,100,1,1000000,100,1,1000000,100,1,1000000,100,1]
+    gameRecords = savedata['gameRecord']
+    data = savedata['gameProgress']['money']
+        
 singlefile = open('info.tsv', 'r', encoding='utf-8')
 songid = singlefile.readlines()    
 songname = {}
@@ -902,7 +969,8 @@ updatetime = datetime.now().astimezone(timezone('Asia/Shanghai')).replace(tzinfo
 
 original_stdout = sys.stdout
 sys.stdout = open('result.txt', 'w', encoding='utf-8')
-print(updatetime)
+if(not settings['yywMode']): print(updatetime)
+else: print('已开启演示模式，所有成绩均为演示作用')
 # print('Save version: ', summary['saveVersion'])
 def challengeModeRankToChinese(cmr : int) -> str:
     res : str = ''
@@ -915,6 +983,7 @@ def challengeModeRankToChinese(cmr : int) -> str:
     res += str(cmr%100)
     return res
 cmrcn = challengeModeRankToChinese(summary['challengeModeRank'])
+print('昵称: ', nickname)
 print('课题模式:', cmrcn)
 print('RKS: ', summary['rankingScore'])
 # print('GameVersion: ', summary['gameVersion'])
@@ -946,7 +1015,7 @@ sys.stdout = original_stdout
 # phigros.load_difficulty(b"../difficulty.tsv")# 读取difficulty.tsv,参数为文件路径
 # b19 = phigros.get_b19(handle).decode('utf-8')
 # print(b19)             # 从存档读取B19,依赖load_difficulty
-phigros.free_handle(handle)                 # 释放handle的内存,不会被垃圾回收,使用完handle请确保释放
+if(not settings['yywMode']): phigros.free_handle(handle)                 # 释放handle的内存,不会被垃圾回收,使用完handle请确保释放
 b27 = [] # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
 
 
@@ -976,8 +1045,8 @@ for i in range(33):
 
 # score[i][2] ->EZ/HD/IN/AT
 filename = f'{str(updatetime).replace(" ", "_").replace(":", "_").replace(".", "_")}'
-if(os.path.exists('/log')): 
-    if(os.path.isfile('/log')): pass
+if(os.path.exists('log')): 
+    if(not os.path.isfile('/log')): pass
     else: os.system('mkdir log')
 else: os.system('mkdir log')
 
@@ -989,7 +1058,7 @@ createImage(
     
     a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
     output_path="result.png",
-    target_size=(1800, 3000),
+    target_size=(1875, 3000),
     blur_radius=55,  # 可根据需要调整虚化程度
     avatar=user['avatar'],
     b27=b27,
@@ -1002,8 +1071,8 @@ createImage(
 )
 printwithcolor('成绩图片已输出至result.png, 文字文件已输出至result.txt',[36])
 
-print(updatetime)
-
+if(not settings['yywMode']): print(updatetime)
+else: print('已开启演示模式，所有成绩均为演示作用')
 if(cmrcn[0]=='灰'):printwithcolor(cmrcn,[30,1],' ')
 elif(cmrcn[0]=='绿'):printwithcolor(cmrcn,[32,1],' ')
 elif(cmrcn[0]=='蓝'):printwithcolor(cmrcn,[36,1],' ')
