@@ -715,7 +715,24 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     )
     # 最终保存
     final_img.convert('RGB').save(output_path, format="PNG")
-# 使用示例
+
+
+if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
+elif(sys.platform.startswith('win32')): phigros = ctypes.CDLL("./phigros-64.dll")
+else: fuck('暂不支持除Linux/Windows外的操作系统',1)
+phigros.get_handle.argtypes = ctypes.c_char_p,
+phigros.get_handle.restype = ctypes.c_void_p
+phigros.free_handle.argtypes = ctypes.c_void_p,
+phigros.get_nickname.argtypes = ctypes.c_void_p,
+phigros.get_nickname.restype = ctypes.c_char_p
+phigros.get_summary.argtypes = ctypes.c_void_p,
+phigros.get_summary.restype = ctypes.c_char_p
+phigros.get_save.argtypes = ctypes.c_void_p,
+phigros.get_save.restype = ctypes.c_char_p
+phigros.load_difficulty.argtypes = ctypes.c_void_p,
+phigros.get_b19.argtypes = ctypes.c_void_p,
+phigros.get_b19.restype = ctypes.c_char_p
+
 
 current_dir = Path(__file__).resolve().parent
 try: os.system(f'cd \"{current_dir}\"')
@@ -725,38 +742,52 @@ settings : dict = {
     'EnterToContiune' : True,
     'yywMode' : False
     }
-if os.path.exists('.env'):
-    load_dotenv('.env')
+
+flag1 : bool = False
+try:
+    sessionToken=str(sys.argv[1])
+    try: sessionToken=sessionToken.encode('UTF-8')
+    except: pass
     try:
-        sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
+        handle = phigros.get_handle(sessionToken)
+        nickname = phigros.get_nickname(handle).decode('utf-8')        # 获取玩家昵称
+        if(nickname == 'ERROR:Could not find user.'):raise('114514')
+        flag1 = True
     except:
-        sessionToken = None
-    if(not sessionToken): 
-        print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
+        raise('114514')
+except:
+    if os.path.exists('.env'):
+        load_dotenv('.env')
+        try:
+            sessionToken = os.getenv('SESSIONTOKEN').encode('UTF-8')
+        except:
+            sessionToken = None
+        if(not sessionToken): 
+            print('.env文件中没有SESSIONTOKEN项, 请输入Sessiontoken, 输入0则结束程序')
+            sessionToken = None
+            flag1 : bool = True
+            try:
+                while True:
+                    sessionToken : str = input().strip()
+                    if(sessionToken == '0'): break
+                    if(sessionToken != ''):
+                        flag1 = False
+                        break
+                if(flag1): sys.exit(0)  
+            except:
+                fuck('?')
+    else:
+        print('未检测到.env文件')
+        print('请输入Sessiontoken, 输入0则结束程序')
         sessionToken = None
         flag1 : bool = True
-        try:
-            while True:
-                sessionToken : str = input().strip()
-                if(sessionToken == '0'): break
-                if(sessionToken != ''):
-                    flag1 = False
-                    break
-            if(flag1): sys.exit(0)  
-        except:
-            fuck('?')
-else:
-    print('未检测到.env文件')
-    print('请输入Sessiontoken, 输入0则结束程序')
-    sessionToken = None
-    flag1 : bool = True
-    while True:
-        sessionToken : str = input().strip()
-        if(sessionToken == '0'): break
-        if(sessionToken != ''):
-            flag1 = False
-            break
-    if(flag1): sys.exit(0)   
+        while True:
+            sessionToken : str = input().strip()
+            if(sessionToken == '0'): break
+            if(sessionToken != ''):
+                flag1 = False
+                break
+        if(flag1): sys.exit(0)   
    
 if os.path.exists('settings.ini'):
     load_dotenv('settings.ini')
@@ -777,9 +808,6 @@ if os.path.exists('settings.ini'):
 try:  sessionToken = sessionToken.encode('utf-8')
 except: pass
 
-if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
-elif(sys.platform.startswith('win32')): phigros = ctypes.CDLL("./phigros-64.dll")
-else: fuck('暂不支持除Linux/Windows外的操作系统',1)
 # print(phigros)
 if settings['AutoUpdate']:
     try:
@@ -793,18 +821,7 @@ if settings['AutoUpdate']:
     except: pass
 
 
-phigros.get_handle.argtypes = ctypes.c_char_p,
-phigros.get_handle.restype = ctypes.c_void_p
-phigros.free_handle.argtypes = ctypes.c_void_p,
-phigros.get_nickname.argtypes = ctypes.c_void_p,
-phigros.get_nickname.restype = ctypes.c_char_p
-phigros.get_summary.argtypes = ctypes.c_void_p,
-phigros.get_summary.restype = ctypes.c_char_p
-phigros.get_save.argtypes = ctypes.c_void_p,
-phigros.get_save.restype = ctypes.c_char_p
-phigros.load_difficulty.argtypes = ctypes.c_void_p,
-phigros.get_b19.argtypes = ctypes.c_void_p,
-phigros.get_b19.restype = ctypes.c_char_p
+
 # phigros.re8.argtypes = ctypes.c_void_p,
 try:
     singlefile = open('info.tsv', 'r', encoding='utf-8')
@@ -851,7 +868,7 @@ def getMaxRks()->int:
 if not settings['yywMode']:
         
     try:
-        handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
+        if(not flag1): handle = phigros.get_handle(sessionToken)   # 获取handle,申请内存,参数为sessionToken
     except Exception as e:
         fuck(e)
     # print(handle)
