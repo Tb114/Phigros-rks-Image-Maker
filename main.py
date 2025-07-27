@@ -491,7 +491,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA').resize((600,157))
     except:
         try:
-            OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA')
+            OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((600,157))
         except Exception as e:
             fuck(e)
     final_img.paste(OVERFLOW,(600,2315),mask=OVERFLOW)
@@ -702,13 +702,13 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         font=FONT_CONFIG['version']
     )
     draw.text(
-        (1150, 2950),
+        (1265, 2950),
         'Phigros rks Image Maker',
         fill=WHITE,
         font=FONT_CONFIG['version']
     )
     draw.text(
-        (1500, 2960),
+        (1610, 2960),
         'open-sourced on Github',
         fill=WHITE,
         font=FONT_CONFIG['open-sourced']
