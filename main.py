@@ -9,8 +9,9 @@ from datetime import datetime, timezone
 from pytz import timezone
 from pathlib import Path
 
-VERSION = '0.07.5'
-
+VERSION = 'Unknown'
+with open("VERSION", "r") as f:
+    VERSION = f.read()
 def printwithcolor(text: str, option: list, end1: str='\n'):
     '''
     option: 
@@ -789,8 +790,8 @@ except:
                 break
         if(flag1): sys.exit(0)   
    
-if os.path.exists('settings.ini'):
-    load_dotenv('settings.ini')
+if os.path.exists('config.ini'):
+    load_dotenv('config.ini')
     for key in settings.keys():
         try:
             set1 = os.getenv(key).encode('UTF-8')
@@ -800,7 +801,7 @@ if os.path.exists('settings.ini'):
         except:
             pass
 # else:
-#     f = open('settings.ini', 'w')
+#     f = open('config.ini', 'w')
 #     for key, value in settings.items():
 #         f.write(f'{key}={"True" if value else "False"}\n')
 #     f.close()
