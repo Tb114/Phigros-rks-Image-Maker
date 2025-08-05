@@ -886,7 +886,7 @@ else:
     nickname = 'Sample'
     summary={'challengeModeRank':551,'rankingScore':getMaxRks()}
     user = {'avatar':''}
-    savedata={'gameRecord':{},'gameProgress':{'challengeModeRank':551,'money':[0,0,0,0,0]} }
+    savedata={'gameRecord':{},'gameProgress':{'challengeModeRank':551,'money':[0,3,4,7,3]} }
     for idx in contect:
         sum = idx.count('\t')
         str1 = idx.split('\t')
