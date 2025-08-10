@@ -816,7 +816,7 @@ try:
     if settings['AutoUpdate'] == 1: raise(Exception)
     elif settings['AutoUpdate'] == -1:
         updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为y\n')
-        if not (updatefileOption == 'Y' or updatefileOption == 'y'):
+        if (updatefileOption == 'Y' or updatefileOption == 'y'):
             raise(Exception)
 except Exception as e: 
     if(e != KeyboardInterrupt):
@@ -890,7 +890,7 @@ else:
     nickname = 'Sample'
     summary={'challengeModeRank':551,'rankingScore':getMaxRks()}
     user = {'avatar':''}
-    savedata={'gameRecord':{},'gameProgress':{'challengeModeRank':551,'money':[0,3,7,4,3]} }
+    savedata={'gameRecord':{},'gameProgress':{'challengeModeRank':551,'money':[3,7,4,3,0]} }
     for idx in contect:
         sum = idx.count('\t')
         str1 = idx.split('\t')
@@ -1104,7 +1104,7 @@ elif(cmrcn[0]=='蓝'):printwithcolor(cmrcn,[36,1],' ')
 elif(cmrcn[0]=='红'):printwithcolor(cmrcn,[31,1],' ')
 elif(cmrcn[0]=='金'):printwithcolor(cmrcn,[33,1],' ')
 else:printwithcolor(cmrcn,[35,1],' ')
-printwithcolor(round(summary['rankingScore'],6),[7,1],    ' ')
+printwithcolor('%.6f'%(round(summary['rankingScore'],6)),[7,1],' ')
 # print('GameVersion: ', summary['gameVersion'])
 printwithcolor(data_num, [1,3])
 print('\\   ',end='')

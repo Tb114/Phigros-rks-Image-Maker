@@ -2,7 +2,7 @@
 昵称:  Sample
 课题模式: 彩51
 RKS:  16.89
-Data: 3TiB 4GiB 7MiB 3KiB
+Data: 3PiB 4TiB 7GiB 3MiB 0KiB
 
 \    EZ   HD   IN   AT
 C    277  277  277  37 
