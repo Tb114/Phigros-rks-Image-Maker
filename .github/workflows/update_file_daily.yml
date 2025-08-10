@@ -1,9 +1,8 @@
-name: Run main.py hourly
+name: Run updatefile.py daily
 
 on:
   schedule:
-    - cron: '0 * * * *'
-    - cron: '30 * * * *'
+    - cron: '30 8 * * *'
   workflow_dispatch:  # 允许手动触发
 
 jobs:
@@ -22,22 +21,18 @@ jobs:
       with:
         python-version: '3.11'  # 使用你需要的Python版本
 
-    - name: Write SESSIONTOKEN to .env
-      run: |
-        echo "SESSIONTOKEN=${{ secrets.SESSIONTOKEN }}" > .env
-
     - name: Install dependencies
       run: |
-        pip install dotenv Pillow pytz requests pathlib
+        pip install requests
 
 
     - name: Run main.py
-      run: timeout 1m python main.py
+      run: timeout 2m python updatefile.py
 
     - name: Commit and push changes
       run: |
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
         git add .
-        git diff --quiet && git diff --staged --quiet || git commit -m "Auto-commit by GitHub Actions"
+        git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update by GitHub Actions"
         git push

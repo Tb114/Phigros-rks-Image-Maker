@@ -739,10 +739,11 @@ current_dir = Path(__file__).resolve().parent
 try: os.system(f'cd \"{current_dir}\"')
 except: printwithcolor('无法切换到文件所在目录, 可能无法正常运行',[1,31])
 settings : dict = {
-    'AutoUpdate' : True, 
-    'EnterToContiune' : True,
-    'yywMode' : False
-    }
+    'AutoUpdate' : True,        #自动更新数据
+    'EnterToContiune' : True,   #按下Enter以继续
+    'yywMode' : False,          #演示模式
+    'outputLog' : True,         #是否保留历史记录
+    } 
 
 flag1 : bool = False
 try:
@@ -795,8 +796,9 @@ if os.path.exists('config.ini'):
     for key in settings.keys():
         try:
             set1 = os.getenv(key).encode('UTF-8')
-            if(set1 == 1 or set1 == b'True' or set1 == b'true'): set1=True
-            else: set1=False
+            if(set1 == 1 or set1 == b'True' or set1 == b'true'): set1 = 1     # strictly enabled
+            elif(set1 == 0 or set1 == b'False' or set1 == b'false'): set1 = 0 # strictly disabled
+            else: set1 = -1                                                   # normal case
             settings[key] = set1
         except:
             pass
@@ -810,17 +812,19 @@ try:  sessionToken = sessionToken.encode('utf-8')
 except: pass
 
 # print(phigros)
-if settings['AutoUpdate']:
-    try:
-        updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为n\n')
-        if updatefileOption == 'Y' or updatefileOption == 'y':
-            try:
-                import updatefile
-                updatefile.main()
-            except Exception as e:
-                printwithcolor(f'无法更新文件{e}',[31])
-    except: pass
-
+try:
+    if settings['AutoUpdate'] == 1: raise(Exception)
+    elif settings['AutoUpdate'] == -1:
+        updatefileOption = input('是否更新本地的曲绘、头像、歌曲难度、歌曲信息文件(y/n)默认为y\n')
+        if not (updatefileOption == 'Y' or updatefileOption == 'y'):
+            raise(Exception)
+except Exception as e: 
+    if(e != KeyboardInterrupt):
+        try:
+            import updatefile
+            updatefile.main()
+        except Exception as e:
+            printwithcolor(f'无法更新文件{e}',[31])
 
 
 # phigros.re8.argtypes = ctypes.c_void_p,
@@ -886,7 +890,7 @@ else:
     nickname = 'Sample'
     summary={'challengeModeRank':551,'rankingScore':getMaxRks()}
     user = {'avatar':''}
-    savedata={'gameRecord':{},'gameProgress':{'challengeModeRank':551,'money':[0,0,0,0,0]} }
+    savedata={'gameRecord':{},'gameProgress':{'challengeModeRank':551,'money':[0,3,7,4,3]} }
     for idx in contect:
         sum = idx.count('\t')
         str1 = idx.split('\t')
@@ -1062,15 +1066,18 @@ for i in range(33):
     b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'推分建议已经被砍了' '''f'{round(target_acc,2)}%' if target_acc<=100 else '无法推分' ''',score[i][4]))
 
 # score[i][2] ->EZ/HD/IN/AT
-filename = f'{str(updatetime).replace(" ", "_").replace(":", "_").replace(".", "_")}'
-if(os.path.exists('log')): 
-    if(not os.path.isfile('/log')): pass
+if settings['outputLog']:
+    filename = f'{str(updatetime).replace(" ", "_").replace(":", "_").replace(".", "_")}'
+    if settings['yywMode']: 
+        filename = filename + "_yywmode"
+    if(os.path.exists('log')): 
+        if(not os.path.isfile('/log')): pass
+        else: os.system('mkdir log')
     else: os.system('mkdir log')
-else: os.system('mkdir log')
-
-if(sys.platform.startswith('linux')): os.system(f'cp ./result.txt ./log/{filename} >/dev/null')
-elif(sys.platform.startswith('win32')): 
-    os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
+    
+    if(sys.platform.startswith('linux')): os.system(f'cp ./result.txt ./log/{filename}.txt >/dev/null')
+    elif(sys.platform.startswith('win32')): 
+        os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
     
 createImage(
     
