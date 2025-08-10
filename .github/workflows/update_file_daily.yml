@@ -1,0 +1,38 @@
+name: Run updatefile.py daily
+
+on:
+  schedule:
+    - cron: '30 8 * * *'
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  run-main:
+    runs-on: ubuntu-latest
+    permissions: 
+        contents: write
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # 获取完整历史记录以便推送
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'  # 使用你需要的Python版本
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+
+    - name: Run main.py
+      run: timeout 2m python updatefile.py
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add .
+        git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update by GitHub Actions"
+        git push

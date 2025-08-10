@@ -18,7 +18,7 @@ jobs:
         fetch-depth: 0  # 获取完整历史记录以便推送
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.11'  # 使用你需要的Python版本
 
@@ -32,7 +32,7 @@ jobs:
 
 
     - name: Run main.py
-      run: timeout 5m python main.py
+      run: timeout 1m python main.py
 
     - name: Commit and push changes
       run: |
