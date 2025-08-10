@@ -7,7 +7,6 @@ from random import choice
 import os
 from datetime import datetime, timezone
 from pytz import timezone
-from pathlib import Path
 
 VERSION = 'Unknown'
 with open("VERSION", "r") as f:
@@ -735,7 +734,7 @@ phigros.get_b19.argtypes = ctypes.c_void_p,
 phigros.get_b19.restype = ctypes.c_char_p
 
 
-current_dir = Path(__file__).resolve().parent
+current_dir = os.getcwd()
 try: os.system(f'cd \"{current_dir}\"')
 except: printwithcolor('无法切换到文件所在目录, 可能无法正常运行',[1,31])
 settings : dict = {
