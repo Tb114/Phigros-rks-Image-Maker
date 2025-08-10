@@ -1,0 +1,49 @@
+已开启演示模式，所有成绩均为演示作用
+昵称:  Sample
+课题模式: 彩51
+RKS:  16.89
+Data: 3PiB 4TiB 7GiB 3MiB 0KiB
+
+\    EZ   HD   IN   AT
+C    277  277  277  37 
+FC   277  277  277  37 
+AT   277  277  277  37 
+
+P1 Rrhar'il,  ACC: 100%, RKS: 17.6/17.6, Score:1000000
+P2 Igallta,  ACC: 100%, RKS: 17.4/17.4, Score:1000000
+P3 Distorted Fate,  ACC: 100%, RKS: 17.4/17.4, Score:1000000
+
+B1 Rrhar'il,  ACC: 100%, RKS: 17.6/17.6, Score:1000000
+B2 Igallta,  ACC: 100%, RKS: 17.4/17.4, Score:1000000
+B3 Distorted Fate,  ACC: 100%, RKS: 17.4/17.4, Score:1000000
+B4 祈 -我ら神祖と共に歩む者なり-,  ACC: 100%, RKS: 17.3/17.3, Score:1000000
+B5 +ERABY+E CONNEC+10N,  ACC: 100%, RKS: 17.3/17.3, Score:1000000
+B6 DESTRUCTION 3,2,1,  ACC: 100%, RKS: 17.3/17.3, Score:1000000
+B7 Stardust:RAY,  ACC: 100%, RKS: 17.2/17.2, Score:1000000
+B8 AbsoluTe disoRdeR,  ACC: 100%, RKS: 17.2/17.2, Score:1000000
+B9 幻影鬼魅 (PLEASE),  ACC: 100%, RKS: 17.0/17.0, Score:1000000
+B10 Re：End of a Dream,  ACC: 100%, RKS: 16.9/16.9, Score:1000000
+B11 INFiNiTE ENERZY -Overdoze-,  ACC: 100%, RKS: 16.8/16.8, Score:1000000
+B12 Cuvism³,  ACC: 100%, RKS: 16.8/16.8, Score:1000000
+B13 Stasis,  ACC: 100%, RKS: 16.7/16.7, Score:1000000
+B14 Spasmodic,  ACC: 100%, RKS: 16.7/16.7, Score:1000000
+B15 Diamond Dust,  ACC: 100%, RKS: 16.7/16.7, Score:1000000
+B16 volcanic,  ACC: 100%, RKS: 16.6/16.6, Score:1000000
+B17 PRAGMATISM -RESURRECTION-,  ACC: 100%, RKS: 16.6/16.6, Score:1000000
+B18 Avataar~Reincarnation of Kalpa~,  ACC: 100%, RKS: 16.6/16.6, Score:1000000
+B19 ATHAZA,  ACC: 100%, RKS: 16.6/16.6, Score:1000000
+B20 Stardust:RAY,  ACC: 100%, RKS: 16.5/16.5, Score:1000000
+B21 Lyrith -迷宮リリス-,  ACC: 100%, RKS: 16.5/16.5, Score:1000000
+B22 Indelible Scar,  ACC: 100%, RKS: 16.5/16.5, Score:1000000
+B23 Ark,  ACC: 100%, RKS: 16.5/16.5, Score:1000000
+B24 祈 -我ら神祖と共に歩む者なり-,  ACC: 100%, RKS: 16.4/16.4, Score:1000000
+B25 狂喜蘭舞,  ACC: 100%, RKS: 16.4/16.4, Score:1000000
+B26 KIZUNA Resolution,  ACC: 100%, RKS: 16.4/16.4, Score:1000000
+B27 CROSS†SOUL,  ACC: 100%, RKS: 16.4/16.4, Score:1000000
+B28 Antithese,  ACC: 100%, RKS: 16.4/16.4, Score:1000000
+————OVERFLOW————
+B29 Fractured Angel,  ACC: 100%, RKS: 16.3/16.3, Score:1000000
+B30 +ERABY+E CONNEC+10N,  ACC: 100%, RKS: 16.3/16.3, Score:1000000
+B31 Distorted Fate,  ACC: 100%, RKS: 16.3/16.3, Score:1000000
+B32 DESTRUCTION 3,2,1,  ACC: 100%, RKS: 16.3/16.3, Score:1000000
+B33 Chronos Collapse - La Campanella,  ACC: 100%, RKS: 16.3/16.3, Score:1000000
