@@ -102,619 +102,916 @@ DIFFICULTY_COLORS = {
 INFO_BLOCK_COLOR = (57, 197, 187)
 WHITE = (255, 255, 255)
 
-def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress):
+def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress, style):
     # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
-    # 初始化基础图像
-    original_img = Image.open(a_path).convert('RGB')
-    enhancer = ImageEnhance.Brightness(original_img)
-    original_img = enhancer.enhance(0.7)
-    original_width, original_height = original_img.size
     
-    target_width, target_height = target_size
-    
-    # 背景模糊处理
-    ratio = max(target_width / original_width, target_height / original_height)
-    new_size = (int(original_width * ratio), int(original_height * ratio))
-    
-    blurred_bg = original_img.resize(new_size, Image.LANCZOS)
-    blurred_bg = blurred_bg.filter(ImageFilter.GaussianBlur(radius=blur_radius))
-    
-    # 裁剪背景
-    left = (blurred_bg.width - target_width) // 2
-    top = (blurred_bg.height - target_height) // 2
-    blurred_bg = blurred_bg.crop((left, top, left+target_width, top+target_height))
-    
-    final_img = Image.new("RGBA", target_size)
-    final_img.paste(blurred_bg, (0, 0))
-    
-    # 绘制头像
-    
-    ava=''
-    try:
-        ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
-        ava_round = add_corners(ava, 5)
-        final_img.paste(ava_round, (64, 64), ava_round)    
-    # except Exception as e:
-        #     fuck(f'找不到头像png文件, 请检查avatar是否为最新数据:{e}',5)
-    except:
-        ava = Image.new("RGBA",(64,64),(57,197,187))
-        ava_round = add_corners(ava, 5)
-    
-     
-    # 字体配置
-    FONT_CONFIG = {
-        'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
-        'difficulty': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 17),
-        'song_name': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
-        'score': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
-        'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
-        'next': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 16),
-        'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48),
-        'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
-        'song_name_bigger': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
-        'challenge_rank': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
-        'data': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
-        'updatetime': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 22),
-        'sheet': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
-        'version': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 30),
-        'open-sourced': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
-        # 'open-sourced': ImageFont.truetype("Resource/Saira-Regular.ttf", 24),
-        # 'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
-        # 'difficulty': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 17),
-        # 'song_name': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 20),
-        # 'score': ImageFont.truetype("Resource/Saira-Regular.ttf", 32),
-        # 'accuracy': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
-        # 'next': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 16),
-        # 'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
-        # 'rks': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 26),
-        # 'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
-        # 'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28),
-        # 'data': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
-        # 'updatetime': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
-        # 'sheet': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 26),
-        # 'version': ImageFont.truetype("Resource/Saira-Regular.ttf", 30),
-        # 'open-sourced': ImageFont.truetype("Resource/Saira-Regular.ttf", 24),
-
+    if(style == 0):pass
+    elif style == 1:
+        # 横向布局
+        target_size = (3000, 1875)  # 调整为横向尺寸
         
-    }
-       
-    # --- 新增：在头像右侧绘制用户名文本框 ---
-    draw = ImageDraw.Draw(final_img)
-
-    # 计算文本框位置（头像右侧 + 20px间距）
-    username_x = 64 + ava_round.width + 20
-    username_y = 64
-
-    # 文本框背景（圆角矩形）
-    username_bg_width = 600  # 宽度可根据需要调整
-    username_bg_height = 96
-    username_bg_radius = 10
-
-    final_img = add_rounded_rectangle(
-        final_img,
-        (username_x, username_y),
-        (username_bg_width, username_bg_height),
-        radius=username_bg_radius,
-        color=(50, 50, 50),  # 深灰色背景
-        alpha=150
-    )
-
-    # 绘制用户名文本（居中）
-    username_bbox = draw.textbbox((0, 0), username, font=FONT_CONFIG['username'])
-
-    
-    draw = ImageDraw.Draw(final_img)
-    username_x = 64 + ava_round.width + 20
-    username_y = 64
-    username_bg_width = 600
-    username_bg_height = 96
-    username_bg_radius = 10
-
-    final_img = add_rounded_rectangle(
-        final_img,
-        (username_x, username_y),
-        (username_bg_width, username_bg_height),
-        radius=username_bg_radius,
-        color=(50, 50, 50),
-        alpha=150
-    )
-    draw.text(
-        (username_x + (username_bg_width - username_bbox[2]) // 2, username_y + (username_bg_height - username_bbox[3]) // 2 - 10),
-        username,
-        fill=WHITE,
-        font=FONT_CONFIG['username']
-    )
-    
-    final_img = add_rounded_rectangle(
-        final_img,
-        (username_x, username_y - 28),
-        (500,30),
-        radius=5,
-        color=(50, 50, 50),
-        alpha=150
-    )
-    draw.text(
-        (username_x + 10, username_y - 28),
-        'Updated at: '+updatetime[:-7]+' UTC+08:00',
-        fill=WHITE,
-        font=FONT_CONFIG['updatetime']
-    )
-    
-    # 在username绘制代码之后添加以下内容
-
-    # 表格参数配置  
-    table_x = username_x + username_bg_width + 400  # 表格起始x坐标（username框右侧20px）
-    table_y = username_y - 10  # 与username框对齐
-    cell_width = 80  # 单元格宽度
-    cell_height = 40  # 单元格高度
-    header_height = 40  # 表头高度
-    row_height = cell_height  # 行高
-    border_radius = 5  # 圆角半径
-    bg_alpha = 150  # 背景透明度
-
-    # 表头文本
-    headers = ["", "EZ", "HD", "IN", "AT"]
-    row_labels = ["C", "FC", "AP"]
-
-    # 1. 绘制表头
-    for col in range(5):
-        cell_x = table_x + col * cell_width
-        cell_y = table_y
+        # 背景处理
+        original_img = Image.open(a_path).convert('RGB')
+        enhancer = ImageEnhance.Brightness(original_img)
+        original_img = enhancer.enhance(0.7)
+        original_width, original_height = original_img.size
         
-        # 表头单元格背景
-        final_img = add_rounded_rectangle(
-            final_img,
-            (cell_x, cell_y),
-            (cell_width if col > 0 else 80, header_height),  # 第一列较窄
-            radius=0,
-            color=(70, 70, 70),
-            alpha=bg_alpha
-        )
+        target_width, target_height = target_size
         
-        # 表头文字
-        header_text = headers[col] if col < len(headers) else ""
-        text_bbox = draw.textbbox((0, 0), header_text, font=FONT_CONFIG['sheet'])
-        draw.text(
-            (cell_x + (cell_width - text_bbox[2])//2, cell_y + (header_height - text_bbox[3])//2-3),
-            header_text,
-            fill=WHITE,
-            font=FONT_CONFIG['sheet']
-        )
-
-    # 2. 绘制数据行
-    for row in range(3):
-        for col in range(5):
-            cell_x = table_x + col * cell_width
-            cell_y = table_y + header_height + row * row_height
-            
-            # 第一列特殊处理（行标签）
-            if col == 0:
-                final_img = add_rounded_rectangle(
-                    final_img,
-                    (cell_x, cell_y),
-                    (80, row_height),  # 行标签列较窄
-                    radius=0,
-                    color=(60, 60, 60),
-                    alpha=bg_alpha
-                )
-                
-                label_text = row_labels[row] if row < len(row_labels) else ""
-                text_bbox = draw.textbbox((0, 0), label_text, font=FONT_CONFIG['sheet'])
-                draw.text(
-                    (cell_x + (80 - text_bbox[2])//2, cell_y + (row_height - text_bbox[3])//2),
-                    label_text,
-                    fill=WHITE,
-                    font=FONT_CONFIG['sheet']
-                )
-            else:
-                # 数据单元格背景
-                final_img = add_rounded_rectangle(
-                    final_img,
-                    (cell_x, cell_y),
-                    (cell_width, row_height),
-                    radius=0,
-                    color=(50, 50, 50),
-                    alpha=bg_alpha
-                )
-                
-                # 进度数据（确保progress数组存在且足够大）
-                if len(progress) > row and len(progress[row]) > col-1:
-                    progress_text = f"{progress[row][col-1]:4d}"
-                else:
-                    progress_text = "0d"
-                    
-                text_bbox = draw.textbbox((0, 0), progress_text, font=FONT_CONFIG['sheet'])
-                draw.text(
-                    (cell_x + (cell_width - text_bbox[2])//2, cell_y + (row_height - text_bbox[3])//2),
-                    progress_text,
-                    fill=WHITE,
-                    font=FONT_CONFIG['sheet']
-                )
-
-    # 3. 添加表格外边框（可选）
-    table_width = 5 * cell_width
-    table_height = header_height + 3 * row_height
-    final_img = add_rounded_rectangle(
-        final_img,
-        (table_x, table_y),
-        (table_width, table_height),
-        radius=border_radius,
-        color=(100, 100, 100),
-        alpha=50,  # 半透明边框
-    )
-    
-    # --- 新增：在用户名下方绘制RKS显示框 ---
-    rks_font = FONT_CONFIG['rks']
-    rks_text = f'%.4f'%rks
-    
-    # 计算RKS文本框位置（用户名下方 + 10px间距）
-    rks_x = username_x  # 与用户名左对齐
-    rks_y = username_y + username_bg_height
-    
-    # RKS文本框尺寸（根据文本自动调整）
-    rks_bbox = draw.textbbox((0, 0), rks_text, font=rks_font)
-    rks_bg_width = rks_bbox[2] - rks_bbox[0] + 40  # 左右各加20px边距
-    rks_bg_height = rks_bbox[3] - rks_bbox[1] + 20  # 上下各加10px边距
-    
-    # 绘制白底黑字的RKS框
-    final_img = add_rounded_rectangle(
-        final_img,
-        (rks_x, rks_y),
-        (rks_bg_width, rks_bg_height),
-        radius=5,  # 圆角半径
-        color=(230,230,230),
-        alpha=255  # 不透明
-    )
-    
-    # 绘制RKS文本（居中）
-    draw.text(
-        (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2 - 3),
-        rks_text,
-        fill=(0, 0, 0),  # 黑色文字
-        font=rks_font
-    )
-    
-    challenge_rank = challengeModeRank
-    rank_tier = challenge_rank // 100
-    rank_number = challenge_rank % 100
-
-    # 确定图标路径
-    icon_map = {
-        1: "Resource/green.png",
-        2: "Resource/blue.png",
-        3: "Resource/red.png",
-        4: "Resource/gold.png",
-        5: "Resource/rainbows.png"
-    }
-    icon_path = icon_map.get(rank_tier, "Resource/grey.png")
-
-    # 加载并调整图标大小
-    try:
-        icon = Image.open(icon_path).convert('RGBA')
-        icon_size = (100, 60)  # 保持与RKS框相同高度
-        icon = icon.resize(icon_size, Image.LANCZOS)
+        # 背景模糊处理
+        ratio = max(target_width / original_width, target_height / original_height)
+        new_size = (int(original_width * ratio), int(original_height * ratio))
         
-        # 图标位置（RKS框右侧+10px间距）
-        icon_x = rks_x + rks_bg_width + 10
-        icon_y = rks_y - 8
+        blurred_bg = original_img.resize(new_size, Image.LANCZOS)
+        blurred_bg = blurred_bg.filter(ImageFilter.GaussianBlur(radius=blur_radius))
         
-        # 粘贴图标
-        final_img.paste(icon, (icon_x, icon_y), icon)
+        # 裁剪背景
+        left = (blurred_bg.width - target_width) // 2
+        top = (blurred_bg.height - target_height) // 2
+        blurred_bg = blurred_bg.crop((left, top, left + target_width, top + target_height))
         
-        # 在图标上绘制居中数字
-        rank_font = FONT_CONFIG['challenge_rank']
-        rank_bbox = draw.textbbox((0, 0), str(rank_number), font=rank_font)
-        
-        draw.text(
-            (icon_x + (icon_size[0] - rank_bbox[2]) // 2, 
-            icon_y + (icon_size[1] - rank_bbox[3]) // 2-5),
-            str(rank_number),
-            fill=WHITE,
-            font=rank_font
-        )
-    except Exception as e:
-        fuck(f"Failed to load challenge rank icon: {e}")
-        
-    data_font = FONT_CONFIG['data']
-
-    # 1. 计算数据框宽度（动态调整）
-    data_icon = Image.open("Resource/data.png").convert('RGBA')
-    data_icon_size = (30, 30)  # 数据图标大小
-    data_icon = data_icon.resize(data_icon_size, Image.LANCZOS)
-    
-    data_text_width = draw.textlength(data, font=data_font)
-    data_box_width = data_icon_size[0] + 10 + int(data_text_width) + 35  # 图标+间距+文字+边距
-    data_box_height = 40  # 与挑战模式图标同高
-
-    # 2. 绘制半透明背景（70%透明度）
-    data_box_pos = (460, icon_y+10)  # 挑战模式图标左侧-10px
-    final_img = add_rounded_rectangle(
-        final_img,
-        data_box_pos,
-        (data_box_width, data_box_height),
-        radius=5,
-        color=(80, 80, 80),  # 深灰色背景
-        alpha=int(255 * 0.7)  # 70%透明度
-    )
-
-    # 3. 粘贴数据图标（左侧居中）
-    data_icon = Image.open("Resource/data.png").convert('RGBA')
-    original_width, original_height = data_icon.size  # 原始尺寸 20x12
-    
-    # 计算等比缩放后的新尺寸（高度固定为数据框高度-8px=32px）
-    new_height = 24  # 略小于数据框高度以留出边距
-    new_width = int(original_width * (new_height / original_height))  # 20*(32/12)=53
-    
-    data_icon = data_icon.resize((new_width, new_height), Image.LANCZOS)
-    
-    # 图标位置（左侧居中，距离左边框10px）
-    data_icon_x = data_box_pos[0] + 10
-    data_icon_y = data_box_pos[1] + (data_box_height - new_height) // 2
-    final_img.paste(data_icon, (data_icon_x, data_icon_y), data_icon)
-    
-    # 调整数据文本起始位置（图标右侧+10px）
-    data_text_x = data_icon_x + new_width + 10
-
-    # 4. 绘制数据文本（右侧居中）
-    data_text_x = data_icon_x + data_icon_size[0] + 15
-    data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2 
-    draw.text(
-        (data_text_x, data_text_y),
-        data,
-        fill=WHITE,
-        font=data_font
-    )
-    # 布局参数
-    start_y = 128 + 120 # 增加头像下方间距
-    cell_width = 256 + 180 + 50
-    cell_height = 135 + 100  # 增加行高
-
-    def truncate_text(text, max_width, font):
-        draw = ImageDraw.Draw(Image.new('RGB', (1, 1)))  # 临时画布
-        ellipsis = "..."
-        
-        # 如果原始文本宽度 <= max_width，直接返回原文本
-        if draw.textlength(text, font=font) <= max_width:
-            return text
-        
-        # 否则逐步缩短文本并检查宽度
-        max_len = len(text)
-        while max_len > 0:
-            truncated = text[:max_len] + ellipsis
-            text_width = draw.textlength(truncated, font=font)
-            if text_width <= max_width:
-                return truncated
-            max_len -= 1
-        
-        return ellipsis  # 极端情况（max_width极小）
-    try:
-        OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA').resize((600,157))
-    except:
-        try:
-            OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((600,157))
-        except Exception as e:
-            fuck(e)
-    final_img.paste(OVERFLOW,(600,2315),mask=OVERFLOW)
-    # 绘制所有B27元素
-    for idx, item in enumerate(b27):
-        row = idx // 3
-        col = idx % 3
-        
-        # 计算位置
-        x = 50 + col * (cell_width + 100)
-        y = start_y + row * (cell_height - 20)
-        if idx >= 30: y += 65
-        # 边界检查
-            
+        final_img = Image.new("RGBA", target_size)
+        final_img.paste(blurred_bg, (0, 0))
         draw = ImageDraw.Draw(final_img)
         
-        # 1. 绘制编号
-        b_text = item[1]
-        text_bbox = draw.textbbox((0,0), b_text, font=FONT_CONFIG['rank'])
-        # b_width = text_bbox[2] - text_bbox[0] + 20
-        b_width = 50
+        # 字体配置
+        FONT_CONFIG = {
+            'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48),
+            'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'song_name': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
+            'score': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
+            'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'difficulty': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 17),
+            'contrib': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 16),
+            'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
+            'version': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 30),
+            'open-sourced': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
+            'sheet': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'challenge_rank': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
+        }
         
-        b_height = text_bbox[3] - text_bbox[1] + 10
-        color1 = (220,220,220)
-        if(item[1][0]=='P'): color1=(240,235,0)
-        final_img = add_rounded_rectangle(
-            final_img,
-            (x, y),
-            (b_width, b_height),
-            5,
-            color1,
-            200
-        )
-        draw.text(
-            (x + (b_width - text_bbox[2])//2, y + (b_height - text_bbox[3])//2 - 5),
-            b_text,
-            fill=(0,0,0),
-            font=FONT_CONFIG['rank']
-        )
-        
-        # 2. 歌曲插图
-        img_path = f"illustrationLowRes/{item[0]}.png"
-        if not os.path.exists(img_path):
-            img_path = "Resource/nodata.png"
+        # 绘制用户信息区域
+        def draw_user_info():
+            # 用户信息区域位置和大小
+            user_info_x, user_info_y = 50, 50
+            user_info_width, user_info_height = 335, 117
             
-        song_img = Image.open(img_path).convert('RGB').resize((int(256*1.2), int(135*1.2)))
-        final_img.paste(song_img, (x + b_width, y))
-        if(item[0] != 'No Data'):
-        # 3. 难度标签（左下角）
-            diff_type = item[7]
-            tag_size = (70, 45)
-            tag_pos = (x + b_width, y + 135 - tag_size[1] +25)  # 左下角位置
-            
-            final_img = add_rounded_rectangle(
-                final_img,
-                tag_pos,
-                tag_size,
-                5,
-                DIFFICULTY_COLORS.get(diff_type, WHITE),
-                200
+            # 绘制背景
+            draw.rounded_rectangle(
+                [(user_info_x, user_info_y), (user_info_x + user_info_width, user_info_y + user_info_height)],
+                radius=10,
+                fill=(102, 102, 102)
             )
             
-            # 难度文字
-            diff_text = f'{diff_type} {item[4]}\n'+'%.3f'%item[3]
-            text_bbox = draw.textbbox((0,0), diff_text, font=FONT_CONFIG['difficulty'])
-            # draw.text(
-            #     (tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]),
-            #     diff_text,
-            #     fill=WHITE,
-            #     font=FONT_CONFIG['difficulty']
-            # )
-            xx,yy = tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]+5
-            for line in diff_text.split('\n'):
+            # 绘制头像
+            avatar_x, avatar_y = user_info_x + 17, user_info_y + 9
+            avatar_size = 64
+            try:
+                avatar_img = Image.open(f"avatar/{avatar}.png").convert("RGBA")
+                avatar_img = avatar_img.resize((avatar_size, avatar_size))
+                avatar_img = add_corners(avatar_img, 10)
+                final_img.paste(avatar_img, (avatar_x, avatar_y), avatar_img)
+            except:
+                avatar_img = Image.new("RGBA", (avatar_size, avatar_size), (57, 197, 187))
+                avatar_img = add_corners(avatar_img, 10)
+                final_img.paste(avatar_img, (avatar_x, avatar_y), avatar_img)
+            
+            # 绘制用户名
+            username_x, username_y = avatar_x + avatar_size + 20, avatar_y + 10
+            draw.text(
+                (username_x, username_y),
+                username,
+                fill=(255, 255, 255),
+                font=FONT_CONFIG['username']
+            )
+            
+            # 绘制挑战模式图标
+            rank_tier = challengeModeRank // 100
+            rank_number = challengeModeRank % 100
+            icon_map = {
+                1: "Resource/green.png",
+                2: "Resource/blue.png",
+                3: "Resource/red.png",
+                4: "Resource/gold.png",
+                5: "Resource/rainbows.png"
+            }
+            icon_path = icon_map.get(rank_tier, "Resource/grey.png")
+            
+            icon_x, icon_y = username_x, username_y + 40
+            icon_width, icon_height = 79, 38
+            try:
+                icon_img = Image.open(icon_path).convert("RGBA").resize((icon_width, icon_height))
+                final_img.paste(icon_img, (icon_x, icon_y), icon_img)
+            except:
+                pass
+            
+            # 绘制挑战模式等级
+            rank_text_x, rank_text_y = icon_x + 10, icon_y + (icon_height - FONT_CONFIG['rks'].size) // 2
+            draw.text(
+                (rank_text_x, rank_text_y),
+                str(rank_number),
+                fill=(255, 255, 255),
+                font=FONT_CONFIG['rks']
+            )
+            
+            # 绘制RKS
+            rks_text = f"{rks:.6f}"
+            rks_x, rks_y = icon_x + icon_width + 10, icon_y + (icon_height - FONT_CONFIG['rks'].size) // 2
+            draw.text(
+                (rks_x, rks_y),
+                rks_text,
+                fill=(255, 255, 255),
+                font=FONT_CONFIG['rks']
+            )
+            
+            # 绘制难度进度
+            diff_types = ['EZ', 'HD', 'IN', 'AT']
+            positions = [
+                (user_info_x + 168, user_info_y + 96),  # EZ
+                (user_info_x + 168, user_info_y + 106),  # HD
+                (user_info_x + 234, user_info_y + 96),  # IN
+                (user_info_x + 234, user_info_y + 106)  # AT
+            ]
+            
+            for i, pos in enumerate(positions):
+                progress_text = f"{progress[0][i]}/{progress[1][i]}/{progress[2][i]}"
                 draw.text(
-                    (xx, yy),
-                    line, 
-                    font=FONT_CONFIG['difficulty'], 
-                    fill=WHITE
+                    pos,
+                    progress_text,
+                    fill=(255, 255, 255),
+                    font=FONT_CONFIG['difficulty']
                 )
-                yy += -2 + int(17*4/3)
-        # 1. 定义info_block的尺寸
-        info_block_width = 240
-        info_block_height = 130
-        # 2. 绘制info_block（圆角矩形背景）
-        info_pos = (x + b_width + 256 + 50, y + (135 - info_block_height)//2 + 25)
-        # final_img = add_rounded_rectangle(
-        #     final_img,
-        #     info_pos,
-        #     (info_block_width, info_block_height),
-        #     radius=5,
-        #     color=INFO_BLOCK_COLOR,
-        #     alpha=200
-        # )
-        info_block = Image.open('Resource/infoblock.png').convert('RGBA').resize((info_block_width,info_block_height))
-        final_img.paste(info_block, (info_pos[0], info_pos[1] - 13), info_block)
-        # 3. 计算居中坐标（关键修改）
-        def get_centered_x(text, font, box_width):
-            """计算文本在指定宽度内的居中x坐标"""
-            text_bbox = draw.textbbox((0, 0), text, font=font)
-            text_width = text_bbox[2] - text_bbox[0]
-            return (box_width - text_width) // 2
-
-        # 4. 绘制歌曲名称（居中）
-        max_name_width = 200
-        truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
-        song_name_font = FONT_CONFIG['song_name']
-        if len(item[2]) <= 15:
-            song_name_font = FONT_CONFIG['song_name_bigger']
-
-        # 计算居中位置
-        name_x = info_pos[0] + get_centered_x(truncated_name, song_name_font, info_block_width)
-        draw.text(
-            (name_x, info_pos[1] + 5),  # y坐标保持原样
-            truncated_name,
-            fill=WHITE,
-            font=song_name_font
-        )
-
         
-        # # 5. 绘制分数（居中）
-        # score_text = f"{item[6]}"
-        # score_x = info_pos[0] + get_centered_x(score_text, FONT_CONFIG['score'], info_block_width)
-        # draw.text(
-        #     (score_x, info_pos[1] + 25),
-        #     score_text,
-        #     fill=WHITE,
-        #     font=FONT_CONFIG['score']
-        # )
-        # 4. 右侧信息块
-        '''info_pos = (x + b_width + 256, y + (135 - 90)//2)
+        # 绘制歌曲信息
+        def draw_song_info(song_data, position, rank_text):
+            song_id, rank, song_name, rks_val, difficulty_val, acc, score_val, diff_type, nxt, fc = song_data
+            x, y = position
+            song_width, song_height = 410, 282
+            
+            # 绘制背景
+            draw.rounded_rectangle(
+                [(x, y), (x + song_width, y + song_height)],
+                radius=10,
+                fill=(102, 102, 102)
+            )
+            
+            # 绘制曲绘
+            illust_x, illust_y = x + 11, y + 62
+            illust_width, illust_height = 261, 140
+            try:
+                illust_path = f"illustrationLowRes/{song_id}.png"
+                illust_img = Image.open(illust_path).convert("RGBA")
+                illust_img = illust_img.resize((illust_width, illust_height))
+                final_img.paste(illust_img, (illust_x, illust_y), illust_img)
+            except:
+                illust_img = Image.open("Resource/nodata.png").convert("RGBA")
+                illust_img = illust_img.resize((illust_width, illust_height))
+                final_img.paste(illust_img, (illust_x, illust_y), illust_img)
+            
+            # 绘制排名
+            rank_x, rank_y = x + 325, y + 203
+            draw.text(
+                (rank_x, rank_y),
+                rank_text,
+                fill=(255, 255, 255, 64),
+                font=FONT_CONFIG['rank']
+            )
+            
+            # 绘制歌曲名
+            song_name_x, song_name_y = x + 11, y + 35
+            if len(song_name) > 30:
+                song_name = song_name[:27] + "..."
+            draw.text(
+                (song_name_x, song_name_y),
+                song_name,
+                fill=(242, 242, 242),
+                font=FONT_CONFIG['song_name']
+            )
+            
+            # 绘制分数
+            score_x, score_y = x + 280, y + 97
+            draw.text(
+                (score_x, score_y),
+                str(score_val),
+                fill=(242, 242, 242),
+                font=FONT_CONFIG['score']
+            )
+            
+            # 绘制ACC
+            acc_text = f"{acc:.2f}%"
+            acc_x, acc_y = x + 280, y + 151
+            draw.text(
+                (acc_x, acc_y),
+                acc_text,
+                fill=(242, 242, 242),
+                font=FONT_CONFIG['accuracy']
+            )
+            
+            # 绘制难度
+            diff_text = f"{diff_type} {difficulty_val}"
+            diff_x, diff_y = x + 188, y + 190
+            draw.text(
+                (diff_x, diff_y),
+                diff_text,
+                fill=(153, 238, 221),
+                font=FONT_CONFIG['difficulty']
+            )
+            
+            # 绘制贡献值
+            contrib_text = f"{rks_val:.4f}"
+            contrib_x, contrib_y = x + 280, y + 192
+            draw.text(
+                (contrib_x, contrib_y),
+                contrib_text,
+                fill=(252, 252, 252),
+                font=FONT_CONFIG['contrib']
+            )
+        
+        # 绘制用户信息
+        draw_user_info()
+        
+        # 布局参数
+        start_x, start_y = 50, 200  # 歌曲块起始位置
+        song_width, song_height = 410, 282
+        padding = 20
+        
+        # 绘制前3个phi成绩
+        for i in range(min(3, len(b27))):
+            song_data = b27[i]
+            rank_text = f"P{i+1:02d}"
+            position = (start_x + i * (song_width + padding), start_y)
+            draw_song_info(song_data, position, rank_text)
+        
+        # 绘制前27个最佳成绩（4行，每行7个，最后一行6个）
+        row_start_y = start_y + song_height + padding
+        for row in range(4):
+            cols = 7 if row < 3 else 6  # 前三行7个，最后一行6个
+            for col in range(cols):
+                idx = 3 + row * 7 + col
+                if idx >= len(b27) or idx >= 30:  # 只绘制到第30个
+                    continue
+                
+                song_data = b27[idx]
+                rank_text = f"B{idx-2:02d}" if idx > 2 else f"B{idx+1:02d}"
+                position = (start_x + col * (song_width + padding), row_start_y + row * (song_height + padding))
+                draw_song_info(song_data, position, rank_text)
+        
+        # 绘制overflow.png
+        overflow_y = row_start_y + 3 * (song_height + padding)
+        try:
+            overflow_img = Image.open("Resource/overflow.png").convert("RGBA")
+            overflow_img = overflow_img.resize((600, 157))
+            final_img.paste(overflow_img, (start_x, overflow_y), overflow_img)
+        except:
+            # 手动绘制overflow效果
+            overflow_width, overflow_height = 600, 157
+            draw.rounded_rectangle(
+                [(start_x, overflow_y), (start_x + overflow_width, overflow_y + overflow_height)],
+                radius=10,
+                fill=(80, 80, 80, 200)
+            )
+            overflow_text = "OVERFLOW"
+            font_overflow = ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48)
+            text_width, text_height = draw.textsize(overflow_text, font=font_overflow)
+            draw.text(
+                (start_x + (overflow_width - text_width) // 2, overflow_y + (overflow_height - text_height) // 2),
+                overflow_text,
+                fill=(255, 255, 255),
+                font=font_overflow
+            )
+        
+        # 绘制第28-33个成绩
+        overflow_start_y = overflow_y + 157 + padding
+        for i in range(6):
+            idx = 30 + i
+            if idx >= len(b27):
+                break
+                
+            song_data = b27[idx]
+            rank_text = f"B{idx-2:02d}" if idx > 2 else f"B{idx+1:02d}"
+            position = (start_x + i * (song_width + padding), overflow_start_y)
+            draw_song_info(song_data, position, rank_text)
+        
+        # 添加版本信息
+        WHITE = (255, 255, 255)
+        draw.text((5, target_height - 50), 'Ver. ' + VERSION, fill=WHITE, font=FONT_CONFIG['version'])
+        draw.text((target_width - 400, target_height - 50), 'Phigros rks Image Maker', fill=WHITE, font=FONT_CONFIG['version'])
+        draw.text((target_width - 300, target_height - 40), 'open-sourced on Github', fill=WHITE, font=FONT_CONFIG['open-sourced'])
+        
+        # 最终保存
+        final_img.convert('RGB').save(output_path, format="PNG")
+    else: 
+        #仿照Phi-plugin
+        original_img = Image.open(a_path).convert('RGB')
+        enhancer = ImageEnhance.Brightness(original_img)
+        original_img = enhancer.enhance(0.7)
+        original_width, original_height = original_img.size
+        
+        target_width, target_height = target_size
+        
+        # 背景模糊处理
+        ratio = max(target_width / original_width, target_height / original_height)
+        new_size = (int(original_width * ratio), int(original_height * ratio))
+        
+        blurred_bg = original_img.resize(new_size, Image.LANCZOS)
+        blurred_bg = blurred_bg.filter(ImageFilter.GaussianBlur(radius=blur_radius))
+        
+        # 裁剪背景
+        left = (blurred_bg.width - target_width) // 2
+        top = (blurred_bg.height - target_height) // 2
+        blurred_bg = blurred_bg.crop((left, top, left+target_width, top+target_height))
+        
+        final_img = Image.new("RGBA", target_size)
+        final_img.paste(blurred_bg, (0, 0))
+        
+        # 绘制头像
+        
+        ava=''
+        try:
+            ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
+            ava_round = add_corners(ava, 5)
+            final_img.paste(ava_round, (64, 64), ava_round)    
+        # except Exception as e:
+            #     fuck(f'找不到头像png文件, 请检查avatar是否为最新数据:{e}',5)
+        except:
+            ava = Image.new("RGBA",(64,64),(57,197,187))
+            ava_round = add_corners(ava, 5)
+        
+        
+        # 字体配置
+        FONT_CONFIG = {
+            'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
+            'difficulty': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 17),
+            'song_name': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
+            'score': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
+            'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'next': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 16),
+            'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48),
+            'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'song_name_bigger': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
+            'challenge_rank': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
+            'data': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'updatetime': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 22),
+            'sheet': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'version': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 30),
+            'open-sourced': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
+            # 'open-sourced': ImageFont.truetype("Resource/Saira-Regular.ttf", 24),
+            # 'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
+            # 'difficulty': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 17),
+            # 'song_name': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 20),
+            # 'score': ImageFont.truetype("Resource/Saira-Regular.ttf", 32),
+            # 'accuracy': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
+            # 'next': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 16),
+            # 'username': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 48),
+            # 'rks': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 26),
+            # 'song_name_bigger': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
+            # 'challenge_rank': ImageFont.truetype("Resource/Saira-Regular.ttf", 28),
+            # 'data': ImageFont.truetype("Resource/Saira-Regular.ttf", 26),
+            # 'updatetime': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 22),
+            # 'sheet': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 26),
+            # 'version': ImageFont.truetype("Resource/Saira-Regular.ttf", 30),
+            # 'open-sourced': ImageFont.truetype("Resource/Saira-Regular.ttf", 24),
+
+            
+        }
+        
+        # --- 新增：在头像右侧绘制用户名文本框 ---
+        draw = ImageDraw.Draw(final_img)
+
+        # 计算文本框位置（头像右侧 + 20px间距）
+        username_x = 64 + ava_round.width + 20
+        username_y = 64
+
+        # 文本框背景（圆角矩形）
+        username_bg_width = 600  # 宽度可根据需要调整
+        username_bg_height = 96
+        username_bg_radius = 10
+
         final_img = add_rounded_rectangle(
             final_img,
-            info_pos,
-            (225, 110),  # 增大尺寸
-            radius=0,
-            color=INFO_BLOCK_COLOR,
-            alpha=200  # 60%透明度
+            (username_x, username_y),
+            (username_bg_width, username_bg_height),
+            radius=username_bg_radius,
+            color=(50, 50, 50),  # 深灰色背景
+            alpha=150
+        )
+
+        # 绘制用户名文本（居中）
+        username_bbox = draw.textbbox((0, 0), username, font=FONT_CONFIG['username'])
+
+        
+        draw = ImageDraw.Draw(final_img)
+        username_x = 64 + ava_round.width + 20
+        username_y = 64
+        username_bg_width = 600
+        username_bg_height = 96
+        username_bg_radius = 10
+
+        final_img = add_rounded_rectangle(
+            final_img,
+            (username_x, username_y),
+            (username_bg_width, username_bg_height),
+            radius=username_bg_radius,
+            color=(50, 50, 50),
+            alpha=150
+        )
+        draw.text(
+            (username_x + (username_bg_width - username_bbox[2]) // 2, username_y + (username_bg_height - username_bbox[3]) // 2 - 10),
+            username,
+            fill=WHITE,
+            font=FONT_CONFIG['username']
         )
         
-        # 歌曲名称（白色，自动截断）
-        
-        max_name_width = 200
-        truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
-        song_name_font = FONT_CONFIG['song_name']
-        if(len(item[2]) <= 15): song_name_font=FONT_CONFIG['song_name_bigger']
-        name_bbox = draw.textbbox((0,0), truncated_name, font=song_name_font)
+        final_img = add_rounded_rectangle(
+            final_img,
+            (username_x, username_y - 28),
+            (500,30),
+            radius=5,
+            color=(50, 50, 50),
+            alpha=150
+        )
         draw.text(
-            (info_pos[0] + 100 - name_bbox[2]/2, info_pos[1] + 5),
-            truncated_name,
+            (username_x + 10, username_y - 28),
+            'Updated at: '+updatetime[:-7]+' UTC+08:00',
             fill=WHITE,
-            font=song_name_font
-        )'''
-        
-        # 分数显示（无逗号，加粗）
-        score_text = f"{item[6]}"
-        score_bbox = draw.textbbox((0,0), score_text, font=FONT_CONFIG['score'])
-        draw.text(
-            (info_pos[0] + 100 - score_bbox[2]/2+40, info_pos[1] + 30),
-            score_text,
-            fill=WHITE,
-            font=FONT_CONFIG['score']
+            font=FONT_CONFIG['updatetime']
         )
         
-        # 分割线（右移10px）
-        line_start = (info_pos[0] + 36, info_pos[1] + 65)  # 右移10px
-        # draw.line([line_start, (line_start[0]+128, line_start[1])], 
-        #          fill=WHITE, width=4)
-        
-        # 精度和NEXT
-        acc_text ='%.2f'%item[5]+'%'
-        acc_width = draw.textlength(acc_text, font=FONT_CONFIG['accuracy'])
-        draw.text(
-            (line_start[0]+35, line_start[1]+5),
-            acc_text,
-            fill=WHITE,
-            font=FONT_CONFIG['accuracy']
+        # 在username绘制代码之后添加以下内容
+
+        # 表格参数配置  
+        table_x = username_x + username_bg_width + 400  # 表格起始x坐标（username框右侧20px）
+        table_y = username_y - 10  # 与username框对齐
+        cell_width = 80  # 单元格宽度
+        cell_height = 40  # 单元格高度
+        header_height = 40  # 表头高度
+        row_height = cell_height  # 行高
+        border_radius = 5  # 圆角半径
+        bg_alpha = 150  # 背景透明度
+
+        # 表头文本
+        headers = ["", "EZ", "HD", "IN", "AT"]
+        row_labels = ["C", "FC", "AP"]
+
+        # 1. 绘制表头
+        for col in range(5):
+            cell_x = table_x + col * cell_width
+            cell_y = table_y
+            
+            # 表头单元格背景
+            final_img = add_rounded_rectangle(
+                final_img,
+                (cell_x, cell_y),
+                (cell_width if col > 0 else 80, header_height),  # 第一列较窄
+                radius=0,
+                color=(70, 70, 70),
+                alpha=bg_alpha
+            )
+            
+            # 表头文字
+            header_text = headers[col] if col < len(headers) else ""
+            text_bbox = draw.textbbox((0, 0), header_text, font=FONT_CONFIG['sheet'])
+            draw.text(
+                (cell_x + (cell_width - text_bbox[2])//2, cell_y + (header_height - text_bbox[3])//2-3),
+                header_text,
+                fill=WHITE,
+                font=FONT_CONFIG['sheet']
+            )
+
+        # 2. 绘制数据行
+        for row in range(3):
+            for col in range(5):
+                cell_x = table_x + col * cell_width
+                cell_y = table_y + header_height + row * row_height
+                
+                # 第一列特殊处理（行标签）
+                if col == 0:
+                    final_img = add_rounded_rectangle(
+                        final_img,
+                        (cell_x, cell_y),
+                        (80, row_height),  # 行标签列较窄
+                        radius=0,
+                        color=(60, 60, 60),
+                        alpha=bg_alpha
+                    )
+                    
+                    label_text = row_labels[row] if row < len(row_labels) else ""
+                    text_bbox = draw.textbbox((0, 0), label_text, font=FONT_CONFIG['sheet'])
+                    draw.text(
+                        (cell_x + (80 - text_bbox[2])//2, cell_y + (row_height - text_bbox[3])//2),
+                        label_text,
+                        fill=WHITE,
+                        font=FONT_CONFIG['sheet']
+                    )
+                else:
+                    # 数据单元格背景
+                    final_img = add_rounded_rectangle(
+                        final_img,
+                        (cell_x, cell_y),
+                        (cell_width, row_height),
+                        radius=0,
+                        color=(50, 50, 50),
+                        alpha=bg_alpha
+                    )
+                    
+                    # 进度数据（确保progress数组存在且足够大）
+                    if len(progress) > row and len(progress[row]) > col-1:
+                        progress_text = f"{progress[row][col-1]:4d}"
+                    else:
+                        progress_text = "0d"
+                        
+                    text_bbox = draw.textbbox((0, 0), progress_text, font=FONT_CONFIG['sheet'])
+                    draw.text(
+                        (cell_x + (cell_width - text_bbox[2])//2, cell_y + (row_height - text_bbox[3])//2),
+                        progress_text,
+                        fill=WHITE,
+                        font=FONT_CONFIG['sheet']
+                    )
+
+        # 3. 添加表格外边框（可选）
+        table_width = 5 * cell_width
+        table_height = header_height + 3 * row_height
+        final_img = add_rounded_rectangle(
+            final_img,
+            (table_x, table_y),
+            (table_width, table_height),
+            radius=border_radius,
+            color=(100, 100, 100),
+            alpha=50,  # 半透明边框
         )
         
-        # next_text = f"{item[8]}"
-        # draw.text(
-        #     (line_start[0] + acc_width + 30, line_start[1] + 5),
-        #     next_text,
-        #     fill=NEXT_COLOR,
-        #     font=FONT_CONFIG['next']
-        # )
+        # --- 新增：在用户名下方绘制RKS显示框 ---
+        rks_font = FONT_CONFIG['rks']
+        rks_text = f'%.4f'%rks
         
-        # 评级图标
-        icon_path = "Resource/"
-        score = item[6]
-        if score == 1000000:
-            icon_path += "Phi.png"
-        elif item[9]:
-            icon_path += "FC.png"
-        else:
-            if score >= 960000: icon_path += "V.png"
-            elif score >=920000: icon_path += "S.png"
-            elif score >=880000: icon_path += "A.png"
-            elif score >=820000: icon_path += "B.png"
-            elif score >=700000: icon_path += "C.png"
-            else: icon_path += "F.png"
-        if os.path.exists(icon_path):
-            icon = Image.open(icon_path).convert('RGBA').resize((64,64))
-            final_img.paste(icon, (info_pos[0], info_pos[1]+40), icon)
-    draw.text(
-        (5, 2950),
-        'Ver. '+VERSION,
-        fill=WHITE,
-        font=FONT_CONFIG['version']
-    )
-    draw.text(
-        (1265, 2950),
-        'Phigros rks Image Maker',
-        fill=WHITE,
-        font=FONT_CONFIG['version']
-    )
-    draw.text(
-        (1610, 2960),
-        'open-sourced on Github',
-        fill=WHITE,
-        font=FONT_CONFIG['open-sourced']
-    )
-    # 最终保存
-    final_img.convert('RGB').save(output_path, format="PNG")
+        # 计算RKS文本框位置（用户名下方 + 10px间距）
+        rks_x = username_x  # 与用户名左对齐
+        rks_y = username_y + username_bg_height
+        
+        # RKS文本框尺寸（根据文本自动调整）
+        rks_bbox = draw.textbbox((0, 0), rks_text, font=rks_font)
+        rks_bg_width = rks_bbox[2] - rks_bbox[0] + 40  # 左右各加20px边距
+        rks_bg_height = rks_bbox[3] - rks_bbox[1] + 20  # 上下各加10px边距
+        
+        # 绘制白底黑字的RKS框
+        final_img = add_rounded_rectangle(
+            final_img,
+            (rks_x, rks_y),
+            (rks_bg_width, rks_bg_height),
+            radius=5,  # 圆角半径
+            color=(230,230,230),
+            alpha=255  # 不透明
+        )
+        
+        # 绘制RKS文本（居中）
+        draw.text(
+            (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2 - 3),
+            rks_text,
+            fill=(0, 0, 0),  # 黑色文字
+            font=rks_font
+        )
+        
+        challenge_rank = challengeModeRank
+        rank_tier = challenge_rank // 100
+        rank_number = challenge_rank % 100
+
+        # 确定图标路径
+        icon_map = {
+            1: "Resource/green.png",
+            2: "Resource/blue.png",
+            3: "Resource/red.png",
+            4: "Resource/gold.png",
+            5: "Resource/rainbows.png"
+        }
+        icon_path = icon_map.get(rank_tier, "Resource/grey.png")
+
+        # 加载并调整图标大小
+        try:
+            icon = Image.open(icon_path).convert('RGBA').resize((61,20))
+            icon_size = (100, 60)  # 保持与RKS框相同高度
+            icon = icon.resize(icon_size, Image.LANCZOS)
+            
+            # 图标位置（RKS框右侧+10px间距）
+            icon_x = rks_x + rks_bg_width + 10
+            icon_y = rks_y - 8
+            
+            # 粘贴图标
+            final_img.paste(icon, (icon_x, icon_y), icon)
+            
+            # 在图标上绘制居中数字
+            rank_font = FONT_CONFIG['challenge_rank']
+            rank_bbox = draw.textbbox((0, 0), str(rank_number), font=rank_font)
+            
+            draw.text(
+                (icon_x + (icon_size[0] - rank_bbox[2]) // 2, 
+                icon_y + (icon_size[1] - rank_bbox[3]) // 2-5),
+                str(rank_number),
+                fill=WHITE,
+                font=rank_font
+            )
+        except Exception as e:
+            fuck(f"Failed to load challenge rank icon: {e}")
+            
+        data_font = FONT_CONFIG['data']
+
+        # 1. 计算数据框宽度（动态调整）
+        data_icon = Image.open("Resource/data.png").convert('RGBA')
+        data_icon_size = (30, 30)  # 数据图标大小
+        data_icon = data_icon.resize(data_icon_size, Image.LANCZOS)
+        
+        data_text_width = draw.textlength(data, font=data_font)
+        data_box_width = data_icon_size[0] + 10 + int(data_text_width) + 35  # 图标+间距+文字+边距
+        data_box_height = 40  # 与挑战模式图标同高
+
+        # 2. 绘制半透明背景（70%透明度）
+        data_box_pos = (460, icon_y+10)  # 挑战模式图标左侧-10px
+        final_img = add_rounded_rectangle(
+            final_img,
+            data_box_pos,
+            (data_box_width, data_box_height),
+            radius=5,
+            color=(80, 80, 80),  # 深灰色背景
+            alpha=int(255 * 0.7)  # 70%透明度
+        )
+
+        # 3. 粘贴数据图标（左侧居中）
+        data_icon = Image.open("Resource/data.png").convert('RGBA')
+        original_width, original_height = data_icon.size  # 原始尺寸 20x12
+        
+        # 计算等比缩放后的新尺寸（高度固定为数据框高度-8px=32px）
+        new_height = 24  # 略小于数据框高度以留出边距
+        new_width = int(original_width * (new_height / original_height))  # 20*(32/12)=53
+        
+        data_icon = data_icon.resize((new_width, new_height), Image.LANCZOS)
+        
+        # 图标位置（左侧居中，距离左边框10px）
+        data_icon_x = data_box_pos[0] + 10
+        data_icon_y = data_box_pos[1] + (data_box_height - new_height) // 2
+        final_img.paste(data_icon, (data_icon_x, data_icon_y), data_icon)
+        
+        # 调整数据文本起始位置（图标右侧+10px）
+        data_text_x = data_icon_x + new_width + 10
+
+        # 4. 绘制数据文本（右侧居中）
+        data_text_x = data_icon_x + data_icon_size[0] + 15
+        data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2 
+        draw.text(
+            (data_text_x, data_text_y),
+            data,
+            fill=WHITE,
+            font=data_font
+        )
+        # 布局参数
+        start_y = 128 + 120 # 增加头像下方间距
+        cell_width = 256 + 180 + 50
+        cell_height = 135 + 100  # 增加行高
+
+        def truncate_text(text, max_width, font):
+            draw = ImageDraw.Draw(Image.new('RGB', (1, 1)))  # 临时画布
+            ellipsis = "..."
+            
+            # 如果原始文本宽度 <= max_width，直接返回原文本
+            if draw.textlength(text, font=font) <= max_width:
+                return text
+            
+            # 否则逐步缩短文本并检查宽度
+            max_len = len(text)
+            while max_len > 0:
+                truncated = text[:max_len] + ellipsis
+                text_width = draw.textlength(truncated, font=font)
+                if text_width <= max_width:
+                    return truncated
+                max_len -= 1
+            
+            return ellipsis  # 极端情况（max_width极小）
+        try:
+            OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA').resize((600,157))
+        except:
+            try:
+                OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((600,157))
+            except Exception as e:
+                fuck(e)
+        final_img.paste(OVERFLOW,(600,2315),mask=OVERFLOW)
+        # 绘制所有B27元素
+        for idx, item in enumerate(b27):
+            row = idx // 3
+            col = idx % 3
+            
+            # 计算位置
+            x = 50 + col * (cell_width + 100)
+            y = start_y + row * (cell_height - 20)
+            if idx >= 30: y += 65
+            # 边界检查
+                
+            draw = ImageDraw.Draw(final_img)
+            
+            # 1. 绘制编号
+            b_text = item[1]
+            text_bbox = draw.textbbox((0,0), b_text, font=FONT_CONFIG['rank'])
+            # b_width = text_bbox[2] - text_bbox[0] + 20
+            b_width = 50
+            
+            b_height = text_bbox[3] - text_bbox[1] + 10
+            color1 = (220,220,220)
+            if(item[1][0]=='P'): color1=(240,235,0)
+            final_img = add_rounded_rectangle(
+                final_img,
+                (x, y),
+                (b_width, b_height),
+                5,
+                color1,
+                200
+            )
+            draw.text(
+                (x + (b_width - text_bbox[2])//2, y + (b_height - text_bbox[3])//2 - 5),
+                b_text,
+                fill=(0,0,0),
+                font=FONT_CONFIG['rank']
+            )
+            
+            # 2. 歌曲插图
+            img_path = f"illustrationLowRes/{item[0]}.png"
+            if not os.path.exists(img_path):
+                img_path = "Resource/nodata.png"
+                
+            song_img = Image.open(img_path).convert('RGB').resize((int(256*1.2), int(135*1.2)))
+            final_img.paste(song_img, (x + b_width, y))
+            if(item[0] != 'No Data'):
+            # 3. 难度标签（左下角）
+                diff_type = item[7]
+                tag_size = (70, 45)
+                tag_pos = (x + b_width, y + 135 - tag_size[1] +25)  # 左下角位置
+                
+                final_img = add_rounded_rectangle(
+                    final_img,
+                    tag_pos,
+                    tag_size,
+                    5,
+                    DIFFICULTY_COLORS.get(diff_type, WHITE),
+                    200
+                )
+                
+                # 难度文字
+                diff_text = f'{diff_type} {item[4]}\n'+'%.3f'%item[3]
+                text_bbox = draw.textbbox((0,0), diff_text, font=FONT_CONFIG['difficulty'])
+                # draw.text(
+                #     (tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]),
+                #     diff_text,
+                #     fill=WHITE,
+                #     font=FONT_CONFIG['difficulty']
+                # )
+                xx,yy = tag_pos[0] + (tag_size[0]-text_bbox[2])//2, tag_pos[1]+5
+                for line in diff_text.split('\n'):
+                    draw.text(
+                        (xx, yy),
+                        line, 
+                        font=FONT_CONFIG['difficulty'], 
+                        fill=WHITE
+                    )
+                    yy += -2 + int(17*4/3)
+            # 1. 定义info_block的尺寸
+            info_block_width = 240
+            info_block_height = 130
+            # 2. 绘制info_block（圆角矩形背景）
+            info_pos = (x + b_width + 256 + 50, y + (135 - info_block_height)//2 + 25)
+            # final_img = add_rounded_rectangle(
+            #     final_img,
+            #     info_pos,
+            #     (info_block_width, info_block_height),
+            #     radius=5,
+            #     color=INFO_BLOCK_COLOR,
+            #     alpha=200
+            # )
+            info_block = Image.open('Resource/infoblock.png').convert('RGBA').resize((info_block_width,info_block_height))
+            final_img.paste(info_block, (info_pos[0], info_pos[1] - 13), info_block)
+            # 3. 计算居中坐标（关键修改）
+            def get_centered_x(text, font, box_width):
+                """计算文本在指定宽度内的居中x坐标"""
+                text_bbox = draw.textbbox((0, 0), text, font=font)
+                text_width = text_bbox[2] - text_bbox[0]
+                return (box_width - text_width) // 2
+
+            # 4. 绘制歌曲名称（居中）
+            max_name_width = 200
+            truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
+            song_name_font = FONT_CONFIG['song_name']
+            if len(item[2]) <= 15:
+                song_name_font = FONT_CONFIG['song_name_bigger']
+
+            # 计算居中位置
+            name_x = info_pos[0] + get_centered_x(truncated_name, song_name_font, info_block_width)
+            draw.text(
+                (name_x, info_pos[1] + 5),  # y坐标保持原样
+                truncated_name,
+                fill=WHITE,
+                font=song_name_font
+            )
+
+            
+            # # 5. 绘制分数（居中）
+            # score_text = f"{item[6]}"
+            # score_x = info_pos[0] + get_centered_x(score_text, FONT_CONFIG['score'], info_block_width)
+            # draw.text(
+            #     (score_x, info_pos[1] + 25),
+            #     score_text,
+            #     fill=WHITE,
+            #     font=FONT_CONFIG['score']
+            # )
+            # 4. 右侧信息块
+            '''info_pos = (x + b_width + 256, y + (135 - 90)//2)
+            final_img = add_rounded_rectangle(
+                final_img,
+                info_pos,
+                (225, 110),  # 增大尺寸
+                radius=0,
+                color=INFO_BLOCK_COLOR,
+                alpha=200  # 60%透明度
+            )
+            
+            # 歌曲名称（白色，自动截断）
+            
+            max_name_width = 200
+            truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
+            song_name_font = FONT_CONFIG['song_name']
+            if(len(item[2]) <= 15): song_name_font=FONT_CONFIG['song_name_bigger']
+            name_bbox = draw.textbbox((0,0), truncated_name, font=song_name_font)
+            draw.text(
+                (info_pos[0] + 100 - name_bbox[2]/2, info_pos[1] + 5),
+                truncated_name,
+                fill=WHITE,
+                font=song_name_font
+            )'''
+            
+            # 分数显示（无逗号，加粗）
+            score_text = f"{item[6]}"
+            score_bbox = draw.textbbox((0,0), score_text, font=FONT_CONFIG['score'])
+            draw.text(
+                (info_pos[0] + 100 - score_bbox[2]/2+40, info_pos[1] + 30),
+                score_text,
+                fill=WHITE,
+                font=FONT_CONFIG['score']
+            )
+            
+            # 分割线（右移10px）
+            line_start = (info_pos[0] + 36, info_pos[1] + 65)  # 右移10px
+            # draw.line([line_start, (line_start[0]+128, line_start[1])], 
+            #          fill=WHITE, width=4)
+            
+            # 精度和NEXT
+            acc_text ='%.2f'%item[5]+'%'
+            acc_width = draw.textlength(acc_text, font=FONT_CONFIG['accuracy'])
+            draw.text(
+                (line_start[0]+35, line_start[1]+5),
+                acc_text,
+                fill=WHITE,
+                font=FONT_CONFIG['accuracy']
+            )
+            
+            # next_text = f"{item[8]}"
+            # draw.text(
+            #     (line_start[0] + acc_width + 30, line_start[1] + 5),
+            #     next_text,
+            #     fill=NEXT_COLOR,
+            #     font=FONT_CONFIG['next']
+            # )
+            
+            # 评级图标
+            icon_path = "Resource/"
+            score = item[6]
+            if score == 1000000:
+                icon_path += "Phi.png"
+            elif item[9]:
+                icon_path += "FC.png"
+            else:
+                if score >= 960000: icon_path += "V.png"
+                elif score >=920000: icon_path += "S.png"
+                elif score >=880000: icon_path += "A.png"
+                elif score >=820000: icon_path += "B.png"
+                elif score >=700000: icon_path += "C.png"
+                else: icon_path += "F.png"
+            if os.path.exists(icon_path):
+                icon = Image.open(icon_path).convert('RGBA').resize((64,64))
+                final_img.paste(icon, (info_pos[0], info_pos[1]+40), icon)
+        draw.text(
+            (5, 2950),
+            'Ver. '+VERSION,
+            fill=WHITE,
+            font=FONT_CONFIG['version']
+        )
+        draw.text(
+            (1265, 2950),
+            'Phigros rks Image Maker',
+            fill=WHITE,
+            font=FONT_CONFIG['version']
+        )
+        draw.text(
+            (1610, 2960),
+            'open-sourced on Github',
+            fill=WHITE,
+            font=FONT_CONFIG['open-sourced']
+        )
+        # 最终保存
+        final_img.convert('RGB').save(output_path, format="PNG")
 
 
 if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
@@ -1091,7 +1388,8 @@ createImage(
     challengeModeRank=summary['challengeModeRank'],
     data=data_num,
     updatetime=str(updatetime),
-    progress=progress
+    progress=progress,
+    style=0
 )
 printwithcolor('成绩图片已输出至result.png, 文字文件已输出至result.txt',[36])
 
