@@ -393,7 +393,6 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             draw_song_info(song_data, position, rank_text)
         
         # 添加版本信息
-        WHITE = (255, 255, 255)
         draw.text((5, target_height - 50), 'Ver. ' + VERSION, fill=WHITE, font=FONT_CONFIG['version'])
         draw.text((target_width - 400, target_height - 50), 'Phigros rks Image Maker', fill=WHITE, font=FONT_CONFIG['version'])
         draw.text((target_width - 300, target_height - 40), 'open-sourced on Github', fill=WHITE, font=FONT_CONFIG['open-sourced'])
