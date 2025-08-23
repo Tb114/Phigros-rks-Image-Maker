@@ -1389,7 +1389,7 @@ createImage(
     data=data_num,
     updatetime=str(updatetime),
     progress=progress,
-    style=0
+    style=2
 )
 printwithcolor('成绩图片已输出至result.png, 文字文件已输出至result.txt',[36])
 
