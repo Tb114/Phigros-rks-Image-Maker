@@ -1,0 +1,49 @@
+2025-09-20 22:36:38.014271
+昵称:  Tb
+课题模式: 金40
+RKS:  15.271456718444824
+Data: 1GiB 71MiB 955KiB
+
+\    EZ   HD   IN   AT
+C    34  105  231  28 
+FC   10  30  42   3 
+AT    4   3   6   0 
+
+P1 Future Mind,  ACC: 100%, RKS: 14.2/14.2, Score:1000000
+P2 君往何处 (Quo Vadis),  ACC: 100%, RKS: 14.1/14.1, Score:1000000
+P3 Break Over,  ACC: 100%, RKS: 14.1/14.1, Score:1000000
+
+B1 DESTRUCTION 3,2,1,  ACC: 99.44%, RKS: 15.896/16.3, Score:965617
+B2 Distorted Fate,  ACC: 99.4%, RKS: 15.87/16.3, Score:959317
+B3 Lyrith -迷宮リリス-,  ACC: 99.54%, RKS: 15.774/16.1, Score:951590
+B4 祈 -我ら神祖と共に歩む者なり-,  ACC: 99.07%, RKS: 15.728/16.4, Score:935392
+B5 Retribution ~ Cycle of Redemption ~ ,  ACC: 99.29%, RKS: 15.691/16.2, Score:944321
+B6 GOODRAGE,  ACC: 99.4%, RKS: 15.573/16.0, Score:993298
+B7 Shadow,  ACC: 99.03%, RKS: 15.507/16.2, Score:936249
+B8 Chronostasis,  ACC: 99.19%, RKS: 15.426/16.0, Score:989351
+B9 Compute It With Some Devilish Alcoholic Steampunk Engines,  ACC: 99.45%, RKS: 15.417/15.8, Score:995066
+B10 a truth seeker -Communication with Utopia will be lost-,  ACC: 99.45%, RKS: 15.414/15.8, Score:950822
+B11 Chronos Collapse - La Campanella,  ACC: 98.75%, RKS: 15.409/16.3, Score:934447
+B12 望影の方舟Six,  ACC: 99.26%, RKS: 15.384/15.9, Score:958992
+B13 Fractured Angel,  ACC: 98.69%, RKS: 15.368/16.3, Score:936222
+B14 Re：End of a Dream,  ACC: 99.23%, RKS: 15.359/15.9, Score:947593
+B15 Bounded Quietude,  ACC: 98.81%, RKS: 15.357/16.2, Score:941894
+B16 Don't Never Around,  ACC: 99.76%, RKS: 15.336/15.5, Score:997855
+B17 Rrhar'il,  ACC: 98.89%, RKS: 15.317/16.1, Score:964046
+B18 Retribution,  ACC: 98.72%, RKS: 15.291/16.2, Score:947968
+B19 千紫万紅,  ACC: 99.68%, RKS: 15.283/15.5, Score:984900
+B20 +ERABY+E CONNEC+10N,  ACC: 98.57%, RKS: 15.28/16.3, Score:929993
+B21 Ad astra per aspera,  ACC: 98.57%, RKS: 15.278/16.3, Score:939295
+B22 Igallta,  ACC: 98.71%, RKS: 15.189/16.1, Score:941213
+B23 白と黒のバケモノ,  ACC: 98.98%, RKS: 15.185/15.9, Score:936236
+B24 Cthugha,  ACC: 98.75%, RKS: 15.124/16.0, Score:945473
+B25 暗夜苏醒 (REANIMATE),  ACC: 99.73%, RKS: 15.115/15.3, Score:996506
+B26 Silence is Golden, Speech is Golden,  ACC: 99.27%, RKS: 15.095/15.6, Score:959560
+B27 You are the Miserable,  ACC: 98.96%, RKS: 15.077/15.8, Score:990625
+B28 Nhelv,  ACC: 99.21%, RKS: 15.06/15.6, Score:981999
+————OVERFLOW————
+B29 Crush BETA,  ACC: 99.86%, RKS: 15.007/15.1, Score:973675
+B30 After Dawn,  ACC: 99.54%, RKS: 14.988/15.3, Score:960928
+B31 NO x,  ACC: 98.41%, RKS: 14.984/16.1, Score:932765
+B32 聖夜讃歌,  ACC: 99.67%, RKS: 14.976/15.2, Score:962132
+B33 Palescreen,  ACC: 98.67%, RKS: 14.973/15.9, Score:947559
