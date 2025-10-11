@@ -106,301 +106,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
     # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
     
     if(style == 0):pass
-    elif style == 1:
-        # 横向布局
-        target_size = (3000, 1875)  # 调整为横向尺寸
-        
-        # 背景处理
-        original_img = Image.open(a_path).convert('RGB')
-        enhancer = ImageEnhance.Brightness(original_img)
-        original_img = enhancer.enhance(0.7)
-        original_width, original_height = original_img.size
-        
-        target_width, target_height = target_size
-        
-        # 背景模糊处理
-        ratio = max(target_width / original_width, target_height / original_height)
-        new_size = (int(original_width * ratio), int(original_height * ratio))
-        
-        blurred_bg = original_img.resize(new_size, Image.LANCZOS)
-        blurred_bg = blurred_bg.filter(ImageFilter.GaussianBlur(radius=blur_radius))
-        
-        # 裁剪背景
-        left = (blurred_bg.width - target_width) // 2
-        top = (blurred_bg.height - target_height) // 2
-        blurred_bg = blurred_bg.crop((left, top, left + target_width, top + target_height))
-        
-        final_img = Image.new("RGBA", target_size)
-        final_img.paste(blurred_bg, (0, 0))
-        draw = ImageDraw.Draw(final_img)
-        
-        # 字体配置
-        FONT_CONFIG = {
-            'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48),
-            'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
-            'song_name': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
-            'score': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
-            'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
-            'difficulty': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 17),
-            'contrib': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 16),
-            'rank': ImageFont.truetype("Resource/SourceHanSansCN-Regular.ttf", 24),
-            'version': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 30),
-            'open-sourced': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
-            'sheet': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
-            'challenge_rank': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
-        }
-        
-        # 绘制用户信息区域
-        def draw_user_info():
-            # 用户信息区域位置和大小
-            user_info_x, user_info_y = 50, 50
-            user_info_width, user_info_height = 335, 117
-            
-            # 绘制背景
-            draw.rounded_rectangle(
-                [(user_info_x, user_info_y), (user_info_x + user_info_width, user_info_y + user_info_height)],
-                radius=10,
-                fill=(102, 102, 102)
-            )
-            
-            # 绘制头像
-            avatar_x, avatar_y = user_info_x + 17, user_info_y + 9
-            avatar_size = 64
-            try:
-                avatar_img = Image.open(f"avatar/{avatar}.png").convert("RGBA")
-                avatar_img = avatar_img.resize((avatar_size, avatar_size))
-                avatar_img = add_corners(avatar_img, 10)
-                final_img.paste(avatar_img, (avatar_x, avatar_y), avatar_img)
-            except:
-                avatar_img = Image.new("RGBA", (avatar_size, avatar_size), (57, 197, 187))
-                avatar_img = add_corners(avatar_img, 10)
-                final_img.paste(avatar_img, (avatar_x, avatar_y), avatar_img)
-            
-            # 绘制用户名
-            username_x, username_y = avatar_x + avatar_size + 20, avatar_y + 10
-            draw.text(
-                (username_x, username_y),
-                username,
-                fill=(255, 255, 255),
-                font=FONT_CONFIG['username']
-            )
-            
-            # 绘制挑战模式图标
-            rank_tier = challengeModeRank // 100
-            rank_number = challengeModeRank % 100
-            icon_map = {
-                1: "Resource/green.png",
-                2: "Resource/blue.png",
-                3: "Resource/red.png",
-                4: "Resource/gold.png",
-                5: "Resource/rainbows.png"
-            }
-            icon_path = icon_map.get(rank_tier, "Resource/grey.png")
-            
-            icon_x, icon_y = username_x, username_y + 40
-            icon_width, icon_height = 79, 38
-            try:
-                icon_img = Image.open(icon_path).convert("RGBA").resize((icon_width, icon_height))
-                final_img.paste(icon_img, (icon_x, icon_y), icon_img)
-            except:
-                pass
-            
-            # 绘制挑战模式等级
-            rank_text_x, rank_text_y = icon_x + 10, icon_y + (icon_height - FONT_CONFIG['rks'].size) // 2
-            draw.text(
-                (rank_text_x, rank_text_y),
-                str(rank_number),
-                fill=(255, 255, 255),
-                font=FONT_CONFIG['rks']
-            )
-            
-            # 绘制RKS
-            rks_text = f"{rks:.6f}"
-            rks_x, rks_y = icon_x + icon_width + 10, icon_y + (icon_height - FONT_CONFIG['rks'].size) // 2
-            draw.text(
-                (rks_x, rks_y),
-                rks_text,
-                fill=(255, 255, 255),
-                font=FONT_CONFIG['rks']
-            )
-            
-            # 绘制难度进度
-            diff_types = ['EZ', 'HD', 'IN', 'AT']
-            positions = [
-                (user_info_x + 168, user_info_y + 96),  # EZ
-                (user_info_x + 168, user_info_y + 106),  # HD
-                (user_info_x + 234, user_info_y + 96),  # IN
-                (user_info_x + 234, user_info_y + 106)  # AT
-            ]
-            
-            for i, pos in enumerate(positions):
-                progress_text = f"{progress[0][i]}/{progress[1][i]}/{progress[2][i]}"
-                draw.text(
-                    pos,
-                    progress_text,
-                    fill=(255, 255, 255),
-                    font=FONT_CONFIG['difficulty']
-                )
-        
-        # 绘制歌曲信息
-        def draw_song_info(song_data, position, rank_text):
-            song_id, rank, song_name, rks_val, difficulty_val, acc, score_val, diff_type, nxt, fc = song_data
-            x, y = position
-            song_width, song_height = 410, 282
-            
-            # 绘制背景
-            draw.rounded_rectangle(
-                [(x, y), (x + song_width, y + song_height)],
-                radius=10,
-                fill=(102, 102, 102)
-            )
-            
-            # 绘制曲绘
-            illust_x, illust_y = x + 11, y + 62
-            illust_width, illust_height = 261, 140
-            try:
-                illust_path = f"illustrationLowRes/{song_id}.png"
-                illust_img = Image.open(illust_path).convert("RGBA")
-                illust_img = illust_img.resize((illust_width, illust_height))
-                final_img.paste(illust_img, (illust_x, illust_y), illust_img)
-            except:
-                illust_img = Image.open("Resource/nodata.png").convert("RGBA")
-                illust_img = illust_img.resize((illust_width, illust_height))
-                final_img.paste(illust_img, (illust_x, illust_y), illust_img)
-            
-            # 绘制排名
-            rank_x, rank_y = x + 325, y + 203
-            draw.text(
-                (rank_x, rank_y),
-                rank_text,
-                fill=(255, 255, 255, 64),
-                font=FONT_CONFIG['rank']
-            )
-            
-            # 绘制歌曲名
-            song_name_x, song_name_y = x + 11, y + 35
-            if len(song_name) > 30:
-                song_name = song_name[:27] + "..."
-            draw.text(
-                (song_name_x, song_name_y),
-                song_name,
-                fill=(242, 242, 242),
-                font=FONT_CONFIG['song_name']
-            )
-            
-            # 绘制分数
-            score_x, score_y = x + 280, y + 97
-            draw.text(
-                (score_x, score_y),
-                str(score_val),
-                fill=(242, 242, 242),
-                font=FONT_CONFIG['score']
-            )
-            
-            # 绘制ACC
-            acc_text = f"{acc:.2f}%"
-            acc_x, acc_y = x + 280, y + 151
-            draw.text(
-                (acc_x, acc_y),
-                acc_text,
-                fill=(242, 242, 242),
-                font=FONT_CONFIG['accuracy']
-            )
-            
-            # 绘制难度
-            diff_text = f"{diff_type} {difficulty_val}"
-            diff_x, diff_y = x + 188, y + 190
-            draw.text(
-                (diff_x, diff_y),
-                diff_text,
-                fill=(153, 238, 221),
-                font=FONT_CONFIG['difficulty']
-            )
-            
-            # 绘制贡献值
-            contrib_text = f"{rks_val:.4f}"
-            contrib_x, contrib_y = x + 280, y + 192
-            draw.text(
-                (contrib_x, contrib_y),
-                contrib_text,
-                fill=(252, 252, 252),
-                font=FONT_CONFIG['contrib']
-            )
-        
-        # 绘制用户信息
-        draw_user_info()
-        
-        # 布局参数
-        start_x, start_y = 50, 200  # 歌曲块起始位置
-        song_width, song_height = 410, 282
-        padding = 20
-        
-        # 绘制前3个phi成绩
-        for i in range(min(3, len(b27))):
-            song_data = b27[i]
-            rank_text = f"P{i+1:02d}"
-            position = (start_x + i * (song_width + padding), start_y)
-            draw_song_info(song_data, position, rank_text)
-        
-        # 绘制前27个最佳成绩（4行，每行7个，最后一行6个）
-        row_start_y = start_y + song_height + padding
-        for row in range(4):
-            cols = 7 if row < 3 else 6  # 前三行7个，最后一行6个
-            for col in range(cols):
-                idx = 3 + row * 7 + col
-                if idx >= len(b27) or idx >= 30:  # 只绘制到第30个
-                    continue
-                
-                song_data = b27[idx]
-                rank_text = f"B{idx-2:02d}" if idx > 2 else f"B{idx+1:02d}"
-                position = (start_x + col * (song_width + padding), row_start_y + row * (song_height + padding))
-                draw_song_info(song_data, position, rank_text)
-        
-        # 绘制overflow.png
-        overflow_y = row_start_y + 3 * (song_height + padding)
-        try:
-            overflow_img = Image.open("Resource/overflow.png").convert("RGBA")
-            overflow_img = overflow_img.resize((600, 157))
-            final_img.paste(overflow_img, (start_x, overflow_y), overflow_img)
-        except:
-            # 手动绘制overflow效果
-            overflow_width, overflow_height = 600, 157
-            draw.rounded_rectangle(
-                [(start_x, overflow_y), (start_x + overflow_width, overflow_y + overflow_height)],
-                radius=10,
-                fill=(80, 80, 80, 200)
-            )
-            overflow_text = "OVERFLOW"
-            font_overflow = ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48)
-            text_width, text_height = draw.textsize(overflow_text, font=font_overflow)
-            draw.text(
-                (start_x + (overflow_width - text_width) // 2, overflow_y + (overflow_height - text_height) // 2),
-                overflow_text,
-                fill=(255, 255, 255),
-                font=font_overflow
-            )
-        
-        # 绘制第28-33个成绩
-        overflow_start_y = overflow_y + 157 + padding
-        for i in range(6):
-            idx = 30 + i
-            if idx >= len(b27):
-                break
-                
-            song_data = b27[idx]
-            rank_text = f"B{idx-2:02d}" if idx > 2 else f"B{idx+1:02d}"
-            position = (start_x + i * (song_width + padding), overflow_start_y)
-            draw_song_info(song_data, position, rank_text)
-        
-        # 添加版本信息
-        draw.text((5, target_height - 50), 'Ver. ' + VERSION, fill=WHITE, font=FONT_CONFIG['version'])
-        draw.text((target_width - 400, target_height - 50), 'Phigros rks Image Maker', fill=WHITE, font=FONT_CONFIG['version'])
-        draw.text((target_width - 300, target_height - 40), 'open-sourced on Github', fill=WHITE, font=FONT_CONFIG['open-sourced'])
-        
-        # 最终保存
-        final_img.convert('RGB').save(output_path, format="PNG")
     else: 
-        #仿照Phi-plugin
         original_img = Image.open(a_path).convert('RGB')
         enhancer = ImageEnhance.Brightness(original_img)
         original_img = enhancer.enhance(0.7)
@@ -443,10 +149,12 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             'difficulty': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 17),
             'song_name': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
             'score': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
-            'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'accuracy': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 28),
+            'accuracy_small': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
             'next': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 16),
-            'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 48),
-            'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
+            'username': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 56),
+            'rks': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 30),
+            'rks_small': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 20),
             'song_name_bigger': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 24),
             'challenge_rank': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 36),
             'data': ImageFont.truetype("Resource/SourceHanSans&SairaHybrid-Regular.ttf", 26),
@@ -515,7 +223,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             alpha=150
         )
         draw.text(
-            (username_x + (username_bg_width - username_bbox[2]) // 2, username_y + (username_bg_height - username_bbox[3]) // 2 - 10),
+            (username_x + (username_bg_width - username_bbox[2]) // 2, username_y + (username_bg_height - username_bbox[3]) // 2 - 5),
             username,
             fill=WHITE,
             font=FONT_CONFIG['username']
@@ -640,35 +348,50 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         )
         
         # --- 新增：在用户名下方绘制RKS显示框 ---
-        rks_font = FONT_CONFIG['rks']
-        rks_text = f'%.4f'%rks
         
         # 计算RKS文本框位置（用户名下方 + 10px间距）
-        rks_x = username_x  # 与用户名左对齐
+        # 1. 原始数据
+        rks_val = rks        
+        main_txt = f'{rks_val:05.2f}'    
+        tiny_txt = f'{int(rks_val * 1000000) % 10000:04d}' 
+
+        # 2. 字体
+        font_main = FONT_CONFIG['rks']              # 正常字号
+        font_tiny = FONT_CONFIG['rks_small']  # 小号，需提前加载
+
+        # 3. 量尺寸
+        main_bbox = draw.textbbox((0, 0), main_txt, font=font_main)
+        tiny_bbox = draw.textbbox((0, 0), tiny_txt, font=font_tiny)
+
+        main_w = main_bbox[2] - main_bbox[0]
+        tiny_w = tiny_bbox[2] - tiny_bbox[0]
+        total_w = main_w + tiny_w                 # 两段文字总宽
+        max_h = main_bbox[3] - main_bbox[1]
+
+        # 4. 背景框尺寸（左右 25 px、上下 20 px 边距）
+        rks_bg_width  = total_w + 35
+        rks_bg_height = max_h + 10
+        rks_x = username_x            # 与用户名左对齐
         rks_y = username_y + username_bg_height
-        
-        # RKS文本框尺寸（根据文本自动调整）
-        rks_bbox = draw.textbbox((0, 0), rks_text, font=rks_font)
-        rks_bg_width = rks_bbox[2] - rks_bbox[0] + 40  # 左右各加20px边距
-        rks_bg_height = rks_bbox[3] - rks_bbox[1] + 20  # 上下各加10px边距
-        
-        # 绘制白底黑字的RKS框
+
+        # 5. 画圆角背景
         final_img = add_rounded_rectangle(
             final_img,
             (rks_x, rks_y),
             (rks_bg_width, rks_bg_height),
-            radius=5,  # 圆角半径
-            color=(230,230,230),
-            alpha=255  # 不透明
+            radius=8,
+            color=(205, 205, 205),
+            alpha=255
         )
-        
-        # 绘制RKS文本（居中）
-        draw.text(
-            (rks_x + (rks_bg_width - rks_bbox[2]) // 2, rks_y + (rks_bg_height - rks_bbox[3]) // 2 - 3),
-            rks_text,
-            fill=(0, 0, 0),  # 黑色文字
-            font=rks_font
-        )
+
+        # 6. 文字纵向居中基准线
+        base_y = rks_y + (rks_bg_height - max_h) // 2
+
+        # 7. 先写主字
+        draw.text((rks_x + 15, base_y - 5), main_txt, fill=(0, 0, 0), font=font_main)
+
+        # 8. 再接小字
+        draw.text((rks_x + 15 + main_w, base_y + 3), tiny_txt, fill=(0, 0, 0), font=font_tiny)
         
         challenge_rank = challengeModeRank
         rank_tier = challenge_rank // 100
@@ -719,11 +442,11 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         data_icon = data_icon.resize(data_icon_size, Image.LANCZOS)
         
         data_text_width = draw.textlength(data, font=data_font)
-        data_box_width = data_icon_size[0] + 10 + int(data_text_width) + 35  # 图标+间距+文字+边距
+        data_box_width = data_icon_size[0] + 8 + int(data_text_width) + 35  # 图标+间距+文字+边距
         data_box_height = 40  # 与挑战模式图标同高
 
         # 2. 绘制半透明背景（70%透明度）
-        data_box_pos = (460, icon_y+10)  # 挑战模式图标左侧-10px
+        data_box_pos = (icon_x + icon_size[0] + 20, icon_y+10)  # 挑战模式图标左侧-10px
         final_img = add_rounded_rectangle(
             final_img,
             data_box_pos,
@@ -790,7 +513,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
                 OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((600,157))
             except Exception as e:
                 fuck(e)
-        final_img.paste(OVERFLOW,(600,2315),mask=OVERFLOW)
+        final_img.paste(OVERFLOW,(600,2325),mask=OVERFLOW)
         # 绘制所有B27元素
         for idx, item in enumerate(b27):
             row = idx // 3
@@ -799,7 +522,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             # 计算位置
             x = 50 + col * (cell_width + 100)
             y = start_y + row * (cell_height - 20)
-            if idx >= 30: y += 65
+            if idx >= 30: y += 70
             # 边界检查
                 
             draw = ImageDraw.Draw(final_img)
@@ -812,7 +535,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             
             b_height = text_bbox[3] - text_bbox[1] + 10
             color1 = (220,220,220)
-            if(item[1][0]=='P'): color1=(240,235,0)
+            if(item[1][0]=='P'): color1=(255,240,87)
             final_img = add_rounded_rectangle(
                 final_img,
                 (x, y),
@@ -839,7 +562,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             # 3. 难度标签（左下角）
                 diff_type = item[7]
                 tag_size = (70, 45)
-                tag_pos = (x + b_width, y + 135 - tag_size[1] +25)  # 左下角位置
+                tag_pos = (x + b_width, y + 135 - tag_size[1] +27)  # 左下角位置
                 
                 final_img = add_rounded_rectangle(
                     final_img,
@@ -882,7 +605,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             #     alpha=200
             # )
             info_block = Image.open('Resource/infoblock.png').convert('RGBA').resize((info_block_width,info_block_height))
-            final_img.paste(info_block, (info_pos[0], info_pos[1] - 13), info_block)
+            final_img.paste(info_block, (info_pos[0], info_pos[1] - 10), info_block)
             # 3. 计算居中坐标（关键修改）
             def get_centered_x(text, font, box_width):
                 """计算文本在指定宽度内的居中x坐标"""
@@ -956,15 +679,29 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             # draw.line([line_start, (line_start[0]+128, line_start[1])], 
             #          fill=WHITE, width=4)
             
-            # 精度和NEXT
-            acc_text ='%.2f'%item[5]+'%'
-            acc_width = draw.textlength(acc_text, font=FONT_CONFIG['accuracy'])
-            draw.text(
-                (line_start[0]+35, line_start[1]+5),
-                acc_text,
-                fill=WHITE,
-                font=FONT_CONFIG['accuracy']
-            )
+            # ACC
+            acc_val = item[5]          # float
+            main_text = f'{acc_val:05.2f}'           # "96.42"
+            tiny_text = f'{int(acc_val * 10000) % 100:02d}'  
+
+            # 2. 字体
+            font_main = FONT_CONFIG['accuracy']          # 正常字号
+            font_tiny = FONT_CONFIG['accuracy_small']    # 小号字号
+
+            # 3. 起始坐标
+            x, y = line_start[0] + 35, line_start[1] + 5
+
+            # 4. 主文本
+            draw.text((x, y), main_text, fill=WHITE, font=font_main)
+
+            # 5. 第 3、4 位（紧接主文本右侧，y 稍下沉）
+            #   textbbox 返回 (left, top, right, bottom)
+            main_w = draw.textbbox((0, 0), main_text, font=font_main)[2]  # 宽度 = right
+            draw.text((x + main_w, y + 7), tiny_text, fill=WHITE, font=font_tiny)
+
+            # 6. 百分号（紧接小字右侧）
+            tiny_w = draw.textbbox((0, 0), tiny_text, font=font_tiny)[2]
+            draw.text((x + main_w + tiny_w, y), '%', fill=WHITE, font=font_main)
             
             # next_text = f"{item[8]}"
             # draw.text(
@@ -1320,10 +1057,10 @@ print(f'FC  {progress[1][0]: 3d} {progress[1][1]: 3d} {progress[1][2]: 3d} {prog
 print(f'AT  {progress[2][0]: 3d} {progress[2][1]: 3d} {progress[2][2]: 3d} {progress[2][3]: 3d} ')
 print()
 for i in range(min(3,len(phi))):
-    print(f'P{i+1} {phi[i][5]},  ACC: {round(phi[i][8],2)}%, RKS: {round(phi[i][0],3)}/{phi[i][7]}, Score:{phi[i][6]}')
+    print(f'P{i+1} {phi[i][5]},  ACC: {"%.4f"%phi[i][8]}%, RKS: {"%.3f"%phi[i][0]}/{phi[i][7]}, Score:{phi[i][6]}')
 print()
 for i in range(min(33,len(score))):
-    print(f'B{i+1} {score[i][5]},  ACC: {round(score[i][8],2)}%, RKS: {round(score[i][0],3)}/{score[i][7]}, Score:{score[i][6]}')
+    print(f'B{i+1} {score[i][5]},  ACC: {"%.4f"%score[i][8]}%, RKS: {"%.3f"%score[i][0]}/{score[i][7]}, Score:{score[i][6]}')
     if(i == 27):
         print('————OVERFLOW————')
 sys.stdout = original_stdout
@@ -1383,7 +1120,7 @@ createImage(
     avatar=user['avatar'],
     b27=b27,
     username=nickname,
-    rks=round(rks,4),
+    rks=round(rks,6),
     challengeModeRank=summary['challengeModeRank'],
     data=data_num,
     updatetime=str(updatetime),
@@ -1400,7 +1137,7 @@ elif(cmrcn[0]=='蓝'):printwithcolor(cmrcn,[36,1],' ')
 elif(cmrcn[0]=='红'):printwithcolor(cmrcn,[31,1],' ')
 elif(cmrcn[0]=='金'):printwithcolor(cmrcn,[33,1],' ')
 else:printwithcolor(cmrcn,[35,1],' ')
-printwithcolor('%.6f'%(round(summary['rankingScore'],6)),[7,1],' ')
+printwithcolor('%.6f'%summary['rankingScore'], [7,1], ' ')
 # print('GameVersion: ', summary['gameVersion'])
 printwithcolor(data_num, [1,3])
 print('\\   ',end='')
@@ -1418,15 +1155,15 @@ print()
 for i in range(min(3,len(phi))):
     printwithcolor(f'P{i+1}',[43,1],' ')
     printwithcolor(songname[phi[i][1]],0,' ')
-    printwithcolor(f'{round(gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1],2)}%',[1],' ')
-    printwithcolor(f'{round(phi[i][0],3)}/{diff[phi[i][1]][classToNum(phi[i][2])]}',[44],' ')
+    printwithcolor(f'{"%.4f"%gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1]}%', [1], ' ')
+    printwithcolor(f'{"%.3f"%phi[i][0]}/{diff[phi[i][1]][classToNum(phi[i][2])]}', [44], ' ')
     printwithcolor(f'{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}',[1,33])
 print()
 for i in range(min(33,len(score))):
     printwithcolor(f'B{i+1}',[43,1],' ')
     printwithcolor(songname[score[i][1]],0,' ')
-    printwithcolor(f'{round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%',[1],' ')
-    printwithcolor(f'{round(score[i][0],3)}',[44],'')
+    printwithcolor(f'{"%.4f"%gameRecords[score[i][1]][classToNum(score[i][2])*3+1]}%', [1], ' ')
+    printwithcolor(f'{"%.3f"%score[i][0]}', [44], '')
     printwithcolor(f'/{diff[score[i][1]][classToNum(score[i][2])]}',[0],' ')
     printwithcolor(f'{gameRecords[score[i][1]][classToNum(score[i][2])*3]}',[1,36])
     # print(f'B{i+1} {songname[score[i][1]]},  ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]}, Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
