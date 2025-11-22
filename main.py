@@ -917,6 +917,8 @@ if not settings['yywMode']:
     gameRecords = savedata['gameRecord']
     data = savedata['gameProgress']['money']
     user = savedata['user']
+    # with open("1.txt", 'w', encoding='utf-8') as f:
+    #     print(gameRecords, file=f)
     # print(savedata)             # 获取存档
 else:
     nickname = 'Sample'

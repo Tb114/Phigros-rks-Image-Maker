@@ -5,25 +5,26 @@ from urllib.parse import urljoin
 GITHUB_PROXY = "https://git.yylx.win/" #"https://github.akams.cn/"
 LOCAL_FOLDER = "illustrationLowRes"
 LOCAL_FOLDER1 = 'avatar'
-RAW_CONTENT_URL =  "https://raw.githubusercontent.com/7aGiven/Phigros_Resource/illustrationLowRes"
-RAW_CONTENT_URL1 = "https://raw.githubusercontent.com/7aGiven/Phigros_Resource/info"
-RAW_CONTENT_URL2 = "https://raw.githubusercontent.com/7aGiven/Phigros_Resource/avatar"
-RAW_CONTENT_URL_BAK = GITHUB_PROXY+"https://github.com/7aGiven/Phigros_Resource/blob/illustrationLowRes"
-RAW_CONTENT_URL1_BAK = GITHUB_PROXY+"https://github.com/7aGiven/Phigros_Resource/blob/info"
-RAW_CONTENT_URL2_BAK = GITHUB_PROXY+"https://github.com/7aGiven/Phigros_Resource/blob/avatar"
-API_URL =  "https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=illustrationLowRes"
-API_URL1 = "https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=avatar"
-API_URL2 = "https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=info"
-API_URL_BAK =  GITHUB_PROXY+"https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=illustrationLowRes"
-API_URL1_BAK = GITHUB_PROXY+"https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=avatar"
-API_URL2_BAK = GITHUB_PROXY+"https://api.github.com/repos/7aGiven/Phigros_Resource/contents?ref=info"
+RAW_CONTENT_URL =  "https://raw.githubusercontent.com/Tb114/Phigros_Resource/blob/illustrationLowRes"
+RAW_CONTENT_URL1 = "https://raw.githubusercontent.com/Tb114/Phigros_Resource/blob/info"
+RAW_CONTENT_URL2 = "https://raw.githubusercontent.com/Tb114/Phigros_Resource/avatar"
+RAW_CONTENT_URL_BAK = GITHUB_PROXY+"https://github.com/Tb114/Phigros_Resource/blob/illustrationLowRes"
+RAW_CONTENT_URL1_BAK = GITHUB_PROXY+"https://github.com/Tb114/Phigros_Resource/blob/info"
+RAW_CONTENT_URL2_BAK = GITHUB_PROXY+"https://github.com/Tb114/Phigros_Resource/blob/avatar"
+API_URL =  "https://api.github.com/repos/Tb114/Phigros_Resource/contents?ref=illustrationLowRes"
+API_URL1 = "https://api.github.com/repos/Tb114/Phigros_Resource/contents?ref=avatar"
+API_URL2 = "https://api.github.com/repos/Tb114/Phigros_Resource/contents?ref=info"
+API_URL_BAK =  GITHUB_PROXY+"https://api.github.com/repos/Tb114/Phigros_Resource/contents?ref=illustrationLowRes"
+API_URL1_BAK = GITHUB_PROXY+"https://api.github.com/repos/Tb114/Phigros_Resource/contents?ref=avatar"
+API_URL2_BAK = GITHUB_PROXY+"https://api.github.com/repos/Tb114/Phigros_Resource/contents?ref=info"
 
 def get_github_files(api_url):
     """使用GitHub API获取文件列表"""
     try:
         response = requests.get(api_url, timeout=10)
         if response.status_code in [200,301,302]:
-            return [item['name'] for item in response.json() if item['type'] == 'file']
+            # 过滤掉.gitignore文件
+            return [item['name'] for item in response.json() if item['type'] == 'file' and item['name'] != '.gitignore']
         # print(f"GitHub API请求失败: HTTP {response.status_code}")
         # raise Exception(f'网络错误: {e}')
     except Exception as e:
