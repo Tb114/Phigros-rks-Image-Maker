@@ -391,7 +391,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         draw.text((rks_x + 15, base_y - 5), main_txt, fill=(0, 0, 0), font=font_main)
 
         # 8. 再接小字
-        draw.text((rks_x + 15 + main_w, base_y + 3), tiny_txt, fill=(0, 0, 0), font=font_tiny)
+        draw.text((rks_x + 15 + main_w, base_y + 4), tiny_txt, fill=(0, 0, 0), font=font_tiny)
         
         challenge_rank = challengeModeRank
         rank_tier = challenge_rank // 100
@@ -507,13 +507,13 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             
             return ellipsis  # 极端情况（max_width极小）
         try:
-            OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA').resize((600,157))
+            OVERFLOW=Image.open("Resource/overflow.png").convert('RGBA').resize((625,114))
         except:
             try:
-                OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((600,157))
+                OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((625,114))
             except Exception as e:
                 fuck(e)
-        final_img.paste(OVERFLOW,(600,2325),mask=OVERFLOW)
+        final_img.paste(OVERFLOW,(600,2360),mask=OVERFLOW)
         # 绘制所有B27元素
         for idx, item in enumerate(b27):
             row = idx // 3
@@ -522,7 +522,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             # 计算位置
             x = 50 + col * (cell_width + 100)
             y = start_y + row * (cell_height - 20)
-            if idx >= 30: y += 70
+            if idx >= 30: y += 95
             # 边界检查
                 
             draw = ImageDraw.Draw(final_img)
@@ -536,20 +536,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             b_height = text_bbox[3] - text_bbox[1] + 10
             color1 = (220,220,220)
             if(item[1][0]=='P'): color1=(255,240,87)
-            final_img = add_rounded_rectangle(
-                final_img,
-                (x, y),
-                (b_width, b_height),
-                5,
-                color1,
-                200
-            )
-            draw.text(
-                (x + (b_width - text_bbox[2])//2, y + (b_height - text_bbox[3])//2 - 5),
-                b_text,
-                fill=(0,0,0),
-                font=FONT_CONFIG['rank']
-            )
+            # Go 9 lines down
             
             # 2. 歌曲插图
             img_path = f"illustrationLowRes/{item[0]}.png"
@@ -558,6 +545,22 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
                 
             song_img = Image.open(img_path).convert('RGB').resize((int(256*1.2), int(135*1.2)))
             final_img.paste(song_img, (x + b_width, y))
+            
+            final_img = add_rounded_rectangle(
+                final_img,
+                (x + 15, y),
+                (b_width, b_height),
+                5,
+                color1,
+                200
+            )
+            draw.text(
+                (x + (b_width - text_bbox[2])//2 + 15, y + (b_height - text_bbox[3])//2 - 5),
+                b_text,
+                fill=(0,0,0),
+                font=FONT_CONFIG['rank']
+            )
+            
             if(item[0] != 'No Data'):
             # 3. 难度标签（左下角）
                 diff_type = item[7]
@@ -726,8 +729,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
                 elif score >=700000: icon_path += "C.png"
                 else: icon_path += "F.png"
             if os.path.exists(icon_path):
-                icon = Image.open(icon_path).convert('RGBA').resize((64,64))
-                final_img.paste(icon, (info_pos[0], info_pos[1]+40), icon)
+                icon = Image.open(icon_path).convert('RGBA').resize((74,74))
+                final_img.paste(icon, (info_pos[0], info_pos[1]+30), icon)
         draw.text(
             (5, 2950),
             'Ver. '+VERSION,
