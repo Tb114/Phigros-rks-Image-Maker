@@ -513,7 +513,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
                 OVERFLOW=Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((625,114))
             except Exception as e:
                 fuck(e)
-        final_img.paste(OVERFLOW,(600,2360),mask=OVERFLOW)
+        if(len(b27)>27): final_img.paste(OVERFLOW,(600,2360),mask=OVERFLOW)
         # 绘制所有B27元素
         for idx, item in enumerate(b27):
             row = idx // 3
@@ -732,19 +732,19 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
                 icon = Image.open(icon_path).convert('RGBA').resize((74,74))
                 final_img.paste(icon, (info_pos[0], info_pos[1]+30), icon)
         draw.text(
-            (5, 2950),
+            (5, target_size[1]-50),
             'Ver. '+VERSION,
             fill=WHITE,
             font=FONT_CONFIG['version']
         )
         draw.text(
-            (1265, 2950),
+            (1265, target_size[1]-50),
             'Phigros rks Image Maker',
             fill=WHITE,
             font=FONT_CONFIG['version']
         )
         draw.text(
-            (1610, 2960),
+            (1610, target_size[1]-40),
             'open-sourced on Github',
             fill=WHITE,
             font=FONT_CONFIG['open-sourced']
@@ -777,7 +777,8 @@ settings : dict = {
     'AutoUpdate' : True,        #自动更新数据
     'EnterToContiune' : True,   #按下Enter以继续
     'yywMode' : False,          #演示模式
-    'outputLog' : True,         #是否保留历史记录
+    'OutputLog' : True,         #是否保留历史记录
+    'MaxSongResultShowcase' : 33,
     } 
 
 flag1 : bool = False
@@ -831,6 +832,9 @@ if os.path.exists('config.ini'):
     for key in settings.keys():
         try:
             set1 = os.getenv(key).encode('UTF-8')
+            if(key=='MaxSongResultShowcase'):
+                settings[key] = int(set1)
+                continue
             if(set1 == 1 or set1 == b'True' or set1 == b'true'): set1 = 1     # strictly enabled
             elif(set1 == 0 or set1 == b'False' or set1 == b'false'): set1 = 0 # strictly disabled
             else: set1 = -1                                                   # normal case
@@ -953,15 +957,17 @@ contect = difffile.readlines()
 for idx in range(len(contect)):
     contect[idx] = contect[idx].rstrip('\n')
 # print(contect)
+chartsum = 0
 for i in contect:
     sum = i.count('\t')
     str1 = i.split('\t')
+    chartsum+=sum
     if sum == 3:
         diff[str1[0]] = [float(str1[1]), float(str1[2]), float(str1[3]), 0.0]
     else:
         diff[str1[0]] = [float(str1[1]), float(str1[2]), float(str1[3]), float(str1[4])]
 
-
+if(settings['MaxSongResultShowcase']==-1): settings['MaxSongResultShowcase'] = chartsum
 
 rksContribution = {}
 score = []
@@ -1024,6 +1030,35 @@ for i in range(min(3,len(phi))):
 
 rks = rks / 30.0
 
+b27 = [] # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
+b27len = 0
+
+for i in range(3):
+    if(i>=len(phi)):
+        phi.append(('No Data',f'B{i+1}','No Data',0,0,0,0,0,'',0))
+        continue
+    id = phi[i][1]
+    accuary = gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1]
+    scr = gameRecords[phi[i][1]][classToNum(phi[i][2])*3]
+    b27.append((id,f'P{i+1}',songname[id],phi[i][0],phi[i][3],accuary,scr,phi[i][2],'推分建议已经被砍了',phi[i][4]))
+for i in range(settings['MaxSongResultShowcase']):
+    if(i>=len(score)):
+        break
+        b27.append(('No Data',f'B{i+1}','No Data',0,0,0,0,0,'',0))
+        continue
+    b27len+=1
+    id = score[i][1]
+    accuary = gameRecords[score[i][1]][classToNum(score[i][2])*3+1]
+    scr = gameRecords[score[i][1]][classToNum(score[i][2])*3]
+    # cnt1 = int(rks*100)/100.0  +0.01
+    # nxt = (cnt1-rks)*30
+    # # nxt = ((cnt1+0.008 if rks-cnt1<0.005 else cnt1+0.018)-rks)*30
+    # target_rks = nxt + score[i][0]
+    # target_acc = pow(target_rks / score[i][3], 1/2) * 45 + 55
+    # print(score[i][0])
+    # print((cnt1+0.005 if rks-cnt1<0.005 else cnt1+0.015),f'{target_rks:f}',target_rks,target_acc,pow((target_acc-55)/45,2)*score[0][3])
+    b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'推分建议已经被砍了' '''f'{round(target_acc,2)}%' if target_acc<=100 else '无法推分' ''',score[i][4]))
+
 updatetime = datetime.now().astimezone(timezone('Asia/Shanghai')).replace(tzinfo=None)
 
 original_stdout = sys.stdout
@@ -1062,11 +1097,11 @@ print(f'FC  {progress[1][0]: 3d} {progress[1][1]: 3d} {progress[1][2]: 3d} {prog
 print(f'AT  {progress[2][0]: 3d} {progress[2][1]: 3d} {progress[2][2]: 3d} {progress[2][3]: 3d} ')
 print()
 for i in range(min(3,len(phi))):
-    print(f'P{i+1} {phi[i][5]},  ACC: {"%.4f"%phi[i][8]}%, RKS: {"%.3f"%phi[i][0]}/{phi[i][7]}, Score:{phi[i][6]}')
+    print(f'P{i+1} {phi[i][5]} {phi[i][2]},  ACC: {"%.4f"%phi[i][8]}%, RKS: {"%.3f"%phi[i][0]}/{phi[i][7]}, Score:{phi[i][6]}')
 print()
-for i in range(min(33,len(score))):
-    print(f'B{i+1} {score[i][5]},  ACC: {"%.4f"%score[i][8]}%, RKS: {"%.3f"%score[i][0]}/{score[i][7]}, Score:{score[i][6]}')
-    if(i == 27):
+for i in range(b27len):
+    print(f'B{i+1} {score[i][5]} {score[i][2]},  ACC: {"%.4f"%score[i][8]}%, RKS: {"%.3f"%score[i][0]}/{score[i][7]}, Score:{score[i][6]}')
+    if(i == 26):
         print('————OVERFLOW————')
 sys.stdout = original_stdout
 # print(rks)
@@ -1075,35 +1110,9 @@ sys.stdout = original_stdout
 # b19 = phigros.get_b19(handle).decode('utf-8')
 # print(b19)             # 从存档读取B19,依赖load_difficulty
 if(not settings['yywMode']): phigros.free_handle(handle)                 # 释放handle的内存,不会被垃圾回收,使用完handle请确保释放
-b27 = [] # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
-
-
-for i in range(3):
-    if(i>=len(phi)):
-        phi.append(('No Data',f'B{i+1}','No Data',0,0,0,0,0,'',0))
-        continue
-    id = phi[i][1]
-    accuary = gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1]
-    scr = gameRecords[phi[i][1]][classToNum(phi[i][2])*3]
-    b27.append((id,f'P{i+1}',songname[id],phi[i][0],phi[i][3],accuary,scr,phi[i][2],'推分建议已经被砍了',phi[i][4]))
-for i in range(33):
-    if(i>=len(score)):
-        b27.append(('No Data',f'B{i+1}','No Data',0,0,0,0,0,'',0))
-        continue
-    id = score[i][1]
-    accuary = gameRecords[score[i][1]][classToNum(score[i][2])*3+1]
-    scr = gameRecords[score[i][1]][classToNum(score[i][2])*3]
-    # cnt1 = int(rks*100)/100.0  +0.01
-    # nxt = (cnt1-rks)*30
-    # # nxt = ((cnt1+0.008 if rks-cnt1<0.005 else cnt1+0.018)-rks)*30
-    # target_rks = nxt + score[i][0]
-    # target_acc = pow(target_rks / score[i][3], 1/2) * 45 + 55
-    # print(score[i][0])
-    # print((cnt1+0.005 if rks-cnt1<0.005 else cnt1+0.015),f'{target_rks:f}',target_rks,target_acc,pow((target_acc-55)/45,2)*score[0][3])
-    b27.append((id,f'B{i+1}',songname[id],score[i][0],score[i][3],accuary,scr,score[i][2],'推分建议已经被砍了' '''f'{round(target_acc,2)}%' if target_acc<=100 else '无法推分' ''',score[i][4]))
 
 # score[i][2] ->EZ/HD/IN/AT
-if settings['outputLog']:
+if settings['OutputLog']:
     filename = f'{str(updatetime).replace(" ", "_").replace(":", "_").replace(".", "_")}'
     if settings['yywMode']: 
         filename = filename + "_yywmode"
@@ -1115,12 +1124,12 @@ if settings['outputLog']:
     if(sys.platform.startswith('linux')): os.system(f'cp ./result.txt ./log/{filename}.txt >/dev/null')
     elif(sys.platform.startswith('win32')): 
         os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
-    
+from math import floor
 createImage(
     
     a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
     output_path="result.png",
-    target_size=(1875, 3000),
+    target_size=(1875, 3000 - floor((33-b27len)/3.0)*215 - (b27len <=27 if 95 else 0)),
     blur_radius=55,  # 可根据需要调整虚化程度
     avatar=user['avatar'],
     b27=b27,
@@ -1160,19 +1169,21 @@ print()
 for i in range(min(3,len(phi))):
     printwithcolor(f'P{i+1}',[43,1],' ')
     printwithcolor(songname[phi[i][1]],0,' ')
+    printwithcolor(phi[i][2],[1],'    ')
     printwithcolor(f'{"%.4f"%gameRecords[phi[i][1]][classToNum(phi[i][2])*3+1]}%', [1], ' ')
     printwithcolor(f'{"%.3f"%phi[i][0]}/{diff[phi[i][1]][classToNum(phi[i][2])]}', [44], ' ')
     printwithcolor(f'{gameRecords[phi[i][1]][classToNum(phi[i][2])*3]}',[1,33])
 print()
-for i in range(min(33,len(score))):
+for i in range(b27len):
     printwithcolor(f'B{i+1}',[43,1],' ')
     printwithcolor(songname[score[i][1]],0,' ')
+    printwithcolor(score[i][2],[1],'    ')
     printwithcolor(f'{"%.4f"%gameRecords[score[i][1]][classToNum(score[i][2])*3+1]}%', [1], ' ')
     printwithcolor(f'{"%.3f"%score[i][0]}', [44], '')
     printwithcolor(f'/{diff[score[i][1]][classToNum(score[i][2])]}',[0],' ')
     printwithcolor(f'{gameRecords[score[i][1]][classToNum(score[i][2])*3]}',[1,36])
     # print(f'B{i+1} {songname[score[i][1]]},  ACC: {round(gameRecords[score[i][1]][classToNum(score[i][2])*3+1],2)}%, RKS: {round(score[i][0],3)}/{diff[score[i][1]][classToNum(score[i][2])]}, Score:{gameRecords[score[i][1]][classToNum(score[i][2])*3]}')
-    if(i == 27):
+    if(i == 26):
         printwithcolor('————OVERFLOW————',[0])
 if settings['EnterToContiune']:
     try: input('按下Enter以继续')
