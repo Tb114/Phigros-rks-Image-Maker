@@ -28,11 +28,11 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install dotenv Pillow pytz requests pathlib cairosvg
+        pip install dotenv Pillow pytz requests pathlib
 
 
     - name: Run main.py
-      run: timeout 1m python main.py
+      run: timeout 5m python main.py
 
     - name: Commit and push changes
       run: |

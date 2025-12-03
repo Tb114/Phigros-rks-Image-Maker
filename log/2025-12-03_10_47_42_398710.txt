@@ -1,0 +1,49 @@
+2025-12-03 10:47:42.398710
+昵称:  Tb
+课题模式: 金43
+RKS:  15.463364601135254
+Data: 1GiB 332MiB 52KiB
+
+\    EZ   HD   IN   AT
+C    34  106  241  31 
+FC   10  30  51   3 
+AT    4   3   7   0 
+
+P1 重生,  ACC: 100.0000%, RKS: 14.400/14.4, Score:1000000
+P2 Future Mind,  ACC: 100.0000%, RKS: 14.200/14.2, Score:1000000
+P3 君往何处 (Quo Vadis),  ACC: 100.0000%, RKS: 14.100/14.1, Score:1000000
+
+B1 DESTRUCTION 3,2,1,  ACC: 99.7324%, RKS: 16.107/16.3, Score:972461
+B2 Lyrith -迷宮リリス-,  ACC: 99.7553%, RKS: 15.925/16.1, Score:996768
+B3 Distorted Fate,  ACC: 99.4720%, RKS: 15.920/16.3, Score:981860
+B4 祈 -我ら神祖と共に歩む者なり-,  ACC: 99.2934%, RKS: 15.889/16.4, Score:935392
+B5 Fractured Angel,  ACC: 99.3958%, RKS: 15.865/16.3, Score:945484
+B6 BANGING STRIKE,  ACC: 99.7756%, RKS: 15.841/16.0, Score:997981
+B7 Ποσειδών,  ACC: 99.4340%, RKS: 15.795/16.2, Score:966893
+B8 Shadow,  ACC: 99.3021%, RKS: 15.701/16.2, Score:967273
+B9 Retribution ~ Cycle of Redemption ~ ,  ACC: 99.2876%, RKS: 15.691/16.2, Score:944321
+B10 白と黒のバケモノ,  ACC: 99.6199%, RKS: 15.633/15.9, Score:996579
+B11 a truth seeker -Communication with Utopia will be lost-,  ACC: 99.7566%, RKS: 15.630/15.8, Score:957241
+B12 Chronostasis,  ACC: 99.4759%, RKS: 15.629/16.0, Score:989351
+B13 +ERABY+E CONNEC+10N,  ACC: 99.0523%, RKS: 15.621/16.3, Score:951993
+B14 GOODRAGE,  ACC: 99.4632%, RKS: 15.621/16.0, Score:993298
+B15 Chronos Collapse - La Campanella,  ACC: 98.9500%, RKS: 15.548/16.3, Score:956843
+B16 望影の方舟Six,  ACC: 99.4794%, RKS: 15.534/15.9, Score:970455
+B17 Cthugha,  ACC: 99.2723%, RKS: 15.487/16.0, Score:963593
+B18 Compute It With Some Devilish Alcoholic Steampunk Engines,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
+B19 Re：End of a Dream,  ACC: 99.3086%, RKS: 15.415/15.9, Score:947593
+B20 Don't Never Around,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
+B21 QZKago Requiem,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
+B22 SIGMA,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
+B23 千紫万紅,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
+B24 Bounded Quietude,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
+B25 明鏡烈火,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
+B26 Aleph-0,  ACC: 99.0452%, RKS: 15.328/16.0, Score:964740
+B27 Rrhar'il,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
+B28 Spasmodic,  ACC: 98.0730%, RKS: 15.300/16.7, Score:922271
+————OVERFLOW————
+B29 G.V.N. (Glitter,Vomitus and Neon),  ACC: 99.2797%, RKS: 15.298/15.8, Score:943809
+B30 Retribution,  ACC: 98.7187%, RKS: 15.291/16.2, Score:947968
+B31 Ad astra per aspera,  ACC: 98.5660%, RKS: 15.278/16.3, Score:939295
+B32 Igallta,  ACC: 98.8114%, RKS: 15.261/16.1, Score:961090
+B33 Kerberos,  ACC: 99.2127%, RKS: 15.252/15.8, Score:992914
