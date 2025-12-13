@@ -1,8 +1,8 @@
-2025-12-13 15:25:29.972722
+2025-12-13 15:39:10.408261
 昵称:  Tb
 课题模式: 金43
-RKS:  15.46949291229248
-Data: 1GiB 350MiB 676KiB
+RKS:  15.47432804107666
+Data: 1GiB 355MiB 462KiB
 
 \    EZ   HD   IN   AT
 C    34  106  241  32 
@@ -14,12 +14,12 @@ P2 Future Mind IN,  ACC: 100.0000%, RKS: 14.200/14.2, Score:1000000
 P3 君往何处 (Quo Vadis) IN,  ACC: 100.0000%, RKS: 14.100/14.1, Score:1000000
 
 B1 DESTRUCTION 3,2,1 IN,  ACC: 99.7324%, RKS: 16.107/16.3, Score:972461
-B2 Lyrith -迷宮リリス- IN,  ACC: 99.7553%, RKS: 15.925/16.1, Score:996768
-B3 Distorted Fate IN,  ACC: 99.4720%, RKS: 15.920/16.3, Score:981860
-B4 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.2934%, RKS: 15.889/16.4, Score:935392
-B5 Fractured Angel IN,  ACC: 99.3958%, RKS: 15.865/16.3, Score:945484
-B6 BANGING STRIKE IN,  ACC: 99.7756%, RKS: 15.841/16.0, Score:997981
-B7 Ποσειδών AT,  ACC: 99.4340%, RKS: 15.795/16.2, Score:966893
+B2 Ποσειδών AT,  ACC: 99.6376%, RKS: 15.940/16.2, Score:968807
+B3 Lyrith -迷宮リリス- IN,  ACC: 99.7553%, RKS: 15.925/16.1, Score:996768
+B4 Distorted Fate IN,  ACC: 99.4720%, RKS: 15.920/16.3, Score:981860
+B5 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.2934%, RKS: 15.889/16.4, Score:935392
+B6 Fractured Angel IN,  ACC: 99.3958%, RKS: 15.865/16.3, Score:945484
+B7 BANGING STRIKE IN,  ACC: 99.7756%, RKS: 15.841/16.0, Score:997981
 B8 Shadow AT,  ACC: 99.3021%, RKS: 15.701/16.2, Score:967273
 B9 Retribution ~ Cycle of Redemption ~  IN,  ACC: 99.2876%, RKS: 15.691/16.2, Score:944321
 B10 白と黒のバケモノ IN,  ACC: 99.6199%, RKS: 15.633/15.9, Score:996579
