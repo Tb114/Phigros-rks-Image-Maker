@@ -1,8 +1,8 @@
-2025-12-13 16:46:55.168535
+2025-12-13 17:24:32.354476
 昵称:  Tb
 课题模式: 金43
-RKS:  15.496898651123047
-Data: 1GiB 366MiB 714KiB
+RKS:  15.501934051513672
+Data: 1GiB 369MiB 312KiB
 
 \    EZ   HD   IN   AT
 C    34  106  241  32 
@@ -32,16 +32,16 @@ B16 Cthugha AT,  ACC: 99.2659%, RKS: 15.579/16.1, Score:946018
 B17 Chronos Collapse - La Campanella IN,  ACC: 98.9500%, RKS: 15.548/16.3, Score:956843
 B18 望影の方舟Six IN,  ACC: 99.4794%, RKS: 15.534/15.9, Score:970455
 B19 Cthugha IN,  ACC: 99.2723%, RKS: 15.487/16.0, Score:963593
-B20 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
-B21 Re：End of a Dream IN,  ACC: 99.3086%, RKS: 15.415/15.9, Score:947593
-B22 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
-B23 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
-B24 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
-B25 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
-B26 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
-B27 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
+B20 Aleph-0 IN,  ACC: 99.2655%, RKS: 15.482/16.0, Score:968192
+B21 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
+B22 Re：End of a Dream IN,  ACC: 99.3086%, RKS: 15.415/15.9, Score:947593
+B23 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
+B24 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
+B25 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
+B26 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
+B27 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
 ————OVERFLOW————
-B28 Aleph-0 IN,  ACC: 99.0452%, RKS: 15.328/16.0, Score:964740
+B28 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
 B29 Rrhar'il IN,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
 B30 Spasmodic AT,  ACC: 98.0730%, RKS: 15.300/16.7, Score:922271
 B31 G.V.N. (Glitter,Vomitus and Neon) IN,  ACC: 99.2797%, RKS: 15.298/15.8, Score:943809
