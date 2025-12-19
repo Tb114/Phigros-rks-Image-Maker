@@ -1,8 +1,8 @@
-2025-12-19 22:46:03.374659
+2025-12-19 23:28:30.990837
 昵称:  Tb
 课题模式: 金43
-RKS:  15.501934051513672
-Data: 1GiB 370MiB 629KiB
+RKS:  15.503304481506348
+Data: 1GiB 375MiB 248KiB
 
 \    EZ   HD   IN   AT
 C    34  106  241  32 
@@ -36,14 +36,14 @@ B20 Aleph-0 IN,  ACC: 99.2655%, RKS: 15.482/16.0, Score:968192
 B21 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
 B22 Re：End of a Dream IN,  ACC: 99.3086%, RKS: 15.415/15.9, Score:947593
 B23 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
-B24 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
-B25 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
-B26 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
-B27 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
+B24 Ad astra per aspera IN,  ACC: 98.7380%, RKS: 15.399/16.3, Score:942287
+B25 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
+B26 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
+B27 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
 ————OVERFLOW————
-B28 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
-B29 Rrhar'il IN,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
-B30 Spasmodic AT,  ACC: 98.0730%, RKS: 15.300/16.7, Score:922271
-B31 G.V.N. (Glitter,Vomitus and Neon) IN,  ACC: 99.2797%, RKS: 15.298/15.8, Score:943809
-B32 Retribution IN,  ACC: 98.7187%, RKS: 15.291/16.2, Score:947968
-B33 Ad astra per aspera IN,  ACC: 98.5660%, RKS: 15.278/16.3, Score:939295
+B28 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
+B29 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
+B30 Rrhar'il IN,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
+B31 Spasmodic AT,  ACC: 98.0730%, RKS: 15.300/16.7, Score:922271
+B32 G.V.N. (Glitter,Vomitus and Neon) IN,  ACC: 99.2797%, RKS: 15.298/15.8, Score:943809
+B33 Retribution IN,  ACC: 98.7187%, RKS: 15.291/16.2, Score:947968
