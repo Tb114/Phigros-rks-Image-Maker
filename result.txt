@@ -1,12 +1,12 @@
-2025-12-20 22:41:36.355844
+2025-12-20 23:23:41.177080
 昵称:  Tb
 课题模式: 金43
-RKS:  15.503304481506348
-Data: 1GiB 381MiB 242KiB
+RKS:  15.5076379776001
+Data: 1GiB 392MiB 278KiB
 
 \    EZ   HD   IN   AT
 C    34  106  241  32 
-FC   10  30  51   3 
+FC   10  30  52   4 
 AT    4   3   7   0 
 
 P1 重生 IN,  ACC: 100.0000%, RKS: 14.400/14.4, Score:1000000
@@ -21,7 +21,7 @@ B5 Distorted Fate IN,  ACC: 99.4720%, RKS: 15.920/16.3, Score:981860
 B6 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.2934%, RKS: 15.889/16.4, Score:935392
 B7 Fractured Angel IN,  ACC: 99.3958%, RKS: 15.865/16.3, Score:945484
 B8 BANGING STRIKE IN,  ACC: 99.7756%, RKS: 15.841/16.0, Score:997981
-B9 Shadow AT,  ACC: 99.3021%, RKS: 15.701/16.2, Score:967273
+B9 Shadow AT,  ACC: 99.3572%, RKS: 15.740/16.2, Score:994215
 B10 Retribution ~ Cycle of Redemption ~  IN,  ACC: 99.2876%, RKS: 15.691/16.2, Score:944321
 B11 白と黒のバケモノ IN,  ACC: 99.6199%, RKS: 15.633/15.9, Score:996579
 B12 a truth seeker -Communication with Utopia will be lost- IN,  ACC: 99.7566%, RKS: 15.630/15.8, Score:957241
@@ -34,16 +34,16 @@ B18 望影の方舟Six IN,  ACC: 99.4794%, RKS: 15.534/15.9, Score:970455
 B19 Cthugha IN,  ACC: 99.2723%, RKS: 15.487/16.0, Score:963593
 B20 Aleph-0 IN,  ACC: 99.2655%, RKS: 15.482/16.0, Score:968192
 B21 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
-B22 Re：End of a Dream IN,  ACC: 99.3086%, RKS: 15.415/15.9, Score:947593
-B23 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
-B24 Ad astra per aspera IN,  ACC: 98.7380%, RKS: 15.399/16.3, Score:942287
-B25 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
-B26 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
-B27 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
+B22 Poison AND÷OR Affection IN,  ACC: 99.6453%, RKS: 15.453/15.7, Score:996807
+B23 Re：End of a Dream IN,  ACC: 99.3086%, RKS: 15.415/15.9, Score:947593
+B24 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
+B25 Ad astra per aspera IN,  ACC: 98.7380%, RKS: 15.399/16.3, Score:942287
+B26 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
+B27 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
 ————OVERFLOW————
-B28 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
-B29 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
-B30 Rrhar'il IN,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
-B31 Spasmodic AT,  ACC: 98.0730%, RKS: 15.300/16.7, Score:922271
-B32 G.V.N. (Glitter,Vomitus and Neon) IN,  ACC: 99.2797%, RKS: 15.298/15.8, Score:943809
-B33 Retribution IN,  ACC: 98.7187%, RKS: 15.291/16.2, Score:947968
+B28 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
+B29 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
+B30 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
+B31 Rrhar'il IN,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
+B32 Spasmodic AT,  ACC: 98.0730%, RKS: 15.300/16.7, Score:922271
+B33 G.V.N. (Glitter,Vomitus and Neon) IN,  ACC: 99.2797%, RKS: 15.298/15.8, Score:943809
