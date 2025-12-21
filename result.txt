@@ -1,8 +1,8 @@
-2025-12-21 12:55:12.525412
+2025-12-21 13:26:43.326181
 昵称:  Tb
 课题模式: 金43
-RKS:  15.5076379776001
-Data: 1GiB 396MiB 4KiB
+RKS:  15.507747650146484
+Data: 1GiB 400MiB 815KiB
 
 \    EZ   HD   IN   AT
 C    34  106  241  32 
@@ -19,7 +19,7 @@ B3 volcanic AT,  ACC: 99.0788%, RKS: 15.927/16.6, Score:949346
 B4 Lyrith -迷宮リリス- IN,  ACC: 99.7553%, RKS: 15.925/16.1, Score:996768
 B5 Distorted Fate IN,  ACC: 99.4720%, RKS: 15.920/16.3, Score:981860
 B6 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.2934%, RKS: 15.889/16.4, Score:935392
-B7 Fractured Angel IN,  ACC: 99.3958%, RKS: 15.865/16.3, Score:945484
+B7 Fractured Angel IN,  ACC: 99.4004%, RKS: 15.868/16.3, Score:945669
 B8 BANGING STRIKE IN,  ACC: 99.7756%, RKS: 15.841/16.0, Score:997981
 B9 Shadow AT,  ACC: 99.3572%, RKS: 15.740/16.2, Score:994215
 B10 Retribution ~ Cycle of Redemption ~  IN,  ACC: 99.2876%, RKS: 15.691/16.2, Score:944321
