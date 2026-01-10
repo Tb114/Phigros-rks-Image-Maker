@@ -1,49 +1,49 @@
-2025-12-03 12:23:21.401698
+2026-01-10 23:29:48.834951
 昵称:  Tb
 课题模式: 金43
-RKS:  15.463364601135254
-Data: 1GiB 332MiB 52KiB
+RKS:  15.547418594360352
+Data: 1GiB 426MiB 306KiB
 
 \    EZ   HD   IN   AT
-C    34  106  241  31 
-FC   10  30  51   3 
+C    34  106  241  33 
+FC   10  30  52   4 
 AT    4   3   7   0 
 
 P1 重生 IN,  ACC: 100.0000%, RKS: 14.400/14.4, Score:1000000
 P2 Future Mind IN,  ACC: 100.0000%, RKS: 14.200/14.2, Score:1000000
 P3 君往何处 (Quo Vadis) IN,  ACC: 100.0000%, RKS: 14.100/14.1, Score:1000000
 
-B1 DESTRUCTION 3,2,1 IN,  ACC: 99.7324%, RKS: 16.107/16.3, Score:972461
-B2 Lyrith -迷宮リリス- IN,  ACC: 99.7553%, RKS: 15.925/16.1, Score:996768
-B3 Distorted Fate IN,  ACC: 99.4720%, RKS: 15.920/16.3, Score:981860
-B4 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.2934%, RKS: 15.889/16.4, Score:935392
-B5 Fractured Angel IN,  ACC: 99.3958%, RKS: 15.865/16.3, Score:945484
-B6 BANGING STRIKE IN,  ACC: 99.7756%, RKS: 15.841/16.0, Score:997981
-B7 Ποσειδών AT,  ACC: 99.4340%, RKS: 15.795/16.2, Score:966893
-B8 Shadow AT,  ACC: 99.3021%, RKS: 15.701/16.2, Score:967273
-B9 Retribution ~ Cycle of Redemption ~  IN,  ACC: 99.2876%, RKS: 15.691/16.2, Score:944321
-B10 白と黒のバケモノ IN,  ACC: 99.6199%, RKS: 15.633/15.9, Score:996579
-B11 a truth seeker -Communication with Utopia will be lost- IN,  ACC: 99.7566%, RKS: 15.630/15.8, Score:957241
-B12 Chronostasis IN,  ACC: 99.4759%, RKS: 15.629/16.0, Score:989351
-B13 +ERABY+E CONNEC+10N IN,  ACC: 99.0523%, RKS: 15.621/16.3, Score:951993
-B14 GOODRAGE IN,  ACC: 99.4632%, RKS: 15.621/16.0, Score:993298
-B15 Chronos Collapse - La Campanella IN,  ACC: 98.9500%, RKS: 15.548/16.3, Score:956843
-B16 望影の方舟Six IN,  ACC: 99.4794%, RKS: 15.534/15.9, Score:970455
-B17 Cthugha IN,  ACC: 99.2723%, RKS: 15.487/16.0, Score:963593
-B18 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
-B19 Re：End of a Dream IN,  ACC: 99.3086%, RKS: 15.415/15.9, Score:947593
-B20 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
-B21 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
-B22 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
-B23 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
-B24 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
-B25 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
-B26 Aleph-0 IN,  ACC: 99.0452%, RKS: 15.328/16.0, Score:964740
-B27 Rrhar'il IN,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
+B1 Ark AT,  ACC: 99.5600%, RKS: 16.179/16.5, Score:964038
+B2 DESTRUCTION 3,2,1 IN,  ACC: 99.7324%, RKS: 16.107/16.3, Score:972461
+B3 Ποσειδών AT,  ACC: 99.6376%, RKS: 15.940/16.2, Score:968807
+B4 volcanic AT,  ACC: 99.0788%, RKS: 15.927/16.6, Score:949346
+B5 Lyrith -迷宮リリス- IN,  ACC: 99.7553%, RKS: 15.925/16.1, Score:996768
+B6 Distorted Fate IN,  ACC: 99.4720%, RKS: 15.920/16.3, Score:981860
+B7 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.2934%, RKS: 15.889/16.4, Score:935392
+B8 Fractured Angel IN,  ACC: 99.4004%, RKS: 15.868/16.3, Score:945669
+B9 BANGING STRIKE IN,  ACC: 99.7756%, RKS: 15.841/16.0, Score:997981
+B10 Shadow AT,  ACC: 99.3572%, RKS: 15.740/16.2, Score:994215
+B11 Retribution ~ Cycle of Redemption ~  IN,  ACC: 99.2876%, RKS: 15.691/16.2, Score:944321
+B12 望影の方舟Six IN,  ACC: 99.6764%, RKS: 15.672/15.9, Score:970455
+B13 白と黒のバケモノ IN,  ACC: 99.6199%, RKS: 15.633/15.9, Score:996579
+B14 a truth seeker -Communication with Utopia will be lost- IN,  ACC: 99.7566%, RKS: 15.630/15.8, Score:957241
+B15 Chronostasis IN,  ACC: 99.4759%, RKS: 15.629/16.0, Score:989351
+B16 +ERABY+E CONNEC+10N IN,  ACC: 99.0523%, RKS: 15.621/16.3, Score:951993
+B17 GOODRAGE IN,  ACC: 99.4632%, RKS: 15.621/16.0, Score:993298
+B18 Cthugha AT,  ACC: 99.2659%, RKS: 15.579/16.1, Score:946018
+B19 Re：End of a Dream IN,  ACC: 99.5405%, RKS: 15.577/15.9, Score:955902
+B20 Chronos Collapse - La Campanella IN,  ACC: 98.9500%, RKS: 15.548/16.3, Score:956843
+B21 Cthugha IN,  ACC: 99.2723%, RKS: 15.487/16.0, Score:963593
+B22 Aleph-0 IN,  ACC: 99.2655%, RKS: 15.482/16.0, Score:968192
+B23 NO x IN,  ACC: 99.1261%, RKS: 15.481/16.1, Score:954883
+B24 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
+B25 Poison AND÷OR Affection IN,  ACC: 99.6453%, RKS: 15.453/15.7, Score:996807
+B26 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
+B27 Ad astra per aspera IN,  ACC: 98.7380%, RKS: 15.399/16.3, Score:942287
 ————OVERFLOW————
-B28 Spasmodic AT,  ACC: 98.0730%, RKS: 15.300/16.7, Score:922271
-B29 G.V.N. (Glitter,Vomitus and Neon) IN,  ACC: 99.2797%, RKS: 15.298/15.8, Score:943809
-B30 Retribution IN,  ACC: 98.7187%, RKS: 15.291/16.2, Score:947968
-B31 Ad astra per aspera IN,  ACC: 98.5660%, RKS: 15.278/16.3, Score:939295
-B32 Igallta IN,  ACC: 98.8114%, RKS: 15.261/16.1, Score:961090
-B33 Kerberos IN,  ACC: 99.2127%, RKS: 15.252/15.8, Score:992914
+B28 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
+B29 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
+B30 千紫万紅 IN,  ACC: 99.8000%, RKS: 15.363/15.5, Score:985783
+B31 Bounded Quietude IN,  ACC: 98.8142%, RKS: 15.357/16.2, Score:941894
+B32 明鏡烈火 IN,  ACC: 99.1874%, RKS: 15.331/15.9, Score:956095
+B33 Rrhar'il IN,  ACC: 98.8923%, RKS: 15.317/16.1, Score:964046
