@@ -352,7 +352,7 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         # 计算RKS文本框位置（用户名下方 + 10px间距）
         # 1. 原始数据
         rks_val = rks        
-        main_txt = f'{rks_val:05.2f}'    
+        main_txt = f'{int(rks_val)}.{int((rks_val-int(rks_val))*100)}'    
         tiny_txt = f'{int(rks_val * 1000000) % 10000:04d}' 
 
         # 2. 字体
