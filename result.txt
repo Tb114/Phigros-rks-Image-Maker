@@ -1,8 +1,8 @@
-2026-01-11 12:12:03.700943
+2026-01-11 12:32:46.803583
 昵称:  Tb
 课题模式: 金43
 RKS:  15.547418594360352
-Data: 1GiB 429MiB 581KiB
+Data: 1GiB 431MiB 853KiB
 
 \    EZ   HD   IN   AT
 C    34  106  241  33 
@@ -39,7 +39,7 @@ B23 NO x IN,  ACC: 99.1261%, RKS: 15.481/16.1, Score:954883
 B24 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
 B25 Poison AND÷OR Affection IN,  ACC: 99.6453%, RKS: 15.453/15.7, Score:996807
 B26 Don't Never Around IN,  ACC: 99.8638%, RKS: 15.406/15.5, Score:998774
-B27 Ad astra per aspera IN,  ACC: 98.7380%, RKS: 15.399/16.3, Score:942287
+B27 Ad astra per aspera IN,  ACC: 98.7380%, RKS: 15.399/16.3, Score:944893
 ————OVERFLOW————
 B28 QZKago Requiem IN,  ACC: 98.5941%, RKS: 15.391/16.4, Score:934599
 B29 SIGMA IN,  ACC: 99.3949%, RKS: 15.378/15.8, Score:951522
