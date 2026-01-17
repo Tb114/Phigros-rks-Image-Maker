@@ -750,8 +750,11 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         )
         # 最终保存
         try:
-            final_img.convert('RGB').save(output_path, format=imageType)
-            print(1111)
+            if(imageType == 'JPEG'):
+                output_path=output_path.replace('jpeg',"jpg")
+                final_img.convert('RGB').save(output_path, format=imageType,quality=70,optimize=True,progressive=True)
+            else:
+                final_img.convert('RGB').save(output_path, format=imageType)
         except:
             final_img.convert('RGB').save(output_path, format='PNG')
 
@@ -842,8 +845,7 @@ if os.path.exists('config.ini'):
                 continue
             if(key=='ResultPictureQuality'):
                 if(set1 in {'high','HIGH','High','png','PNG'}): settings[key] = 'PNG'
-                elif(set1 in {'low','LOW','Low','jpg','JPG'}): settings[key] = 'JPG'
-                elif(set1 in {'JPEG','jpeg'}): settings[key] = 'JPEG'
+                elif(set1 in {'low','LOW','Low','jpg','JPG','JPEG','jpeg'}): settings[key] = 'JPEG'
                 elif(set1 in {'WEBP','webp'}): settings[key] = 'WEBP'
                 elif(set1 in {'GIF','gif'}): settings[key] = 'GIF'
                 elif(set1 in {'BMP','bmp'}): settings[key] = 'BMP'
@@ -1148,7 +1150,7 @@ if settings['OutputLog']:
     elif(sys.platform.startswith('win32')): 
         os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
 from math import floor
-output_path = f"result.{settings['ResultPictureQuality']}"
+output_path = f"result.{settings['ResultPictureQuality'].lower()}"
 createImage(
     
     a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
