@@ -164,10 +164,39 @@ def main():
     print("开始验证根目录下的曲目与难度文件...")
     verify_file('difficulty.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
     verify_file('info.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
+    verify_file('avatar_replace.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
     
     print("同步完成")
+    replaceAvatarName()
     # if platform.startswith('win32'): os.system('cls')
     # else: os.system('Clear')
+def replaceAvatarName():
+    import os
 
+    mp:map = {}
+    with open('./avatar_replace.tsv','r', encoding='utf-8') as f:
+        content = f.read()
+        lst:list[str] = content.split('\n')
+        
+        for each in lst:
+            try:
+                each.split('\t')[1]
+            except:
+                continue
+            mp[each.split('\t')[1]] = each.split('\t')[0]
+    # print(mp)
+    for key, value in mp.items():
+        old_file = os.path.join('avatar/', f"{key}.png")
+        new_file = os.path.join('avatar/', f"{value}.png")
+        # 检查原文件是否存在
+        if os.path.exists(old_file):
+            if old_file == 'avatar/Cipher1.png':
+                continue
+            try:
+                if(os.path.isfile(new_file)):
+                    os.remove(new_file)
+                os.rename(old_file, new_file)
+            except: pass
+            
 if __name__ == "__main__":
     main()

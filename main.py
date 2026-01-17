@@ -102,7 +102,7 @@ DIFFICULTY_COLORS = {
 INFO_BLOCK_COLOR = (57, 197, 187)
 WHITE = (255, 255, 255)
 
-def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress, style):
+def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress, style, imageType):
     # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
     
     if(style == 0):pass
@@ -351,9 +351,8 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         
         # 计算RKS文本框位置（用户名下方 + 10px间距）
         # 1. 原始数据
-        rks_val = rks        
-        main_txt = f'{int(rks_val)}.{int((rks_val-int(rks_val))*100)}'    
-        tiny_txt = f'{int(rks_val * 1000000) % 10000:04d}' 
+        main_txt = f'{int(rks)}.{int((rks-int(rks))*100)}'    
+        tiny_txt = f'{int(rks * 1000000) % 10000:04d}' 
 
         # 2. 字体
         font_main = FONT_CONFIG['rks']              # 正常字号
@@ -378,10 +377,10 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
         final_img = add_rounded_rectangle(
             final_img,
             (rks_x, rks_y),
-            (rks_bg_width, rks_bg_height),
-            radius=8,
-            color=(205, 205, 205),
-            alpha=255
+            (rks_bg_width, rks_bg_height + 4),
+            radius=6,
+            color=(230, 230, 230),
+            alpha=230
         )
 
         # 6. 文字纵向居中基准线
@@ -738,19 +737,23 @@ def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, user
             font=FONT_CONFIG['version']
         )
         draw.text(
-            (1265, target_size[1]-50),
+            (1260, target_size[1]-50),
             'Phigros rks Image Maker',
             fill=WHITE,
             font=FONT_CONFIG['version']
         )
         draw.text(
-            (1610, target_size[1]-40),
+            (1610, target_size[1]-45),
             'open-sourced on Github',
             fill=WHITE,
             font=FONT_CONFIG['open-sourced']
         )
         # 最终保存
-        final_img.convert('RGB').save(output_path, format="PNG")
+        try:
+            final_img.convert('RGB').save(output_path, format=imageType)
+            print(1111)
+        except:
+            final_img.convert('RGB').save(output_path, format='PNG')
 
 
 if(sys.platform.startswith('linux')): phigros = ctypes.CDLL("./libphigros.so")
@@ -779,6 +782,7 @@ settings : dict = {
     'yywMode' : False,          #演示模式
     'OutputLog' : True,         #是否保留历史记录
     'MaxSongResultShowcase' : 33,
+    'ResultPictureQuality' : 'auto', #low/high/auto
     } 
 
 flag1 : bool = False
@@ -832,15 +836,34 @@ if os.path.exists('config.ini'):
     for key in settings.keys():
         try:
             set1 = os.getenv(key).encode('UTF-8')
+            set1 = set1.decode('utf-8')
             if(key=='MaxSongResultShowcase'):
                 settings[key] = int(set1)
                 continue
-            if(set1 == 1 or set1 == b'True' or set1 == b'true'): set1 = 1     # strictly enabled
-            elif(set1 == 0 or set1 == b'False' or set1 == b'false'): set1 = 0 # strictly disabled
-            else: set1 = -1                                                   # normal case
+            if(key=='ResultPictureQuality'):
+                if(set1 in {'high','HIGH','High','png','PNG'}): settings[key] = 'PNG'
+                elif(set1 in {'low','LOW','Low','jpg','JPG'}): settings[key] = 'JPG'
+                elif(set1 in {'JPEG','jpeg'}): settings[key] = 'JPEG'
+                elif(set1 in {'WEBP','webp'}): settings[key] = 'WEBP'
+                elif(set1 in {'GIF','gif'}): settings[key] = 'GIF'
+                elif(set1 in {'BMP','bmp'}): settings[key] = 'BMP'
+                elif(set1 in {'TIF','TIFF','tif','tiff'}): settings[key] = 'TIF'
+                else: settings[key] = 'auto'
+                continue
+            if(set1 in {'True', 'TRUE', 'true', '1'}): set1 = 1     # strictly enabled
+            elif(set1 in {'False', 'FALSE', 'false', '0'}): set1 = 0 # strictly disabled
+            else: set1 = -1          # normal case
             settings[key] = set1
         except:
             pass
+        
+if(settings['ResultPictureQuality']=='auto'):
+    try:
+        if os.environ.get('GITHUB_ACTIONS') == 'true': 
+            settings['ResultPictureQuality'] = 'JPG'
+        else: 
+            raise Exception
+    except: settings['ResultPictureQuality'] = 'PNG'
 # else:
 #     f = open('config.ini', 'w')
 #     for key, value in settings.items():
@@ -1125,10 +1148,11 @@ if settings['OutputLog']:
     elif(sys.platform.startswith('win32')): 
         os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
 from math import floor
+output_path = f"result.{settings['ResultPictureQuality']}"
 createImage(
     
     a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
-    output_path="result.png",
+    output_path=output_path,
     target_size=(1875, 3000 - floor((33-b27len)/3.0)*215 - (b27len <=27 if 95 else 0)),
     blur_radius=55,  # 可根据需要调整虚化程度
     avatar=user['avatar'],
@@ -1139,9 +1163,10 @@ createImage(
     data=data_num,
     updatetime=str(updatetime),
     progress=progress,
-    style=2
+    style=2,
+    imageType=settings['ResultPictureQuality']
 )
-printwithcolor('成绩图片已输出至result.png, 文字文件已输出至result.txt',[36])
+printwithcolor(f'成绩图片已输出至{output_path}, 文字文件已输出至result.txt',[36])
 
 if(not settings['yywMode']): print(updatetime)
 else: print('已开启演示模式，所有成绩均为演示作用')
@@ -1151,7 +1176,7 @@ elif(cmrcn[0]=='蓝'):printwithcolor(cmrcn,[36,1],' ')
 elif(cmrcn[0]=='红'):printwithcolor(cmrcn,[31,1],' ')
 elif(cmrcn[0]=='金'):printwithcolor(cmrcn,[33,1],' ')
 else:printwithcolor(cmrcn,[35,1],' ')
-printwithcolor('%.6f'%summary['rankingScore'], [7,1], ' ')
+printwithcolor('%.10f'%summary['rankingScore'], [7,1], ' ')
 # print('GameVersion: ', summary['gameVersion'])
 printwithcolor(data_num, [1,3])
 print('\\   ',end='')

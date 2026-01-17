@@ -2,7 +2,7 @@ name: Run updatefile.py daily
 
 on:
   schedule:
-    - cron: '30 8 * * *'
+    - cron: '30 9 * * *'
   workflow_dispatch:  # 允许手动触发
 
 jobs:
