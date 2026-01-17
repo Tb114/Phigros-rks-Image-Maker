@@ -862,7 +862,7 @@ if os.path.exists('config.ini'):
 if(settings['ResultPictureQuality']=='auto'):
     try:
         if os.environ.get('GITHUB_ACTIONS') == 'true': 
-            settings['ResultPictureQuality'] = 'JPG'
+            settings['ResultPictureQuality'] = 'JPEG'
         else: 
             raise Exception
     except: settings['ResultPictureQuality'] = 'PNG'
