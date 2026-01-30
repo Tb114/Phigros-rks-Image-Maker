@@ -1,1 +1,0 @@
-pip install dotenv Pillow pytz requests PyQt5  -i https://pypi.tuna.tsinghua.edu.cn/simple

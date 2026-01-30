@@ -28,7 +28,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install dotenv Pillow pytz requests pathlib
+        pip install -r REQUIREMENTS
 
 
     - name: Run main.py

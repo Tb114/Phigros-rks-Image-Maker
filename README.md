@@ -25,7 +25,7 @@ Written by [![](https://img.shields.io/badge/Github-Tb114-39C5bb)](https://githu
 - 推分建议(砍)
 
 效果如下
-![如果没有加载出图片尝试使用代理/VPN](https://github.com/Tb114/Phigros-rks-Image-Maker/blob/main/result.png?raw=true)
+![如果没有加载出图片尝试使用代理/VPN](https://github.com/Tb114/Phigros-rks-Image-Maker/blob/main/result.jpg?raw=true)
 
 
 本项目基于[PhigrosLibrary](https://github.com/7aGiven/PhigrosLibrary)

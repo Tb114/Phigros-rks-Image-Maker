@@ -165,7 +165,6 @@ def main():
     verify_file('difficulty.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
     verify_file('info.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
     verify_file('avatar_replace.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
-    
     print("同步完成")
     replaceAvatarName()
     # if platform.startswith('win32'): os.system('cls')
