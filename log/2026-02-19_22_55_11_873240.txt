@@ -1,0 +1,53 @@
+2026-02-19 22:55:11.873240
+
+发现计算rks(114.0)与云端获取rks(15.620845794677734)不同
+请确认游戏是否更新定数或更改rks计算法则
+
+昵称:  Tb
+课题模式: 金45
+RKS:  15.620845794677734
+Data: 1GiB 597MiB 445KiB
+
+\    EZ   HD   IN   AT
+C    34  106  246  38 
+FC   10  30  53   4 
+AT    4   3   7   0 
+
+P1 重生 IN,  ACC: 100.0000%, RKS: 14.300/14.3, Score:1000000
+P2 Future Mind IN,  ACC: 100.0000%, RKS: 14.200/14.2, Score:1000000
+P3 君往何处 (Quo Vadis) IN,  ACC: 100.0000%, RKS: 14.100/14.1, Score:1000000
+
+B1 Ark AT,  ACC: 99.5600%, RKS: 16.179/16.5, Score:973616
+B2 DESTRUCTION 3,2,1 IN,  ACC: 99.7324%, RKS: 16.107/16.3, Score:972461
+B3 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.4509%, RKS: 16.002/16.4, Score:955905
+B4 Distorted Fate IN,  ACC: 99.5273%, RKS: 15.959/16.3, Score:981860
+B5 Ποσειδών AT,  ACC: 99.6376%, RKS: 15.940/16.2, Score:968807
+B6 volcanic AT,  ACC: 99.0788%, RKS: 15.927/16.6, Score:949346
+B7 Lyrith -迷宮リリス- IN,  ACC: 99.7553%, RKS: 15.925/16.1, Score:996768
+B8 Fractured Angel IN,  ACC: 99.4327%, RKS: 15.892/16.3, Score:967034
+B9 Incyde IN,  ACC: 99.1717%, RKS: 15.802/16.4, Score:939584
+B10 Ad astra per aspera IN,  ACC: 99.2916%, RKS: 15.791/16.3, Score:944893
+B11 BANGING STRIKE AT,  ACC: 98.6136%, RKS: 15.781/16.8, Score:925567
+B12 Re：End of a Dream AT,  ACC: 98.4677%, RKS: 15.769/16.9, Score:919397
+B13 Cuvism³ AT,  ACC: 98.7270%, RKS: 15.769/16.7, Score:941324
+B14 彩 IN,  ACC: 99.3607%, RKS: 15.743/16.2, Score:951025
+B15 BANGING STRIKE IN,  ACC: 99.7756%, RKS: 15.742/15.9, Score:997981
+B16 Shadow AT,  ACC: 99.3572%, RKS: 15.740/16.2, Score:994215
+B17 Retribution ~ Cycle of Redemption ~  IN,  ACC: 99.2876%, RKS: 15.691/16.2, Score:947131
+B18 望影の方舟Six IN,  ACC: 99.6764%, RKS: 15.672/15.9, Score:970455
+B19 +ERABY+E CONNEC+10N IN,  ACC: 99.1242%, RKS: 15.672/16.3, Score:951993
+B20 Cthugha AT,  ACC: 99.3629%, RKS: 15.647/16.1, Score:955208
+B21 白と黒のバケモノ IN,  ACC: 99.6199%, RKS: 15.633/15.9, Score:996579
+B22 a truth seeker -Communication with Utopia will be lost- IN,  ACC: 99.7566%, RKS: 15.630/15.8, Score:957241
+B23 Chronostasis IN,  ACC: 99.4759%, RKS: 15.629/16.0, Score:989351
+B24 GOODRAGE IN,  ACC: 99.4632%, RKS: 15.621/16.0, Score:993298
+B25 Re：End of a Dream IN,  ACC: 99.5953%, RKS: 15.615/15.9, Score:956788
+B26 QZKago Requiem IN,  ACC: 99.0230%, RKS: 15.600/16.3, Score:941497
+B27 Chronos Collapse - La Campanella IN,  ACC: 98.9500%, RKS: 15.548/16.3, Score:956843
+————OVERFLOW————
+B28 Spasmodic AT,  ACC: 98.3662%, RKS: 15.509/16.7, Score:922271
+B29 Cthugha IN,  ACC: 99.2723%, RKS: 15.487/16.0, Score:963593
+B30 Aleph-0 IN,  ACC: 99.2655%, RKS: 15.482/16.0, Score:968192
+B31 NO x IN,  ACC: 99.1261%, RKS: 15.481/16.1, Score:954883
+B32 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.5383%, RKS: 15.477/15.8, Score:995845
+B33 Retribution IN,  ACC: 98.9580%, RKS: 15.458/16.2, Score:947968

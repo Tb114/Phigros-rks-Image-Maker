@@ -2,7 +2,7 @@ name: Run updatefile.py daily
 
 on:
   schedule:
-    - cron: '30 9 * * *'
+    - cron: '20 9 * * *'
   workflow_dispatch:  # 允许手动触发
 
 jobs:
@@ -36,3 +36,7 @@ jobs:
         git add .
         git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update by GitHub Actions"
         git push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false  # 不取消正在运行的，等待完成
