@@ -1,84 +1,124 @@
-name: Update Template
+name: Self Upgrade
 
 on:
-  # 触发条件：你可以根据需要调整，例如每天定时运行或手动触发
   schedule:
-    - cron: '0 0 * * *' # 每天 UTC 0 点运行
-  workflow_dispatch: # 允许手动触发
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
-  check-and-update:
+  update-specific-files:
     runs-on: ubuntu-latest
     steps:
-      # 1. 检出当前仓库（你的主仓库）
+      # 0. 配置 Git 身份
+      - name: Configure Git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+      
+      # 1. 检出当前仓库
       - name: Checkout current repo
         uses: actions/checkout@v4
         with:
-          # 必须设置 fetch-depth: 0 以获取完整历史，否则无法进行版本比较
           fetch-depth: 0
 
-      # 2. 获取远程模板仓库的版本号
-      - name: Get remote template version
+      # 2. 获取远程模板的版本号
+      - name: Get remote version
         id: get_remote_version
         run: |
-          # 使用 GitHub API 获取远程仓库 VERSION 文件内容
           REMOTE_VERSION=$(curl -s https://raw.githubusercontent.com/Tb114/Phigros-rks-Image-Maker-Template/main/VERSION)
           echo "Remote version: $REMOTE_VERSION"
           echo "remote_version=$REMOTE_VERSION" >> $GITHUB_OUTPUT
 
-      # 3. 获取本地仓库的版本号
+      # 3. 获取本地版本号
       - name: Get local version
         id: get_local_version
         run: |
-          # 检查本地 VERSION 文件是否存在
           if [ -f "VERSION" ]; then
             LOCAL_VERSION=$(cat VERSION)
           else
-            # 如果文件不存在，默认版本设为 0.0.0
             LOCAL_VERSION="0.0.0"
           fi
           echo "Local version: $LOCAL_VERSION"
           echo "local_version=$LOCAL_VERSION" >> $GITHUB_OUTPUT
 
-      # 4. 版本号比较逻辑（核心）
+      # 4. 比较版本（仅在远程版本更高时继续）
       - name: Compare versions
         id: compare_versions
         run: |
-          # 使用 sort 的版本比较功能（适用于语义化版本号）
-          # 如果远程版本 > 本地版本，则输出 need_update=true
-          if printf "%s\n" "${{ steps.get_local_version.outputs.local_version }}" "${{ steps.get_remote_version.outputs.remote_version }}" | sort -V -C 2>/dev/null; then
-            echo "Local version is up-to-date or newer. No update needed."
-            echo "need_update=false" >> $GITHUB_OUTPUT
-          else
-            echo "Remote version is newer. Proceeding with update."
+          LOCAL_VERSION="${{ steps.get_local_version.outputs.local_version }}"
+          REMOTE_VERSION="${{ steps.get_remote_version.outputs.remote_version }}"
+          
+          # 只有当远程版本 > 本地版本时才更新
+          if [[ "$(printf "%s\n" "$LOCAL_VERSION" "$REMOTE_VERSION" | sort -V | tail -n1)" == "$REMOTE_VERSION" ]] && [[ "$LOCAL_VERSION" != "$REMOTE_VERSION" ]]; then
+            echo "Remote version ($REMOTE_VERSION) is newer than local version ($LOCAL_VERSION). Will update specified files."
             echo "need_update=true" >> $GITHUB_OUTPUT
+          else
+            echo "Local version ($LOCAL_VERSION) is up-to-date or newer. No update needed."
+            echo "need_update=false" >> $GITHUB_OUTPUT
           fi
 
-      # 5. 条件拉取：仅当需要更新时执行
-      - name: Fetch and merge template files
+      # 5. 更新指定文件（仅当需要更新时）
+      - name: Update specific files from template
         if: steps.compare_versions.outputs.need_update == 'true'
         run: |
-          # 添加远程模板仓库作为临时远程源
-          git remote add template https://github.com/Tb114/Phigros-rks-Image-Maker-Template.git
-          git fetch template main
+          echo "Updating specific files from template..."
+          
+          # 创建一个临时目录来获取模板文件
+          mkdir -p /tmp/template-files
+          cd /tmp/template-files
+          
+          # 下载需要更新的文件列表
+          # 这里列出你想要从模板更新的所有文件
+          FILES_TO_UPDATE=(
+            "main.py"
+            "REQUIREMENTS"
+            "updatefile.py"
+          )
+          
+          # 下载每个文件
+          for file in "${FILES_TO_UPDATE[@]}"; do
+            echo "Downloading $file from template..."
+            curl -s -o "$file" "https://raw.githubusercontent.com/Tb114/Phigros-rks-Image-Maker-Template/main/$file" || echo "Failed to download $file"
+          done
+          
+          # 返回到工作目录并复制文件
+          cd "$GITHUB_WORKSPACE"
+          
+          # 复制下载的文件到工作目录
+          for file in "${FILES_TO_UPDATE[@]}"; do
+            if [ -f "/tmp/template-files/$file" ]; then
+              echo "Copying $file..."
+              cp "/tmp/template-files/$file" .
+            fi
+          done
+          
+          # 更新 VERSION 文件为最新版本
+          echo "${{ steps.get_remote_version.outputs.remote_version }}" > VERSION
+          
+          # 清理
+          rm -rf /tmp/template-files
 
-          # 关键步骤：使用 merge 策略，保留本地文件
-          # --allow-unrelated-histories 允许合并不相关的历史
-          # -X ours 策略：当有冲突时，优先保留本地版本（即保留本地独有文件）
-          git merge template/main --allow-unrelated-histories -X ours
-
-          # 清理临时远程源
-          git remote remove template
-
-      # 6. 提交更新（可选，如果需要自动提交）
-      - name: Commit and push changes
+      # 6. 提交更新
+      - name: Commit updates
         if: steps.compare_versions.outputs.need_update == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "chore: update template to version ${{ steps.get_remote_version.outputs.remote_version }}"
-          git push
+          # 检查是否有文件被更改
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "Changes detected. Committing..."
+            
+            # 添加更新的文件（明确指定）
+            git add VERSION
+            git add main.py
+            git add REQUIREMENTS
+            git add updatefile.py
+            # 添加其他你更新的文件
+            
+            git commit -m "chore: update template files to version ${{ steps.get_remote_version.outputs.remote_version }}"
+            git push
+            echo "Files updated and committed successfully."
+          else
+            echo "No files were changed. Skipping commit."
+          fi
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
