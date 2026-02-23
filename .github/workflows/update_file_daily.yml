@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # 允许手动触发
 
 jobs:
-  run-main:
+  update-files:
     runs-on: ubuntu-latest
     permissions: 
         contents: write
@@ -26,9 +26,9 @@ jobs:
         pip install requests
 
 
-    - name: Run main.py
+    - name: Run updatefile.py
       run: timeout 2m python updatefile.py
-
+    
     - name: Commit and push changes
       run: |
         git config --global user.name "GitHub Actions"
@@ -36,6 +36,7 @@ jobs:
         git add .
         git diff --quiet && git diff --staged --quiet || git commit -m "Auto-update by GitHub Actions"
         git push
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

@@ -1,0 +1,85 @@
+name: Update Template
+
+on:
+  # 触发条件：你可以根据需要调整，例如每天定时运行或手动触发
+  schedule:
+    - cron: '0 0 * * *' # 每天 UTC 0 点运行
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  check-and-update:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 检出当前仓库（你的主仓库）
+      - name: Checkout current repo
+        uses: actions/checkout@v4
+        with:
+          # 必须设置 fetch-depth: 0 以获取完整历史，否则无法进行版本比较
+          fetch-depth: 0
+
+      # 2. 获取远程模板仓库的版本号
+      - name: Get remote template version
+        id: get_remote_version
+        run: |
+          # 使用 GitHub API 获取远程仓库 VERSION 文件内容
+          REMOTE_VERSION=$(curl -s https://raw.githubusercontent.com/Tb114/Phigros-rks-Image-Maker-Template/main/VERSION)
+          echo "Remote version: $REMOTE_VERSION"
+          echo "remote_version=$REMOTE_VERSION" >> $GITHUB_OUTPUT
+
+      # 3. 获取本地仓库的版本号
+      - name: Get local version
+        id: get_local_version
+        run: |
+          # 检查本地 VERSION 文件是否存在
+          if [ -f "VERSION" ]; then
+            LOCAL_VERSION=$(cat VERSION)
+          else
+            # 如果文件不存在，默认版本设为 0.0.0
+            LOCAL_VERSION="0.0.0"
+          fi
+          echo "Local version: $LOCAL_VERSION"
+          echo "local_version=$LOCAL_VERSION" >> $GITHUB_OUTPUT
+
+      # 4. 版本号比较逻辑（核心）
+      - name: Compare versions
+        id: compare_versions
+        run: |
+          # 使用 sort 的版本比较功能（适用于语义化版本号）
+          # 如果远程版本 > 本地版本，则输出 need_update=true
+          if printf "%s\n" "${{ steps.get_local_version.outputs.local_version }}" "${{ steps.get_remote_version.outputs.remote_version }}" | sort -V -C 2>/dev/null; then
+            echo "Local version is up-to-date or newer. No update needed."
+            echo "need_update=false" >> $GITHUB_OUTPUT
+          else
+            echo "Remote version is newer. Proceeding with update."
+            echo "need_update=true" >> $GITHUB_OUTPUT
+          fi
+
+      # 5. 条件拉取：仅当需要更新时执行
+      - name: Fetch and merge template files
+        if: steps.compare_versions.outputs.need_update == 'true'
+        run: |
+          # 添加远程模板仓库作为临时远程源
+          git remote add template https://github.com/Tb114/Phigros-rks-Image-Maker-Template.git
+          git fetch template main
+
+          # 关键步骤：使用 merge 策略，保留本地文件
+          # --allow-unrelated-histories 允许合并不相关的历史
+          # -X ours 策略：当有冲突时，优先保留本地版本（即保留本地独有文件）
+          git merge template/main --allow-unrelated-histories -X ours
+
+          # 清理临时远程源
+          git remote remove template
+
+      # 6. 提交更新（可选，如果需要自动提交）
+      - name: Commit and push changes
+        if: steps.compare_versions.outputs.need_update == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "chore: update template to version ${{ steps.get_remote_version.outputs.remote_version }}"
+          git push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false  # 不取消正在运行的，等待完成
