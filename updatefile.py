@@ -164,7 +164,7 @@ def main():
     print("开始验证根目录下的曲目与难度文件...")
     verify_file('difficulty.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
     verify_file('info.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
-    verify_file('avatar_replace.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
+    verify_file('tmp.tsv', RAW_CONTENT_URL1, '.', RAW_CONTENT_URL1_BAK)
     print("同步完成")
     replaceAvatarName()
     # if platform.startswith('win32'): os.system('cls')
@@ -173,7 +173,14 @@ def replaceAvatarName():
     import os
 
     mp:map = {}
-    with open('./avatar_replace.tsv','r', encoding='utf-8') as f:
+    # if(os.path.exists('./avatar_replace.tsv')):
+    #     os.rename('./avatar_replace.tsv','./avatar_replace_renamed.tsv')
+    #     try:
+    #         os.rename('./tmp.tsv','./avatar_replace.tsv')
+    #         os.remove('./avatar_replace_renamed.tsv')
+    #     except:
+    #         os.rename('./avatar_replace_renamed.tsv','./avatar_replace.tsv')
+    with open('./tmp.tsv','r', encoding='utf-8') as f:
         content = f.read()
         lst:list[str] = content.split('\n')
         

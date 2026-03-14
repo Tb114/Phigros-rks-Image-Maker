@@ -902,6 +902,7 @@ settings : dict = {
     'OutputLog' : True,         #是否保留历史记录
     'MaxSongResultShowcase' : 33,
     'ResultPictureQuality' : 'auto', #low/high/auto
+    'ImageStyle' : 1
     } 
 
 flag1 : bool = False
@@ -957,20 +958,21 @@ if os.path.exists('config.ini'):
             set1 = os.getenv(key).encode('UTF-8')
             set1 = set1.decode('utf-8')
             if(key=='MaxSongResultShowcase'):
-                settings[key] = int(set1)
-                continue
-            if(key=='ResultPictureQuality'):
-                if(set1 in {'high','HIGH','High','png','PNG'}): settings[key] = 'PNG'
-                elif(set1 in {'low','LOW','Low','jpg','JPG','JPEG','jpeg'}): settings[key] = 'JPEG'
-                elif(set1 in {'WEBP','webp'}): settings[key] = 'WEBP'
-                elif(set1 in {'GIF','gif'}): settings[key] = 'GIF'
-                elif(set1 in {'BMP','bmp'}): settings[key] = 'BMP'
-                elif(set1 in {'TIF','TIFF','tif','tiff'}): settings[key] = 'TIF'
-                else: settings[key] = 'auto'
-                continue
-            if(set1 in {'True', 'TRUE', 'true', '1'}): set1 = 1     # strictly enabled
-            elif(set1 in {'False', 'FALSE', 'false', '0'}): set1 = 0 # strictly disabled
-            else: set1 = -1          # normal case
+                set1=int(set1)
+            elif(key=='ResultPictureQuality'):
+                if(set1 in {'high','HIGH','High','png','PNG'}): set1 = 'PNG'
+                elif(set1 in {'low','LOW','Low','jpg','JPG','JPEG','jpeg'}): set1 = 'JPEG'
+                elif(set1 in {'WEBP','webp'}): set1 = 'WEBP'
+                elif(set1 in {'GIF','gif'}): set1 = 'GIF'
+                elif(set1 in {'BMP','bmp'}): set1 = 'BMP'
+                elif(set1 in {'TIF','TIFF','tif','tiff'}): set1 = 'TIF'
+                else: set1 = 'auto'
+            elif(key=='ImageStyle'):
+                set1=int(set1)
+            else:
+                if(set1 in {'True', 'TRUE', 'true', '1'}): set1 = 1     # strictly enabled
+                elif(set1 in {'False', 'FALSE', 'false', '0'}): set1 = 0 # strictly disabled
+                else: set1 = -1          # normal case
             settings[key] = set1
         except:
             pass
@@ -1023,7 +1025,7 @@ for idx in range(len(songid)):
 try:
     difffile = open('difficulty.tsv', 'r', encoding='utf-8')
 except:
-    fuck('无法打开info.tsv文件',11)
+    fuck('无法打开difficulty.tsv文件',11)
 diff = {}
 allRksRanking = {}
 contect = difffile.readlines()
@@ -1289,11 +1291,15 @@ if settings['OutputLog']:
         os.system(f'copy .\\result.txt .\\log\\{filename}.txt > NUL')
 from math import floor
 output_path = f"result.{settings['ResultPictureQuality'].lower()}"
+if(settings['ImageStyle']==0):
+    target_size=(3000, 1800 - floor((33-b27len)/7.0)*215)
+else:
+    target_size=(1875, 3000 - floor((33-b27len)/3.0)*215 - (b27len <=27 if 95 else 0))
 createImage(
     
     a_path=f"illustrationLowRes/{choice(os.listdir('illustrationLowRes'))}",  # 替换为你的图片路径
     output_path=output_path,
-    target_size=(1875, 3000 - floor((33-b27len)/3.0)*215 - (b27len <=27 if 95 else 0)),
+    target_size=target_size,
     blur_radius=55,  # 可根据需要调整虚化程度
     avatar=user['avatar'],
     b27=b27,
@@ -1303,7 +1309,7 @@ createImage(
     data=data_num,
     updatetime=str(updatetime),
     progress=progress,
-    style=2,
+    style=settings['ImageStyle'],
     imageType=settings['ResultPictureQuality'],
     isrksCorrect=isrksCorrect,
     rks_savedata=rks_savedata
