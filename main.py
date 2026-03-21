@@ -141,8 +141,624 @@ def suggestionsCalculate(rks : float, diff : float, p3 : float, b27_contribution
 
 def createImage(a_path, output_path, target_size, blur_radius, avatar, b27, username, rks, challengeModeRank, data, updatetime, progress, style, imageType, isrksCorrect, rks_savedata):
     # (songid,rank,songname,rks,difficulty,acc,score,type,nxt,fc)
-    
-    if(style == 0):pass
+    def draw_song_item(final_img, item, x, y, cell_width, cell_height, draw):
+        # 绘制编号
+        b_text = item[1]
+        text_bbox = draw.textbbox((0, 0), b_text, font=FONT_CONFIG['rank'])
+        b_width = 50
+        b_height = text_bbox[3] - text_bbox[1] + 10
+        color1 = (220, 220, 220)
+        
+        if item[1][0] == 'P':
+            color1 = (255, 240, 87)
+        
+        # 歌曲插图
+        img_path = f"illustrationLowRes/{item[0]}.png"
+        if not os.path.exists(img_path):
+            img_path = "Resource/nodata.png"
+            
+        song_img = Image.open(img_path).convert('RGB').resize((int(256 * 1.2), int(135 * 1.2)))
+        final_img.paste(song_img, (x + b_width, y))
+        
+        # 编号背景
+        final_img = add_rounded_rectangle(
+            final_img,
+            (x + 15, y),
+            (b_width, b_height),
+            5,
+            color1,
+            200
+        )
+        
+        # 编号文本
+        draw.text(
+            (x + (b_width - text_bbox[2]) // 2 + 15, y + (b_height - text_bbox[3]) // 2 - 5),
+            b_text,
+            fill=(0, 0, 0),
+            font=FONT_CONFIG['rank']
+        )
+        
+        # 难度标签
+        if item[0] != 'No Data':
+            diff_type = item[7]
+            tag_size = (70, 45)
+            tag_pos = (x + b_width, y + 135 - tag_size[1] + 27)
+            
+            final_img = add_rounded_rectangle(
+                final_img,
+                tag_pos,
+                tag_size,
+                5,
+                DIFFICULTY_COLORS.get(diff_type, WHITE),
+                200
+            )
+            
+            diff_text = f'{diff_type} {item[4]}\n' + '%.3f' % item[3]
+            text_bbox = draw.textbbox((0, 0), diff_text, font=FONT_CONFIG['difficulty'])
+            xx, yy = tag_pos[0] + (tag_size[0] - text_bbox[2]) // 2, tag_pos[1] + 5
+            
+            for line in diff_text.split('\n'):
+                draw.text(
+                    (xx, yy),
+                    line,
+                    font=FONT_CONFIG['difficulty'],
+                    fill=WHITE
+                )
+                yy += -2 + int(17 * 4 / 3)
+        
+        # 信息块
+        info_block_width = 240
+        info_block_height = 130
+        info_pos = (x + b_width + 256 + 50, y + (135 - info_block_height) // 2 + 25)
+        
+        try:
+            info_block = Image.open('Resource/infoblock.png').convert('RGBA').resize((info_block_width, info_block_height))
+            final_img.paste(info_block, (info_pos[0], info_pos[1] - 10), info_block)
+        except:
+            pass
+        
+        # 歌曲名称
+        def truncate_text(text, max_width, font):
+            ellipsis = "..."
+            if draw.textlength(text, font=font) <= max_width:
+                return text
+            
+            max_len = len(text)
+            while max_len > 0:
+                truncated = text[:max_len] + ellipsis
+                if draw.textlength(truncated, font=font) <= max_width:
+                    return truncated
+                max_len -= 1
+            
+            return ellipsis
+        
+        max_name_width = 200
+        truncated_name = truncate_text(item[2], max_name_width, FONT_CONFIG['song_name'])
+        song_name_font = FONT_CONFIG['song_name']
+        
+        if len(item[2]) <= 15:
+            song_name_font = FONT_CONFIG['song_name_bigger']
+        
+        name_bbox = draw.textbbox((0, 0), truncated_name, font=song_name_font)
+        draw.text(
+            (info_pos[0] + 100 - name_bbox[2] / 2 + 25, info_pos[1]),
+            truncated_name,
+            fill=WHITE,
+            font=song_name_font
+        )
+        
+        # 分数
+        score_text = f"{item[6]}"
+        score_bbox = draw.textbbox((0, 0), score_text, font=FONT_CONFIG['score'])
+        draw.text(
+            (info_pos[0] + 100 - score_bbox[2] / 2 + 40, info_pos[1] + 30),
+            score_text,
+            fill=WHITE,
+            font=FONT_CONFIG['score']
+        )
+        
+        # ACC
+        acc_val = item[5]
+        main_text = f'{acc_val:05.2f}'
+        tiny_text = f'{int(acc_val * 10000) % 100:02d}'
+        
+        font_main = FONT_CONFIG['accuracy']
+        font_tiny = FONT_CONFIG['accuracy_small']
+        
+        acc_x = info_pos[0] + 36 + 35
+        acc_y = info_pos[1] + 65
+        
+        draw.text((acc_x, acc_y), main_text, fill=WHITE, font=font_main)
+        
+        main_w = draw.textbbox((0, 0), main_text, font=font_main)[2]
+        draw.text((acc_x + main_w, acc_y + 7), tiny_text, fill=WHITE, font=font_tiny)
+        
+        tiny_w = draw.textbbox((0, 0), tiny_text, font=font_tiny)[2]
+        draw.text((acc_x + main_w + tiny_w, acc_y), '%', fill=WHITE, font=font_main)
+        
+        # 评级图标
+        icon_path = "Resource/"
+        score = item[6]
+        
+        if score == 1000000:
+            icon_path += "Phi.png"
+        elif item[9]:
+            icon_path += "FC.png"
+        else:
+            if score >= 960000:
+                icon_path += "V.png"
+            elif score >= 920000:
+                icon_path += "S.png"
+            elif score >= 880000:
+                icon_path += "A.png"
+            elif score >= 820000:
+                icon_path += "B.png"
+            elif score >= 700000:
+                icon_path += "C.png"
+            else:
+                icon_path += "F.png"
+        
+        if os.path.exists(icon_path):
+            try:
+                icon = Image.open(icon_path).convert('RGBA').resize((74, 74))
+                final_img.paste(icon, (info_pos[0], info_pos[1] + 25), icon)
+            except:
+                pass
+
+    if(style == 0):
+        # 横版布局
+        # 将原来的竖版尺寸转换为横版
+        if len(target_size) == 2 and target_size[0] < target_size[1]:
+            # 如果传入的是竖版尺寸，自动转换为横版
+            target_size = (7500, 2500)  # 增加宽度以适应每行6个
+        
+        original_img = Image.open(a_path).convert('RGB')
+        enhancer = ImageEnhance.Brightness(original_img)
+        original_img = enhancer.enhance(0.7)
+        original_width, original_height = original_img.size
+        
+        target_width, target_height = target_size
+        
+        # 背景模糊处理
+        ratio = max(target_width / original_width, target_height / original_height)
+        new_size = (int(original_width * ratio), int(original_height * ratio))
+        
+        blurred_bg = original_img.resize(new_size, Image.LANCZOS)
+        blurred_bg = blurred_bg.filter(ImageFilter.GaussianBlur(radius=blur_radius))
+        
+        # 裁剪背景
+        left = (blurred_bg.width - target_width) // 2
+        top = (blurred_bg.height - target_height) // 2
+        blurred_bg = blurred_bg.crop((left, top, left+target_width, top+target_height))
+        
+        final_img = Image.new("RGBA", target_size)
+        final_img.paste(blurred_bg, (0, 0))
+        
+        # 绘制头像
+        ava=''
+        try:
+            ava = Image.open(f'avatar/{avatar}.png').convert('RGBA')
+            ava_round = add_corners(ava, 5)
+            final_img.paste(ava_round, (64, 64), ava_round)    
+        # except Exception as e:
+            #     fuck(f'找不到头像png文件, 请检查avatar是否为最新数据:{e}',5)
+        except:
+            ava = Image.new("RGBA",(64,64),(57,197,187))
+            ava_round = add_corners(ava, 5)
+            
+        # 数据不同步警告
+        if not isrksCorrect:
+            warning_text = f'发现计算rks({rks})与云端获取rks({rks_savedata})不同\n请确认游戏是否更新定数或更改rks计算法则'
+            warning_font = FONT_CONFIG['warning']
+            draw = ImageDraw.Draw(final_img)
+            
+            # 获取多行文本的边界框
+            lines = warning_text.split('\n')
+            max_width = 0
+            total_height = 0
+            
+            for line in lines:
+                bbox = draw.textbbox((0, 0), line, font=warning_font)
+                line_width = bbox[2] - bbox[0]
+                line_height = bbox[3] - bbox[1]
+                max_width = max(max_width, line_width)
+                total_height += line_height
+            
+            # 设置边距
+            padding_x = 10
+            padding_y = 5
+            line_spacing = 5
+            
+            # 警告框的位置（头像下方）
+            warning_x = 64
+            warning_y = 64 + ava_round.height + 5
+            
+            # 警告框尺寸
+            warning_width = max_width + padding_x * 2
+            warning_height = total_height + padding_y * 2 + line_spacing * (len(lines) - 1)
+            
+            # 绘制警告框
+            final_img = add_rounded_rectangle(
+                final_img,
+                (warning_x, warning_y),
+                (warning_width, warning_height),
+                radius=5,
+                color=(255, 255, 255),
+                alpha=230
+            )
+            
+            final_img = add_rounded_rectangle(
+                final_img,
+                (warning_x - 2, warning_y - 2),
+                (warning_width + 4, warning_height + 4),
+                radius=6,
+                color=(255, 0, 0),
+                alpha=100
+            )
+            
+            # 绘制警告文本
+            current_y = warning_y + padding_y
+            for line in lines:
+                bbox = draw.textbbox((0, 0), line, font=warning_font)
+                line_width = bbox[2] - bbox[0]
+                line_height = bbox[3] - bbox[1]
+                
+                line_x = warning_x + (warning_width - line_width) // 2
+                draw.text(
+                    (line_x, current_y),
+                    line,
+                    fill=(255, 0, 0),
+                    font=warning_font
+                )
+                current_y += line_height + line_spacing
+        
+        # --- 横版布局：上方信息区域 ---
+        draw = ImageDraw.Draw(final_img)
+        
+        # 1. 用户名框
+        username_x = 64 + ava_round.width + 20
+        username_y = 64
+        username_bg_width = 400
+        username_bg_height = 96
+        
+        final_img = add_rounded_rectangle(
+            final_img,
+            (username_x, username_y),
+            (username_bg_width, username_bg_height),
+            radius=10,
+            color=(50, 50, 50),
+            alpha=150
+        )
+        
+        username_bbox = draw.textbbox((0, 0), username, font=FONT_CONFIG['username'])
+        draw.text(
+            (username_x + (username_bg_width - username_bbox[2]) // 2, 
+             username_y + (username_bg_height - username_bbox[3]) // 2 - 5),
+            username,
+            fill=WHITE,
+            font=FONT_CONFIG['username']
+        )
+        
+        # 更新时间
+        final_img = add_rounded_rectangle(
+            final_img,
+            (username_x, username_y - 28),
+            (500, 30),
+            radius=5,
+            color=(50, 50, 50),
+            alpha=150
+        )
+        draw.text(
+            (username_x + 10, username_y - 28),
+            'Updated at: ' + updatetime[:-7] + ' UTC+08:00',
+            fill=WHITE,
+            font=FONT_CONFIG['updatetime']
+        )
+        
+        # 2. RKS显示框
+        main_txt = f'{int(rks)}.{int((rks - int(rks)) * 100)}'
+        tiny_txt = f'{int(rks * 1000000) % 10000:04d}'
+        
+        font_main = FONT_CONFIG['rks']
+        font_tiny = FONT_CONFIG['rks_small']
+        
+        main_bbox = draw.textbbox((0, 0), main_txt, font=font_main)
+        tiny_bbox = draw.textbbox((0, 0), tiny_txt, font=font_tiny)
+        
+        main_w = main_bbox[2] - main_bbox[0]
+        tiny_w = tiny_bbox[2] - tiny_bbox[0]
+        total_w = main_w + tiny_w
+        max_h = main_bbox[3] - main_bbox[1]
+        
+        rks_bg_width = total_w + 35
+        rks_bg_height = max_h + 10
+        rks_x = username_x
+        rks_y = username_y + username_bg_height + 10
+        
+        final_img = add_rounded_rectangle(
+            final_img,
+            (rks_x, rks_y),
+            (rks_bg_width, rks_bg_height + 4),
+            radius=6,
+            color=(230, 230, 230),
+            alpha=230
+        )
+        
+        base_y = rks_y + (rks_bg_height - max_h) // 2
+        draw.text((rks_x + 15, base_y - 5), main_txt, fill=(0, 0, 0), font=font_main)
+        draw.text((rks_x + 15 + main_w, base_y + 4), tiny_txt, fill=(0, 0, 0), font=font_tiny)
+        
+        # 3. 挑战模式图标
+        challenge_rank = challengeModeRank
+        rank_tier = challenge_rank // 100
+        rank_number = challenge_rank % 100
+        
+        icon_map = {
+            1: "Resource/green.png",
+            2: "Resource/blue.png",
+            3: "Resource/red.png",
+            4: "Resource/gold.png",
+            5: "Resource/rainbows.png"
+        }
+        icon_path = icon_map.get(rank_tier, "Resource/grey.png")
+        
+        try:
+            icon = Image.open(icon_path).convert('RGBA').resize((100, 60), Image.LANCZOS)
+            icon_x = rks_x + rks_bg_width + 10
+            icon_y = rks_y - 5
+            final_img.paste(icon, (icon_x, icon_y), icon)
+            
+            rank_font = FONT_CONFIG['challenge_rank']
+            rank_bbox = draw.textbbox((0, 0), str(rank_number), font=rank_font)
+            
+            draw.text(
+                (icon_x + (100 - rank_bbox[2]) // 2,
+                 icon_y + (60 - rank_bbox[3]) // 2 - 5),
+                str(rank_number),
+                fill=WHITE,
+                font=rank_font
+            )
+        except:
+            pass
+        
+        # 4. 数据框
+        data_font = FONT_CONFIG['data']
+        data_text_width = draw.textlength(data, font=data_font)
+        data_box_width = 30 + 8 + int(data_text_width) + 35
+        data_box_height = 40
+        
+        data_box_pos = (icon_x + 100 + 20, icon_y + 12)
+        final_img = add_rounded_rectangle(
+            final_img,
+            data_box_pos,
+            (data_box_width, data_box_height),
+            radius=5,
+            color=(80, 80, 80),
+            alpha=int(255 * 0.7)
+        )
+        
+        try:
+            data_icon = Image.open("Resource/data.png").convert('RGBA')
+            original_width, original_height = data_icon.size
+            new_height = 24
+            new_width = int(original_width * (new_height / original_height))
+            data_icon = data_icon.resize((new_width, new_height), Image.LANCZOS)
+            
+            data_icon_x = data_box_pos[0] + 10
+            data_icon_y = data_box_pos[1] + (data_box_height - new_height) // 2
+            final_img.paste(data_icon, (data_icon_x, data_icon_y), data_icon)
+            
+            data_text_x = data_icon_x + new_width + 10
+            data_text_y = data_box_pos[1] + (data_box_height - data_font.size) // 2
+            draw.text(
+                (data_text_x, data_text_y),
+                data,
+                fill=WHITE,
+                font=data_font
+            )
+        except:
+            pass
+        
+        # 5. 成绩统计表格
+        table_x = username_x + username_bg_width + 400
+        table_y = username_y
+        cell_width = 80
+        cell_height = 40
+        header_height = 40
+        row_height = cell_height
+        border_radius = 5
+        bg_alpha = 150
+        
+        headers = ["", "EZ", "HD", "IN", "AT"]
+        row_labels = ["C", "FC", "AP"]
+        
+        # 绘制表头
+        for col in range(5):
+            cell_x = table_x + col * cell_width
+            cell_y = table_y
+            
+            final_img = add_rounded_rectangle(
+                final_img,
+                (cell_x, cell_y),
+                (cell_width if col > 0 else 80, header_height),
+                radius=0,
+                color=(70, 70, 70),
+                alpha=bg_alpha
+            )
+            
+            header_text = headers[col] if col < len(headers) else ""
+            text_bbox = draw.textbbox((0, 0), header_text, font=FONT_CONFIG['sheet'])
+            draw.text(
+                (cell_x + (cell_width - text_bbox[2]) // 2, 
+                 cell_y + (header_height - text_bbox[3]) // 2 - 3),
+                header_text,
+                fill=WHITE,
+                font=FONT_CONFIG['sheet']
+            )
+        
+        # 绘制数据行
+        for row in range(3):
+            for col in range(5):
+                cell_x = table_x + col * cell_width
+                cell_y = table_y + header_height + row * row_height
+                
+                if col == 0:
+                    final_img = add_rounded_rectangle(
+                        final_img,
+                        (cell_x, cell_y),
+                        (80, row_height),
+                        radius=0,
+                        color=(60, 60, 60),
+                        alpha=bg_alpha
+                    )
+                    
+                    label_text = row_labels[row] if row < len(row_labels) else ""
+                    text_bbox = draw.textbbox((0, 0), label_text, font=FONT_CONFIG['sheet'])
+                    draw.text(
+                        (cell_x + (80 - text_bbox[2]) // 2, 
+                         cell_y + (row_height - text_bbox[3]) // 2),
+                        label_text,
+                        fill=WHITE,
+                        font=FONT_CONFIG['sheet']
+                    )
+                else:
+                    final_img = add_rounded_rectangle(
+                        final_img,
+                        (cell_x, cell_y),
+                        (cell_width, row_height),
+                        radius=0,
+                        color=(50, 50, 50),
+                        alpha=bg_alpha
+                    )
+                    
+                    if len(progress) > row and len(progress[row]) > col - 1:
+                        progress_text = f"{progress[row][col - 1]:4d}"
+                    else:
+                        progress_text = "0d"
+                    
+                    text_bbox = draw.textbbox((0, 0), progress_text, font=FONT_CONFIG['sheet'])
+                    draw.text(
+                        (cell_x + (cell_width - text_bbox[2]) // 2, 
+                         cell_y + (row_height - text_bbox[3]) // 2),
+                        progress_text,
+                        fill=WHITE,
+                        font=FONT_CONFIG['sheet']
+                    )
+        
+        # 表格外边框
+        table_width = 5 * cell_width
+        table_height = header_height + 3 * row_height
+        final_img = add_rounded_rectangle(
+            final_img,
+            (table_x, table_y),
+            (table_width, table_height),
+            radius=border_radius,
+            color=(100, 100, 100),
+            alpha=50
+        )
+        
+        # --- 横版布局：B27歌曲显示区域 ---
+        # --- 横版布局：B27歌曲显示区域 ---
+        start_y = 280  # 增加上方信息区域间距
+        cell_width = 256 + 180 + 50
+        cell_height = 135 + 100
+        
+        # 调整元素宽度和间距以适应每行6个
+        songs_per_row = 6
+        element_width_with_spacing = 600
+         
+        # 加载overflow图片
+        try:
+            OVERFLOW = Image.open("Resource/overflow.png").convert('RGBA').resize((625, 114))
+        except:
+            try:
+                OVERFLOW = Image.open("Resource/OVERFLOW.png").convert('RGBA').resize((625, 114))
+            except:
+                OVERFLOW = None
+        
+        # 统一绘制所有元素，每行6个
+        row_height_with_gap = cell_height - 10  # 行高
+        
+        # 计算总行数
+        total_items = len(b27)
+        
+        # 确定要显示的前27个歌曲
+        display_items = min(total_items, 30)  # 最多显示27个
+        
+        # 计算显示前27个歌曲所需行数
+        songs_per_row = 6
+        display_rows = (display_items + songs_per_row - 1) // songs_per_row  # 向上取整
+        
+        # 绘制前27个歌曲
+        for idx in range(display_items):
+            if idx >= display_items:
+                break
+                
+            item = b27[idx]
+            
+            # 计算行和列
+            row_idx = idx // songs_per_row
+            col_idx = idx % songs_per_row
+            
+            # 计算位置并转换为整数
+            x = int(60 + col_idx * element_width_with_spacing)
+            y = int(start_y + row_idx * row_height_with_gap)
+            
+            # 绘制每个歌曲元素
+            draw_song_item(final_img, item, x, y, cell_width, cell_height, draw)
+        
+        # 如果超过27个，显示overflow
+        if len(b27) > 30 and OVERFLOW:
+            # 计算overflow的位置（在B27之后，B28之前）
+            overflow_y = int(start_y + display_rows * row_height_with_gap - 10)
+            overflow_x = int((target_width - 625) // 2)  # 居中显示
+            final_img.paste(OVERFLOW, (overflow_x, overflow_y), mask=OVERFLOW)
+            
+            # 在overflow之后继续绘制剩余的歌曲
+            for idx in range(30, total_items):
+                item = b27[idx]
+                
+                # 重新计算行和列（从overflow之后的行开始）
+                adjusted_idx = idx - 30
+                row_idx = display_rows + 1 + (adjusted_idx // songs_per_row)  # +1是因为overflow占一行
+                col_idx = adjusted_idx % songs_per_row
+                
+                # 计算位置并转换为整数
+                x = int(60 + col_idx * element_width_with_spacing)
+                y = int(start_y + row_idx * row_height_with_gap - 65)
+                
+                # 绘制每个歌曲元素
+                draw_song_item(final_img, item, x, y, cell_width, cell_height, draw)
+        
+        # 底部信息
+        draw.text(
+            (5, target_height - 50),
+            'Ver. ' + VERSION,
+            fill=WHITE,
+            font=FONT_CONFIG['version']
+        )
+        draw.text(
+            (target_width - 740, target_height - 50),
+            'Phigros rks Image Maker',
+            fill=WHITE,
+            font=FONT_CONFIG['version']
+        )
+        draw.text(
+            (target_width - 390, target_height - 45),
+            'open-sourced on Github',
+            fill=WHITE,
+            font=FONT_CONFIG['open-sourced']
+        )
+        
+        # 最终保存
+        try:
+            if imageType == 'JPEG':
+                output_path = output_path.replace('jpeg', "jpg")
+                final_img.convert('RGB').save(output_path, format=imageType, quality=70, optimize=True, progressive=True)
+            else:
+                final_img.convert('RGB').save(output_path, format=imageType)
+        except:
+            final_img.convert('RGB').save(output_path, format='PNG')
     else: 
         original_img = Image.open(a_path).convert('RGB')
         enhancer = ImageEnhance.Brightness(original_img)
@@ -1292,7 +1908,7 @@ if settings['OutputLog']:
 from math import floor
 output_path = f"result.{settings['ResultPictureQuality'].lower()}"
 if(settings['ImageStyle']==0):
-    target_size=(3000, 1800 - floor((33-b27len)/7.0)*215)
+    target_size=(3750, 1800 - floor((33-b27len)/6.0)*215)
 else:
     target_size=(1875, 3000 - floor((33-b27len)/3.0)*215 - (b27len <=27 if 95 else 0))
 createImage(
