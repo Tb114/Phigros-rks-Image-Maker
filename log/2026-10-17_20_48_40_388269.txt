@@ -1,0 +1,59 @@
+2026-10-17 20:48:40.388269
+
+发现计算rks(15.649730854455145)与云端获取rks(15.105067253112793)不同
+请确认游戏是否更新定数或更改rks计算法则
+
+昵称:  Tb
+课题模式: 红46
+RKS:  15.105067253112793
+Data: 10GiB 931MiB 559KiB
+
+\    EZ   HD   IN   AT
+C    258  261  265  29 
+FC   258  258  92   3 
+AT   258  258  12   1 
+
+P1 BANGING STRIKE IN,  ACC: 100.0000%, RKS: 15.900/15.9, Score:1000000
+P2 a truth seeker -Communication with Utopia will be lost- IN,  ACC: 100.0000%, RKS: 15.800/15.8, Score:1000000
+P3 Poison AND÷OR Affection IN,  ACC: 100.0000%, RKS: 15.700/15.7, Score:1000000
+
+B1 Re：End of a Dream AT,  ACC: 99.6042% >> 99.816%, RKS: 16.604/16.9, Score:996220
+B2 祈 -我ら神祖と共に歩む者なり- IN,  ACC: 99.5725% >> 99.791%, RKS: 16.090/16.4, Score:972705
+B3 Ad astra per aspera IN,  ACC: 99.5289% >> 99.749%, RKS: 15.960/16.3, Score:970887
+B4 Distorted Fate IN,  ACC: 99.4997% >> 99.720%, RKS: 15.940/16.3, Score:958920
+B5 BANGING STRIKE IN,  ACC: 100.0000% >> 100.000%, RKS: 15.900/15.9, Score:1000000
+B6 DESTRUCTION 3,2,1 IN,  ACC: 99.3407% >> 99.562%, RKS: 15.826/16.3, Score:974484
+B7 a truth seeker -Communication with Utopia will be lost- IN,  ACC: 100.0000% >> 无法推分%, RKS: 15.800/15.8, Score:1000000
+B8 Cthugha AT,  ACC: 99.5222% >> 99.745%, RKS: 15.760/16.1, Score:974508
+B9 +ERABY+E CONNEC+10N IN,  ACC: 99.2092% >> 99.431%, RKS: 15.732/16.3, Score:965297
+B10 Lyrith -迷宮リリス- IN,  ACC: 99.4554% >> 99.678%, RKS: 15.713/16.1, Score:963212
+B11 Poison AND÷OR Affection IN,  ACC: 100.0000% >> 无法推分%, RKS: 15.700/15.7, Score:1000000
+B12 白と黒のバケモノ IN,  ACC: 99.6199% >> 99.845%, RKS: 15.633/15.9, Score:996579
+B13 Kerberos IN,  ACC: 99.7546% >> 99.980%, RKS: 15.628/15.8, Score:992372
+B14 Retribution IN,  ACC: 99.1900% >> 99.413%, RKS: 15.622/16.2, Score:931959
+B15 Bounded Quietude IN,  ACC: 99.1019% >> 99.325%, RKS: 15.560/16.2, Score:935229
+B16 Re：End of a Dream IN,  ACC: 99.4730% >> 99.699%, RKS: 15.530/15.9, Score:984718
+B17 Rrhar'il IN,  ACC: 99.1769% >> 99.401%, RKS: 15.516/16.1, Score:959435
+B18 蝎虎天体 -Lacertid- IN,  ACC: 100.0000% >> 无法推分%, RKS: 15.500/15.5, Score:1000000
+B19 Chronostasis IN,  ACC: 99.2537% >> 99.479%, RKS: 15.474/16.0, Score:945652
+B20 インフェルノシティ IN,  ACC: 99.6510% >> 99.879%, RKS: 15.457/15.7, Score:993824
+B21 Aleph-0 IN,  ACC: 99.1299% >> 99.356%, RKS: 15.387/16.0, Score:992170
+B22 Fractured Angel IN,  ACC: 98.7085% >> 98.933%, RKS: 15.378/16.3, Score:962638
+B23 Chronos Collapse - La Campanella IN,  ACC: 98.6600% >> 98.884%, RKS: 15.344/16.3, Score:972657
+B24 G.V.N. (Glitter,Vomitus and Neon) IN,  ACC: 99.2862% >> 99.514%, RKS: 15.303/15.8, Score:942959
+B25 El Condor Pasa (Phigros Edit) IN,  ACC: 99.5132% >> 99.743%, RKS: 15.264/15.6, Score:994750
+B26 Compute It With Some Devilish Alcoholic Steampunk Engines IN,  ACC: 99.2003% >> 99.429%, RKS: 15.243/15.8, Score:962300
+B27 Labyrinth in Kowloon: Walled World IN,  ACC: 99.4609% >> 99.691%, RKS: 15.228/15.6, Score:973148
+————OVERFLOW————
+B28 Nhelv IN,  ACC: 99.4598% >> 99.691%, RKS: 15.228/15.6, Score:979052
+B29 Don't Never Around IN,  ACC: 99.6012% >> 99.835%, RKS: 15.226/15.5, Score:995404
+B30 千紫万紅 IN,  ACC: 99.6000% >> 99.835%, RKS: 15.226/15.5, Score:984067
+B31 Der Richter IN,  ACC: 99.4560% >> 99.691%, RKS: 15.225/15.6, Score:988164
+B32 Silence is Golden, Speech is Golden IN,  ACC: 99.3991% >> 99.691%, RKS: 15.186/15.6, Score:966198
+B33 SIGMA IN,  ACC: 99.0764% >> 99.407%, RKS: 15.158/15.8, Score:969268
+B34 CROSS†SOUL IN,  ACC: 98.2567% >> 98.587%, RKS: 15.154/16.4, Score:929215
+B35 Lyrith -迷宮リリス- AT,  ACC: 98.0987% >> 98.455%, RKS: 15.135/16.5, Score:924980
+B36 You are the Miserable AT,  ACC: 99.0290% >> 99.407%, RKS: 15.126/15.8, Score:952217
+B37 幻影鬼魅 (PLEASE) IN,  ACC: 99.8704% >> 无法推分%, RKS: 15.113/15.2, Score:998833
+B38 Cthugha IN,  ACC: 98.7209% >> 99.129%, RKS: 15.103/16.0, Score:964044
+B39 Pont des souvenirs IN,  ACC: 99.6997% >> 无法推分%, RKS: 15.096/15.3, Score:991018
